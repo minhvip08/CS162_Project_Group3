@@ -8,7 +8,7 @@ using namespace std;
 #define MAX 50
 
 
-struct Profile {
+struct profile {
 	string name;
 	string date;
 	string gender;
@@ -16,59 +16,67 @@ struct Profile {
 	string email;
 };
 
-struct Accounts {
+struct account {
 	string username;
 	string password;
-	Profile profile;
-	Accounts* pNext_Acc;
+	profile prf;
+	account* pnext;
 };
-struct StudentInfor{ 
-	int ID_student; 
-	string FirstName; 
-	string LastName; 
-	string Gender; 
+struct studentinfor{ 
+	int id; 
+	string firstname; 
+	string lastname; 
+	string gender; 
 	string birthday; 
-	string Social_ID; 
+	string social_id;
 };
 
-struct Date{ 
+struct date{ 
 	int day, month, year; 
 };
+struct session_date {
+	const string MON = "MON";
+	const string TUE = "TUE";
+	const string WED = "WED";
+	const string THU = "THU";
+	const string FRI = "FRI";
+	const string SAT = "SAT";
+};
 
-struct Courses{ 
+struct session_time {
+	const string S1 = "S1(7:30)";
+	const string S2 = "S2(09:30";
+	const string S3 = "S3(13:30)";
+	const string S4 = "S4(15:30)";
+};
+struct session {
+	session_date day;
+	session_time time;
+};
+struct courses{ 
 	int ID_course; 
 	string course_name; 
-	string teacher_name; 
+	string teacher_name;
 	unsigned int credits; 
 	//int max_student = MAX; 
 	int cur_student; 
-	session_date session_date; 
-	session_time session_time;
+	session sess;
 	int num_sessions; 
 };
 
-struct schoolYear{ 
+struct shcoolyear{ 
 	string time; 
 	int courses; 
 };
 
-struct Teacher{
+struct teacher{
+	profile prf;
+	courses* cours;
+	teacher* next;
 };
-
-struct session_date{ 
-	const string MON = "MON"; 
-	const string TUE = "TUE"; 
-	const string WED = "WED"; 
-	const string THU = "THU"; 
-	const string FRI = "FRI"; 
-	const string SAT = "SAT"; 
+struct student
+{
+	profile prf;
+	courses* cours;
+	student* next;
 };
-
-struct session_time{
-	const string S1 = "S1(7:30)"; 
-	const string S2 = "S2(09:30"; 
-	const string S3 = "S3(13:30)";
-	const string S4 = "S4(15:30)"; 
-};
-
-
