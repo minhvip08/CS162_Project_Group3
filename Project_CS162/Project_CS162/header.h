@@ -1,12 +1,32 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <Windows.h>
+using namespace std;
 
-struct Student{ 
+#define MAX 50
+
+
+struct Profile {
+	string name;
+	string date;
+	string gender;
+	string phone;
+	string email;
+};
+
+struct Accounts {
+	string username;
+	string password;
+	Profile profile;
+	Accounts* pNext_Acc;
+};
+struct StudentInfor{ 
 	int ID_student; 
 	string FirstName; 
 	string LastName; 
-	char Gender; 
+	string Gender; 
 	string birthday; 
 	string Social_ID; 
 };
