@@ -21,7 +21,7 @@ struct account{
 	string username;
 	string password;
 	profile prf;
-	account* pnext;
+	account* pNext;
 };
 struct studentinfor{ 
 	int id; 
@@ -57,7 +57,7 @@ struct session{
 	
 	string date; 
 	string time; 
-	session* next; 
+	session* pNext; 
 };
 
 struct Class {
@@ -99,12 +99,23 @@ struct schoolyear {
 struct teacher{
 	profile prf;
 	course* cours;
-	teacher* next;
+	teacher* pNext;
 };
 
 struct student
 {
 	profile prf;
-	course* cours;
-	student* next;
+	int gpa;
+	course* listCourse;
+	student* pNext;
+};
+
+struct studentScore {
+	string name;
+	string id;
+	double total;
+	double final;
+	double mid;
+	double other;
+	studentScore* pNext;
 };
