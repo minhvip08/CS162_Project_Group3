@@ -87,11 +87,13 @@ struct semester {
 	int num_class; 
 	course* course_list;
 	Class* list_class; 
+	semester* next; 
 };
 
 struct schoolyear {
 	string time;
-	semester* semseter = new semester[3];
+	int num_sem = 0;
+	semester* sem;
 	//Class* list_class; 
 	schoolyear* next_schyear;
 };
