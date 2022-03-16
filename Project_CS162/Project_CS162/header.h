@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <string>
 #include <Windows.h>
 using namespace std;
@@ -61,7 +62,7 @@ struct session{
 
 struct Class {
 	string class_name;
-	int max_student; 
+	int max_student = MAX; 
 	int cur_student; 
 	date start_date; 
 	date end_day; 
@@ -79,7 +80,7 @@ struct course{
 	//int num_sessions; 
 };
 
-struct semester {
+struct semester { 
 	string start_day;
 	string end_day;
 	int num_course;
