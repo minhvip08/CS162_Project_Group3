@@ -8,7 +8,7 @@ using namespace std;
 #define MAX 50
 
 
-struct profile {
+struct profile{
 	string name;
 	string date;
 	string gender;
@@ -16,7 +16,7 @@ struct profile {
 	string email;
 };
 
-struct account {
+struct account{
 	string username;
 	string password;
 	profile prf;
@@ -34,6 +34,7 @@ struct studentinfor{
 struct date{ 
 	int day, month, year; 
 };
+
 struct session_date {
 	const string MON = "MON";
 	const string TUE = "TUE";
@@ -49,34 +50,53 @@ struct session_time {
 	const string S3 = "S3(13:30)";
 	const string S4 = "S4(15:30)";
 };
-struct session {
+struct session{
 	session_date day;
 	session_time time;
 };
-struct courses{ 
+
+struct Class {
+	string class_name;
+	int max_student; 
+	int cur_student; 
+	date start_date; 
+	date end_day; 
+	Class* nextClass; 
+};
+struct course{ 
 	int ID_course; 
 	string course_name; 
 	string teacher_name;
-	unsigned int credits; 
-	//int max_student = MAX; 
+	unsigned int credits;  
 	int cur_student; 
 	session sess;
 	int num_sessions; 
 };
 
-struct shcoolyear{ 
-	string time; 
-	int courses; 
+struct semester {
+	string start_day;
+	string end_day;
+	int num_course;
+	int num_class; 
+	course* course_list; 
+};
+
+struct schoolyear {
+	string time;
+	semester* semseter = new semester[3];
+	Class* list_class; 
+	schoolyear* next_schyear;
 };
 
 struct teacher{
 	profile prf;
-	courses* cours;
+	course* cours;
 	teacher* next;
 };
+
 struct student
 {
 	profile prf;
-	courses* cours;
+	course* cours;
 	student* next;
 };
