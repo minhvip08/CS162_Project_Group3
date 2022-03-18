@@ -29,6 +29,7 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 			getline(fin, head->stu->prf.social_id, ',');
 			head->stu->pNext = nullptr;
 			cur = head->stu;
+			cur->pNext = nullptr;
 		}
 		else
 		{
@@ -66,7 +67,7 @@ void copyliststu(Class*& c1, Class* c2) // c1 is the new class (dont have any st
 		return;
 	student* tmp = nullptr;
 	student* cur = c2->stu;
-	while (c2->stu)
+	while (cur)
 	{
 		if (c1->stu == nullptr)
 		{
@@ -78,6 +79,7 @@ void copyliststu(Class*& c1, Class* c2) // c1 is the new class (dont have any st
 			tmp->pNext = new student;
 			tmp = tmp->pNext;
 			copystudentinfo(tmp, cur);
+			tmp->pNext = nullptr;
 		}
 		cur = cur->pNext;
 	}
