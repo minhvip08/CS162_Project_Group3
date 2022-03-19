@@ -2,38 +2,32 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <conio.h>
 #include <string>
 #include <Windows.h>
 using namespace std;
 
 #define MAX 50
 
+struct date {
+	int day, month, year;
+};
 
 struct profile{
-	string name;
-	string date;
+	string lastname; 
+	string firstname;
+	date DOB; 
 	string gender;
 	string phone;
 	string email;
+	string social_id; 
 };
 
 struct account{
 	string username;
 	string password;
-	profile prf;
+	//profile prf;
 	account* pNext;
-};
-struct studentinfor{ 
-	int id; 
-	string firstname; 
-	string lastname; 
-	string gender; 
-	string birthday; 
-	string social_id;
-};
-
-struct date{ 
-	int day, month, year; 
 };
 
 struct session_date {
@@ -51,10 +45,8 @@ struct session_time {
 	const string S3 = "S3(13:30)";
 	const string S4 = "S4(15:30)";
 };
+
 struct session{
-	/*session_date day;
-	session_time time;*/
-	
 	string date; 
 	string time; 
 	session* pNext; 
@@ -81,8 +73,8 @@ struct course{
 };
 
 struct semester { 
-	string start_day;
-	string end_day;
+	date start_day;
+	date end_day;
 	int num_course;
 	int num_class; 
 	course* course_list;
@@ -98,16 +90,18 @@ struct schoolyear {
 	schoolyear* next_schyear;
 };
 
-struct teacher{
-	profile prf;
-	course* cours;
+struct teacher
+{
+	account acc;
 	teacher* pNext;
 };
 
 struct student
 {
+	int id; 
 	profile prf;
-	int gpa;
+	double gpa;
+	account acc; 
 	course* listCourse;
 	student* pNext;
 };
@@ -121,3 +115,27 @@ struct studentScore {
 	double other;
 	studentScore* pNext;
 };
+
+
+// Create functions (Input data)
+void input_schoolyear(schoolyear*& head);
+void input_semester(semester*& head);
+void input_course(course*& head);
+void input_session(session*& head);
+void input_class(Class*& head);
+void input_date(date& p);
+
+// Output to console
+void show_schoolyear(schoolyear* head);
+void show_semester(semester* s);
+void show_course(course* c);
+void show_session(session* head);
+void show_class(Class* head);
+void show_date(date s);
+
+// Delete Memory
+void Delete_schoolyear(schoolyear*& head);
+void Delete_semester(semester*& head);
+void Delete_course(course*& head);
+void Delete_session(session*& head);
+void Delete_class(Class*& head);
