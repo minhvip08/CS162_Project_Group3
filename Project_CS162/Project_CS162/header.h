@@ -9,6 +9,12 @@ using namespace std;
 
 #define MAX 50
 
+/*schoolyear: add head; 
+semester: add head; // use recursion to output
+student list: add head; // use recursion to output
+course: add head;
+class: add head; */ 
+
 struct date {
 	int day, month, year;
 };
@@ -18,15 +24,14 @@ struct profile{
 	string firstname;
 	date DOB; 
 	string gender;
-	string phone;
-	string email;
 	string social_id; 
 };
 
 struct account{
 	string username;
 	string password;
-	//profile prf;
+	int type; // 0 = student, 1 = staff.
+	profile prf;
 	account* pNext;
 };
 
@@ -48,26 +53,27 @@ struct session_time {
 
 struct session{
 	string date; 
-	string time; 
-	session* pNext; 
+	string time;  
 };
 
 struct Class {
 	string class_name;
-	int max_student = MAX; 
-	int cur_student; 
+	int total_student;  // input <= 50 (opt 1. input, 2.default)
 	date start_date; 
 	date end_day; 
+	student* student_list; 
 	Class* nextClass; 
 };
 
-struct course{ 
+struct course{ // thieu student list
 	int ID_course; 
 	string course_name; 
 	string teacher_name;
 	unsigned int credits;  
 	int cur_student; 
-	session* sess;
+	session *sess;
+	student* student_list; 
+	//studentScore* list_score; 
 	course* next; 
 	//int num_sessions; 
 };
@@ -75,10 +81,10 @@ struct course{
 struct semester { 
 	date start_day;
 	date end_day;
-	int num_course;
-	int num_class; 
+	int num_course = 0;
+	int num_class = 0; 
 	course* course_list;
-	Class* list_class; 
+//	Class* list_class; 
 	semester* next; 
 };
 
@@ -86,24 +92,31 @@ struct schoolyear {
 	string time;
 	int num_sem = 0;
 	semester* sem;
-	//Class* list_class; 
+	Class* list_class; 
 	schoolyear* next_schyear;
 };
 
-struct teacher
+struct student 
 {
-	account acc;
-	teacher* pNext;
-};
-
-struct student
-{
-	int id; 
+	int No; 
+	string id; 
 	profile prf;
 	double gpa;
 	account acc; 
-	course* listCourse;
+//	course* listCourse;
+	enrolledCourse* list_enrolled; 
+	finalGPA* list_gpa; 
 	student* pNext;
+};
+
+struct enrolledCourse {
+	int id_course; 
+	string name; 
+	session *sess;
+	studentScore* list_score; 
+	enrolledCourse* next; 
+	/*int semester; 
+	int year;*/
 };
 
 struct studentScore {
@@ -114,6 +127,11 @@ struct studentScore {
 	double mid;
 	double other;
 	studentScore* pNext;
+};
+
+struct finalGPA {
+	float gpa; 
+	finalGPA* next; 
 };
 
 
