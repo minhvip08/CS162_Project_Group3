@@ -72,8 +72,8 @@ struct course{ // thieu student list
 	unsigned int credits;  
 	int cur_student; 
 	session *sess;
-	student* student_list; 
-	//studentScore* list_score; 
+	//student* student_list; 
+	studentScore* list_score; 
 	course* next; 
 	//int num_sessions; 
 };
@@ -96,7 +96,7 @@ struct schoolyear {
 	schoolyear* next_schyear;
 };
 
-struct student 
+struct student  // Class
 {
 	int No; 
 	string id; 
@@ -109,7 +109,7 @@ struct student
 	student* pNext;
 };
 
-struct enrolledCourse {
+struct enrolledCourse { // student (class)
 	int id_course; 
 	string name; 
 	session *sess;
@@ -119,7 +119,7 @@ struct enrolledCourse {
 	int year;*/
 };
 
-struct studentScore {
+struct studentScore { // course
 	string name;
 	string id;
 	double total;
@@ -129,7 +129,7 @@ struct studentScore {
 	studentScore* pNext;
 };
 
-struct finalGPA {
+struct finalGPA { // class
 	float gpa; 
 	finalGPA* next; 
 };
