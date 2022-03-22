@@ -29,35 +29,37 @@ void input_schoolyear(schoolyear* &head)
 		}
 	}
 }
-
+/*
 void input_semester(semester* &head)
 {
 	semester* cur = head;
 //	while (true){
-	//	/*cin.get();*/
-		cout << "Start day: " << endl;
-		input_date(cur->start_day); 
-		cout << "End day: " << endl; input_date(cur->end_day); 
-		cout << "Number of course: "; cin >> cur->num_course;
-		cout << "Number of class: "; cin >> cur->num_class;
-		for(int i = 0; i < cur->num_course; ++i)
-			input_course(cur->course_list);
-		for(int i = 0; i < cur->num_class; ++i)
-			input_class(cur->list_class);
+	//	/*cin.get();
+cout << "Start day: " << endl;
+input_date(cur->start_day);
+cout << "End day: " << endl; input_date(cur->end_day);
+cout << "Number of course: "; cin >> cur->num_course;
+cout << "Number of class: "; cin >> cur->num_class;
+for (int i = 0; i < cur->num_course; ++i)
+	input_course(cur->course_list);
+for (int i = 0; i < cur->num_class; ++i)
+	input_class(cur->list_class);
 
-		/*cout << "Press any key to add more semester, else press 0" << endl; 
-		char k; k = _getch(); 
-		if (k == '0') {
-			cur->next = nullptr; 
-			break;
-		}
-		else {
-			cur->next = new semester; 
-			cur = cur->next; 
-		}*/
-//	}
-	
+cout << "Press any key to add more semester, else press 0" << endl;
+char k; k = _getch();
+if (k == '0') {
+	cur->next = nullptr;
+	break;
 }
+else {
+	cur->next = new semester;
+	cur = cur->next;
+}
+//	}
+
+}
+*/
+
 
 void input_course(course* &head) // OK 
 {
@@ -239,4 +241,44 @@ void show_date(date s) // OK
 {
 	cout << "Date: " << setfill('0') << setw(2) << s.day; 
 	cout << '/' << setfill('0') << setw(2) << s.month << '/' << s.year << endl;
+}
+
+
+void createSemester(schoolYear* pHead) {
+	int semesterNow(0);
+	date dateTmp;
+	semester* pTemp = pHead->sem;
+	while (pTemp != nullptr) {
+		semesterNow++;
+		pTemp = pTemp->next;
+	}
+
+	semesterNow++;
+	pTemp = new semester;
+	cout << "Now is semester" << semesterNow << ".";
+	cout << endl << "Please enter the start of the semester";
+	cout << endl << "Day: ";
+	cin >> dateTmp.day;
+	cout << "Month: ";
+	cin >> dateTmp.month;
+	cout << "Year: ";
+	cin >> dateTmp.year;
+
+	pTemp->start_date = dateTmp;
+
+	cout << endl << "Please enter the end of the semester";
+	cout << endl << "Day: ";
+	cin >> dateTmp.day;
+	cout << "Month: ";
+	cin >> dateTmp.month;
+	cout << "Year: ";
+	cin >> dateTmp.year;
+
+	pTemp->end_day = dayTmp;
+
+		
+}
+
+void createCourseRegistration(schoolyear* pHead) {
+
 }
