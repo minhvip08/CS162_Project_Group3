@@ -66,12 +66,13 @@ struct Class {
 };
 
 struct course { // thieu student list
-	int ID_course;
+	int NO;
+	string ID_course;
 	string course_name;
 	string teacher_name;
 	unsigned int credits;
 	int cur_student;
-	session* sess;
+	session sess[2];
 	student* student_list;
 	//studentScore* list_score; 
 	course* next;
