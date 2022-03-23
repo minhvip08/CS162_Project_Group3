@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __HEADER_H_
+#define __HEADER_H__
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -33,7 +35,7 @@ struct studentinfor{
 };
 
 struct date{ 
-	int day, month, year; 
+	int day, month, year;
 };
 
 struct session_date {
@@ -121,3 +123,13 @@ struct studentScore {
 	double other;
 	studentScore* pNext;
 };
+void Menu();
+void registerView(account& acc, account* head);
+void loginView(account& acc, account* head);
+void loadAccountFile(ifstream& fin, account*& head);
+bool checkAccountModel(account login, account* head);
+void loginModel(account login, account* head);
+void saveAccountFile(ofstream& fout, account* head);
+void registerModel(account& acc, account* head);
+void inputProfileInfo(account*& acc);
+#endif

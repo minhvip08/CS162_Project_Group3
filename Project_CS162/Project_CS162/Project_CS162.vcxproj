@@ -139,7 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\ACourseRegistrationSystem_P\main\loginModel.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="loginView.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
