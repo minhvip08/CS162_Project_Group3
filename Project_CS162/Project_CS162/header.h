@@ -102,7 +102,7 @@ struct Class {
 	Class* nextClass;
 };
 
-struct course { // thieu student list
+struct course { 
 	int ID_course;
 	string course_name;
 	string teacher_name;
@@ -110,17 +110,16 @@ struct course { // thieu student list
 	int cur_student;
 	session ses1;
 	session ses2;
-	//student* student_list; 
 	studentScore* list_score;
 	course* next;
-	//int num_sessions; 
 };
 
 struct semester {
 	date start_date;
 	date end_date;
+	date start_regist; 
+	date end_regist; 
 	int num_course = 0;
-	int num_class = 0;
 	course* course_list;
 	//	Class* list_class; 
 	semester* next;
@@ -129,6 +128,7 @@ struct semester {
 struct schoolyear {
 	string time;
 	int num_sem = 0;
+	int num_class = 0;
 	semester* sem;
 	Class* list_class;
 	schoolyear* next_schyear;
@@ -145,10 +145,10 @@ void input_date(date& p);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
-void show_semester(semester* s);
-void show_course(course* c);
+void show_semester(semester* s, int i);
+void show_course(course* c, int i);
 void show_session(session head);
-void show_class(Class* head);
+void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
 

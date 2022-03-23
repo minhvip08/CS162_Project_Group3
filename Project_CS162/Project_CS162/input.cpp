@@ -25,55 +25,99 @@ void create_schoolyear(schoolyear* &head)
 void create_semester(schoolyear* &head)
 {
 	if (!head) {
-		cout << "List of schoolyear is empty" << endl;
-		cout << "Pls input new schoolyear" << endl;
+		cout << "You haven't added a new schoolyear" << endl; 
 		return;
 	}
 
-	schoolyear* cur = new schoolyear;
-	cin.get();
-	cout << "Input time (ex 2021-2022): "; getline(cin, cur->time, '\n');
-	cur->sem = NULL;
-	cur->list_class = NULL;
-	if (!head) {
-		head = cur;
-		head->next_schyear = NULL;
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+
+	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1;
+		while (j < x) {
+			check = check->next_schyear;
+			++j;
+		}
+	}
+
+	semester* cur = new semester; cur->course_list = NULL;
+	cout << "Start date: "; input_date(cur->start_date);
+	cout << "End day: "; input_date(cur->end_date);
+	++check->num_sem;
+	cur->course_list = NULL;
+	if (!check->sem) {
+		check->sem = cur;
+		cur->next = NULL;
 	}
 	else {
-		cur->next_schyear = head;
-		head = cur;
+		cur->next = check->sem;
+		check->sem = cur;
 	}
 }
 
 void create_course(schoolyear* &head) // OK 
 {
 	if (!head) {
-		cout << "You haven't input a semester" << endl;
+		cout << "You haven't input a schoolyear" << endl;
 		return;
 	}
-	else if (!head->sem) {
-		cout << "You haven't add a semester" << endl; 
-		return; 
+
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
-	course* cur = new course;
+
+
+	if (!check->sem) {
+		cout << "You haven't add a semester for this schoolyear" << endl;
+		return;
+	}
+	semester* se = check->sem; cout << "List of semester: " << endl; int t = 1;
+	while (se) {
+		cout << t << ". Semester " << t << endl; ++t;
+		se = se->next;
+	} cout << endl;
+
+	cout << "Which semester you want to add course? "; int k; cin >> k;
+	semester* s_check = check->sem;
+	if (k > 1) {
+		int j = 1; while (j < k) { s_check = s_check->next; ++j; }
+	}
+
+	++s_check->num_course;
+
+	course* cur = new course; cur->list_score = nullptr; 
 	cout << "Course ID: "; cin >> cur->ID_course;
 	cin.get();
 	cout << "Course name: "; getline(cin, cur->course_name, '\n');
 	cout << "Teacher name: "; getline(cin, cur->teacher_name, '\n');
 	cout << "Number of credits: "; cin >> cur->credits;
-	cout << "Total student: "; cin >> cur->cur_student;
+	cout << "Total student(press 1 for default 50): "; int n; cin >> n; 
+	if (n == 1) cur->cur_student = 50;
+	else cur->cur_student = n; 
 
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
 
 	cur->list_score = NULL;
-	if (!head->sem->course_list) {
-		head->sem->course_list = cur;
-		head->sem->next = NULL;
+	if (!s_check->course_list) {
+		s_check->course_list = cur;
+		cur->next = NULL;
 	}
 	else {
-		cur->next = head->sem->course_list;
-		head->sem->course_list = cur;
+		cur->next = s_check->course_list;
+		s_check->course_list = cur;
 	}
 }
 
@@ -110,8 +154,20 @@ void create_class(schoolyear* &head) //OK
 		return;
 	}
 
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+	cout << "Which schoolyear you want to add class? "; int x; cin >> x;
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+	++check->num_class;
+
 	Class* cur = new Class;
-	cout << "Class name: "; cin >> cur->class_name;
+	cout << "Class name: "; cin.get(); getline(cin, cur->class_name, '\n');
 	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
 	if (n == 1) cur->total_student = 50;
 	else cur->total_student = n;
@@ -119,13 +175,13 @@ void create_class(schoolyear* &head) //OK
 	cout << "End date: "; input_date(cur->end_day);
 	cur->student_list = NULL;
 
-	if (!head->list_class) {
-		head->list_class = cur;
+	if (!check->list_class) {
+		check->list_class = cur;
 		cur->nextClass = NULL;
 	}
 	else {
-		cur->nextClass = head->list_class;
-		head->list_class = cur;
+		cur->nextClass = check->list_class;
+		check->list_class = cur;
 	}
 }
 
