@@ -55,51 +55,32 @@ struct session {
 	string date;
 	string time;
 };
-
-struct Class {
-	string class_name;
-	int total_student;  // input <= 50 (opt 1. input, 2.default)
-	date start_date;
-	date end_day;
-	student* student_list;
-	Class* nextClass;
+struct studentScore { // course
+	string name;
+	string id;
+	double total;
+	double final;
+	double mid;
+	double other;
+	studentScore* pNext;
 };
 
-struct course { // thieu student list
-	int NO;
-	string ID_course;
-	string course_name;
-	string teacher_name;
-	unsigned int credits;
-	int cur_student;
-	session sess[2];
-	student* student_list;
-	//studentScore* list_score; 
-	course* next;
-	//int num_sessions; 
+struct enrolledCourse { // student (class)
+	int id_course;
+	string name;
+	session* sess;
+	studentScore* list_score;
+	enrolledCourse* next;
+	/*int semester;
+	int year;*/
 };
 
-struct semester {
-	date start_date;
-	date end_date;
-	date start_regist;
-	date end_regist;
-	int num_course = 0;
-	int num_class = 0;
-	course* course_list;
-	//	Class* list_class; 
-	semester* next;
+struct finalGPA { // class
+	float gpa;
+	finalGPA* next;
 };
 
-struct schoolyear {
-	string time;
-	int num_sem = 3;
-	semester* sem;
-	Class* list_class;
-	schoolyear* next_schyear;
-};
-
-struct student
+struct student  // Class
 {
 	int No;
 	string id;
@@ -112,55 +93,71 @@ struct student
 	student* pNext;
 };
 
-struct enrolledCourse {
-	int id_course;
-	string name;
-	session* sess;
+struct Class {
+	string class_name;
+	int total_student;  // input <= 50 (opt 1. input, 2.default)
+	date start_date;
+	date end_day;
+	student* student_list;
+	Class* nextClass;
+};
+
+struct course { // thieu student list
+	int ID_course;
+	string course_name;
+	string teacher_name;
+	unsigned int credits;
+	int cur_student;
+	session ses1;
+	session ses2;
+	//student* student_list; 
 	studentScore* list_score;
-	enrolledCourse* next;
-	/*int semester;
-	int year;*/
+	course* next;
+	//int num_sessions; 
 };
 
-struct studentScore {
-	string name;
-	string id;
-	double total;
-	double final;
-	double mid;
-	double other;
-	studentScore* pNext;
+struct semester {
+	date start_date;
+	date end_date;
+	int num_course = 0;
+	int num_class = 0;
+	course* course_list;
+	//	Class* list_class; 
+	semester* next;
 };
 
-struct finalGPA {
-	float gpa;
-	finalGPA* next;
+struct schoolyear {
+	string time;
+	int num_sem = 0;
+	semester* sem;
+	Class* list_class;
+	schoolyear* next_schyear;
 };
 
 
 // Create functions (Input data)
-void input_schoolyear(schoolyear*& head);
-void input_semester(semester*& head);
-void input_course(course*& head);
-void input_session(session*& head);
-void input_class(Class*& head);
+void create_schoolyear(schoolyear*& head);
+void create_semester(schoolyear*& head);
+void create_course(schoolyear*& head);
+void input_session(session& s);
+void create_class(schoolyear*& head);
 void input_date(date& p);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
 void show_semester(semester* s);
 void show_course(course* c);
-void show_session(session* head);
+void show_session(session head);
 void show_class(Class* head);
 void show_date(date s);
+void menu_staff();
 
 // Delete Memory
-void Delete_schoolyear(schoolyear*& head);
-void Delete_semester(semester*& head);
-void Delete_course(course*& head);
-void Delete_session(session*& head);
-void Delete_class(Class*& head);
+//void Delete_schoolyear(schoolyear*& head);
+//void Delete_semester(semester*& head);
+//void Delete_course(course*& head);
+//void Delete_session(session*& head);
+//void Delete_class(Class*& head);
 
 // Course
-void createSemester(schoolyear* pHead);
-void createCourseEnrolledTime(semester*& pTemp);
+//void createCourseEnrolledTime(semester*& pTemp);
