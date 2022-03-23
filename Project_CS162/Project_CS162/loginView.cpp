@@ -1,87 +1,111 @@
-#include <iostream>
-#include<fstream>
-#include<string.h>
+
 #include "header.h"
-#include "loginModel.cpp"
-using namespace std;
+void registerView(account& acc, account* head) {
+	account* cur = head;
+	bool flag;
+	string repassword;
+	cout << "Enter your username: ";
+	cin >> acc.username;
+	do
+	{
+		flag = true;
+		cout << "Enter password: ";
+		cin >> acc.password;
+		cout << "Enter password again: ";
+		cin >> repassword;
+		if (acc.password != repassword) {
+			cout << "Not alike" << endl;
+			flag = false;
+		}
+	} while (!flag);
+
+	if (checkAccountModel(acc, head)) {
+		cout << "Username or password exist" << endl;
+		registerView(acc, head);
+	}
+	else {
+		registerModel(acc, head);
+		cout << "Username and password approved" << endl;
+		ofstream fout;
+		fout.open("AccountFile.txt");
+		if (!fout.is_open())
+		{
+			cout << "Can not open file" << endl;
+		}
+		else
+		{
+			saveAccountFile(fout, head);
+		}
+		fout.close();
+	}
+
+}
+void loginView(account& acc, account* head) {
+	cout << "Enter your username: ";
+	cin >> acc.username;
+	cout << "Enter your password: ";
+	cin >> acc.password;
+
+	if (checkAccountModel(acc, head)) {
+		cout << "Register successful!";
+	}
+	else {
+		int choose = 0;
+		while (choose != 1 && choose != 2) {
+			cout << "Wrong username or password" << endl;
+			cout << "1.Login again" << endl;
+			cout << "2.Register" << endl;
+			cin >> choose;
+		}
+		if (choose == 1)
+		{
+			loginView(acc, head);
+		}
+		else if (choose == 2) {
+			registerView(acc, head);
+		}
+	}
+}
+
 void Menu() {
 	int type = 0;
 	account acc;
+	account* head = NULL;
 	while (type != 1 && type != 2) {
 		cout << "Staff or Student?" << endl;
-		cout << "1.Staff"<<endl;
-		cout << "2.Student"<<endl;
+		cout << "1.Staff" << endl;
+		cout << "2.Student" << endl;
 		cin >> type;
-		if (type == 1) {
-			//open file for staff
-		}
-		else if (type == 2) {
-			//open file for student
-		}
+	}
+	if (type == 1) {
+		//acc.type="Staff";
+		cout << "Staff" << endl;
+	}
+	else if (type == 2) {
+		//acc.type="Student";
+		cout << "Student" << endl;
 	}
 	type = 0;
-	while (type!=1&&type!=2) {
+	while (type != 1 && type != 2) {
 		cout << "1.Login" << endl;
 		cout << "2.Register" << endl;
 		cin >> type;
-		if (type == 1) {
-			loginView(acc);
-		}
-		else if (type == 2) {
-			registerView(acc);
-		}
 	}
-}
-void loginView(account& login){
-	cout << "Enter your username: ";
-	cin >> login.username;
-	cout << "Enter your password: ";
-	cin >> login.password;
-	loginModel(login);
-}
-void registerView(account &reg){
-	string check;
-	cout << "Enter account name: "<<endl;
-	cin >> reg.username;
-	do
+	ifstream fin;
+	fin.open("AccountFile.txt");
+	if (!fin.is_open())
 	{
-		cout << "Please enter password: ";
-		cin >> reg.password;
-		cout << "Please enter password again: ";
-		cin >> check;
-	} while (check.compare(reg.password) == 1);
-	registerModel(reg);
-	//cout << "Register successful!";
-}
-
-void inputProfileInfo(account*& acc)
-{
-	int gender = 0;
-	cout << "Enter your name: "<<endl;
-	getline(cin, acc->prf.name);
-	while (gender!=1&&gender!=2&&gender!=3) {
-		cout << "Enter your gender: " << endl;
-		cout << "1.Male" << endl;
-		cout << "2.Female" << endl;
-		cout << "3.Other" << endl;
-		cin >> gender;
-		if (gender == 1) {
-			acc->prf.gender = "Male";
-		}
-		else if (gender == 2) {
-			acc->prf.gender = "Female";
-		}
-		else if(gender==3){
-			cin >> acc->prf.gender;
-		}
+		cout << "Can not open file" << endl;
 	}
-	cout << "Enter date of birth: "<<endl;
-	cin >> acc->prf.date;
-	//cout << "Day: " << endl;
-	//cout << "Month: " << endl;
-	//cout << "Year: " << endl;
-	cout << "\nEnter your phone number:"<<endl;
-	cin >> acc->prf.phone;
-	cout << "Enter your e-mail: "<<endl;
-	cin >> acc->prf.email;
+	else
+	{
+		loadAccountFile(fin, head);
+	}
+	fin.close();
+	if (type == 1) {
+		loginView(acc, head);
+	}
+	else if (type == 2) {
+		registerView(acc, head);
+	}
 }
