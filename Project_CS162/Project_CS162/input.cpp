@@ -55,7 +55,7 @@ void create_semester(schoolyear* &head)
 	cur->course_list = NULL;
 	if (!check->sem) {
 		check->sem = cur;
-		cur->next = NULL;
+		check->sem->next = NULL;
 	}
 	else {
 		cur->next = check->sem;
@@ -81,23 +81,16 @@ void create_course(schoolyear* &head) // OK
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
 
-
-
-
 	if (!check->sem) {
 		cout << "You haven't add a semester for this schoolyear" << endl;
 		return;
 	}
-	semester* se = check->sem; cout << "List of semester: " << endl; int t = 1;
-	while (se) {
-		cout << t << ". Semester " << t << endl; ++t;
-		se = se->next;
-	} cout << endl;
 
+	cout << "There are " << check->num_sem << " currently in this schoolyear." << endl;
 	cout << "Which semester you want to add course? "; int k; cin >> k;
 	semester* s_check = check->sem;
-	if (k > 1) {
-		int j = 1; while (j < k) { s_check = s_check->next; ++j; }
+	if (k != check->num_sem) {
+		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
 	}
 
 	++s_check->num_course;
@@ -115,13 +108,10 @@ void create_course(schoolyear* &head) // OK
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
 
-	
-
-
 	cur->list_score = NULL;
 	if (!s_check->course_list) {
 		s_check->course_list = cur;
-		cur->next = NULL;
+		s_check->course_list->next = NULL;
 	}
 	else {
 		cur->next = s_check->course_list;
@@ -195,27 +185,14 @@ void create_class(schoolyear* &head) //OK
 	}
 }
 
-void createCourseEnrolledTime(semester*& pTemp) {
-	date dateTmp;
-	cout << "Create a course registration time! ";
+void createCourseEnrolledTime(semester*& s) 
+{
+	cout << "Create a course registration time! " << endl;
 	cout << endl << "Please enter the start of the semester";
-	cout << endl << "Day: ";
-	cin >> dateTmp.day;
-	cout << "Month: ";
-	cin >> dateTmp.month;
-	cout << "Year: ";
-	cin >> dateTmp.year;
-
-	pTemp->start_regist = dateTmp;
+	input_date(s->start_regist);
 
 	cout << endl << "Please enter the end of the semester";
-	cout << endl << "Day: ";
-	cin >> dateTmp.day;
-	cout << "Month: ";
-	cin >> dateTmp.month;
-	cout << "Year: ";
-	cin >> dateTmp.year;
-	pTemp->end_regist = dateTmp;
+	input_date(s->end_regist);
 }
 
 void input_date(date &p) // OK

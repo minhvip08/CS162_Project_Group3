@@ -6,7 +6,18 @@ void show_semester(semester* s, int i)
 	cout << "Semester: " << i << endl;
 	show_date(s->start_date); show_date(s->end_date);
 	cout << "Number of course: " << s->num_course << endl;
-	show_course(s->course_list, s->num_course);
+
+	while (1) {
+		int n;
+		cout << "1. View course list" << endl;
+		cout << "0. Go backward" << endl;
+		cout << "You choose: "; cin >> n;
+
+		if (n == 0) break;
+		switch (n) {
+		case 1: show_course(s->course_list, s->num_course); break;
+		}
+	}
 }
 
 void show_course(course* c, int i)

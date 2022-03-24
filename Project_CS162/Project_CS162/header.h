@@ -1,11 +1,10 @@
-#ifndef __HEADER_H_
-#define __HEADER_H__
-
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <conio.h>
 #include <string>
+#include <ctime>
 #include <Windows.h>
 using namespace std;
 
@@ -70,7 +69,8 @@ struct studentScore { // course
 struct enrolledCourse { // student (class)
 	int id_course;
 	string name;
-	session* sess;
+	session ses1; 
+	session ses2; 
 	studentScore* list_score;
 	enrolledCourse* next;
 	/*int semester;
@@ -108,6 +108,7 @@ struct course {
 	int ID_course;
 	string course_name;
 	string teacher_name;
+	int credits; 
 	int cur_student;
 	session ses1;
 	session ses2;
@@ -181,4 +182,7 @@ void copyliststu(Class*& c1, Class* c2);
 
 // Course
 //void createCourseEnrolledTime(semester*& pTemp);
-#endif
+
+// Support function
+//date getCurrentDate();
+//bool check_date(date d);
