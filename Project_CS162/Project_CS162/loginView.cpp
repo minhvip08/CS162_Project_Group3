@@ -1,8 +1,7 @@
 
 #include "header.h"
-void registerView(account& acc, account* head) {
-	account* cur = head;
-	bool flag;
+void registerView(account& acc, account*&head) {
+	bool flag = false;
 	string repassword;
 	cout << "Enter your username: ";
 	cin >> acc.username;
@@ -26,6 +25,7 @@ void registerView(account& acc, account* head) {
 	else {
 		registerModel(acc, head);
 		cout << "Username and password approved" << endl;
+		cout << "Register Successful !";
 		ofstream fout;
 		fout.open("AccountFile.txt");
 		if (!fout.is_open())
@@ -70,7 +70,7 @@ void loginView(account& acc, account* head) {
 void Menu() {
 	int type = 0;
 	account acc;
-	account* head = NULL;
+	account* head =NULL;
 	while (type != 1 && type != 2) {
 		cout << "Staff or Student?" << endl;
 		cout << "1.Staff" << endl;

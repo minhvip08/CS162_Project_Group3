@@ -27,7 +27,6 @@ struct profile {
 	string gender;
 	string social_id;
 };
-
 struct account {
 	string username;
 	string password;
@@ -146,14 +145,14 @@ void create_class(schoolyear*& head);
 void input_date(date& p);
 
 //Login and register(missing clearscreen, type and date modification)
-void registerView(account& acc, account* head);
+void registerView(account& acc, account*&head);
 void loginView(account& acc, account* head);
 void Menu();
-void profileRegisterModel(account*& acc);
+void profileRegisterModel(account*& head);
 void loadAccountFile(ifstream& fin, account*& head);
 void saveAccountFile(ofstream& fout, account* head);
 bool checkAccountModel(account login, account* head);
-void registerModel(account& acc, account* head);
+void registerModel(account& acc, account*&head);
 
 // Output to console
 void show_schoolyear(schoolyear* head);

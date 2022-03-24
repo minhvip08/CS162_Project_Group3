@@ -1,12 +1,14 @@
 
 #include "header.h"
-void profileRegisterModel(account*& acc)
+void profileRegisterModel(account*& head)
 {
 	int gender = 0;
-	cout << "Enter name: ";
-	cin >> acc->prf.name;
+	cout << "Enter last name: ";
+	cin >> head->prf.lastname;
+	cout << "Enter first name: ";
+	cin >> head->prf.firstname;
 	cout << "Enter date of birth: ";
-	cin >> acc->prf.date;
+	cin >> head->prf.DOB;
 	//cout << "Day: " << endl;
 	//cout << "Month: " << endl;
 	//cout << "Year: " << endl;
@@ -17,30 +19,28 @@ void profileRegisterModel(account*& acc)
 		cout << "3.Other" << endl;
 		cin >> gender;
 		if (gender == 1) {
-			acc->prf.gender = "Male";
+			head->prf.gender = "Male";
 		}
 		else if (gender == 2) {
-			acc->prf.gender = "Female";
+			head->prf.gender = "Female";
 		}
 		else if (gender == 3) {
 			cout << "Enter gender: ";
-			cin >> acc->prf.gender;
+			cin >> head->prf.gender;
 		}
 	}
-	cout << "Enter your phone number:";
-	cin >> acc->prf.phone;
-	cout << "Enter your e-mail: ";
-	cin >> acc->prf.email;
+	cout << "Enter your social ID:";
+	cin >> head->prf.social_id;
 }
 void loadAccountFile(ifstream& fin, account*& head) {
 	head = new account;
 	getline(fin, head->username, ',');
 	getline(fin, head->password, ',');
-	getline(fin, head->prf.name, ',');
-	getline(fin, head->prf.date, ',');
+	getline(fin, head->prf.lastname, ',');
+	getline(fin, head->prf.firstname, ',');
+	getline(fin, head->prf.DOB, ',');
 	getline(fin, head->prf.gender, ',');
-	getline(fin, head->prf.phone, ',');
-	getline(fin, head->prf.email);
+	getline(fin, head->prf.social_id);
 
 	account* cur = head;
 	while (fin.eof() == false) {
@@ -48,59 +48,54 @@ void loadAccountFile(ifstream& fin, account*& head) {
 		cur = cur->pNext;
 		getline(fin, cur->username, ',');
 		getline(fin, cur->password, ',');
-		getline(fin, cur->prf.name, ',');
-		getline(fin, cur->prf.date, ',');
+		getline(fin, cur->prf.lastname, ',');
+		getline(fin, cur->prf.firstname, ',');
+		getline(fin, cur->prf.DOB, ',');
 		getline(fin, cur->prf.gender, ',');
-		getline(fin, cur->prf.phone, ',');
-		getline(fin, cur->prf.email);
+		getline(fin, cur->prf.social_id);
 	}
 	cur->pNext = NULL;
 }
 
 void saveAccountFile(ofstream& fout, account* head)
 {
-	account* cur = head;
-	//fout << "Username,Password,Name,Date of Birth,Gender,Phone,Email" << endl;
-	while (cur != NULL) {
-		fout << cur->username << ",";
-		fout << cur->password << ",";
-		fout << cur->prf.name << ",";
-		fout << cur->prf.date << ",";
+	while (head != NULL) {
+		fout << head->username << ",";
+		fout << head->password << ",";
+		fout << head->prf.lastname << ",";
+		fout << head->prf.firstname << ",";
+		fout << head->prf.DOB << ",";
 		//fout << cur->prf.date.day << "/"<< cur->prf.date.month << "/"<<cur->prf.date.year << ",";
-		fout << cur->prf.gender << ",";
-		fout << cur->prf.phone << ",";
-		fout << cur->prf.email;
+		fout << head->prf.gender << ",";
+		fout << head->prf.social_id;
 		fout << endl;
-		cur = cur->pNext;
+		head = head->pNext;
 	}
 }
 
-void registerModel(account &acc, account* head) {
-	account* cur = head;
-	if (head == NULL) {
-		head = new account;
-		head->username = acc.username;
-		head->password = acc.password;
-		cur = head;
+void registerModel(account& acc, account*& head) {
+	account* cur = new account;
+	cur->username = acc.username;
+	cur->password = acc.password;
+	if (head == nullptr) {
+		head = cur;
 	}
 	else {
-		cur->pNext = new account;
-		cur = cur->pNext;
-		cur->username = acc.username;
-		cur->password = acc.password;
+		cur->pNext = head;
+		head = cur;
 	}
-	profileRegisterModel(cur);
-	cur->pNext = NULL;
+	profileRegisterModel(head);
 }
+
 bool checkAccountModel(account acc, account* head)
 {
 	account* cur = head;
 	while (cur != NULL)
 	{
-		if (cur->username == acc.username && cur->password == acc.password){
+		if (cur->username == acc.username && cur->password == acc.password) {
 			return true;
 		}
-		cur = cur ->pNext;
+		cur = cur->pNext;
 	}
 	return false;
 }
