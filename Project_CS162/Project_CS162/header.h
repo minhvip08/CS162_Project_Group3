@@ -24,7 +24,7 @@ struct date {
 struct profile {
 	string lastname;
 	string firstname;
-	date DOB;
+	string DOB;
 	string gender;
 	string social_id;
 };
@@ -162,6 +162,15 @@ void show_session(session head);
 void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
+
+//Load students in csv file
+void createlistofstu(Class*& head, const string str);
+void copystudentinfor(student* &stu1, student* &stu2);
+void copyliststu(Class*& c1, Class* c2);
+
+
+
+
 
 // Delete Memory
 //void Delete_schoolyear(schoolyear*& head);
