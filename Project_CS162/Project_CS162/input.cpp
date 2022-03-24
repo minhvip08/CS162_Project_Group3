@@ -115,9 +115,6 @@ void create_course(schoolyear* &head) // OK
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
 
-	
-
-
 	cur->list_score = NULL;
 	if (!s_check->course_list) {
 		s_check->course_list = cur;
@@ -195,27 +192,14 @@ void create_class(schoolyear* &head) //OK
 	}
 }
 
-void createCourseEnrolledTime(semester*& pTemp) {
-	date dateTmp;
-	cout << "Create a course registration time! ";
+void createCourseEnrolledTime(semester*& s) 
+{
+	cout << "Create a course registration time! " << endl;
 	cout << endl << "Please enter the start of the semester";
-	cout << endl << "Day: ";
-	cin >> dateTmp.day;
-	cout << "Month: ";
-	cin >> dateTmp.month;
-	cout << "Year: ";
-	cin >> dateTmp.year;
-
-	pTemp->start_regist = dateTmp;
+	input_date(s->start_regist);
 
 	cout << endl << "Please enter the end of the semester";
-	cout << endl << "Day: ";
-	cin >> dateTmp.day;
-	cout << "Month: ";
-	cin >> dateTmp.month;
-	cout << "Year: ";
-	cin >> dateTmp.year;
-	pTemp->end_regist = dateTmp;
+	input_date(s->end_regist);
 }
 
 void input_date(date &p) // OK

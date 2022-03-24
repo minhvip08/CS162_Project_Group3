@@ -108,6 +108,7 @@ struct course {
 	int ID_course;
 	string course_name;
 	string teacher_name;
+	int credits; 
 	int cur_student;
 	session ses1;
 	session ses2;
