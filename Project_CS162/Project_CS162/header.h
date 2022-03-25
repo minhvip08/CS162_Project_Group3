@@ -143,6 +143,10 @@ void create_course(schoolyear*& head);
 void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
+void createCourseEnrolledTime(semester*& s);
+void uppdateCourseInfor(semester* pHeadSem);
+void update1InforCourse(course* pCourse, int opt);
+
 
 //Login and register(missing clearscreen, type and date modification)
 void registerView(account& acc, account*&head);
@@ -162,6 +166,7 @@ void show_session(session head);
 void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
+void show_ID_course(course* c);
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);
@@ -172,16 +177,13 @@ void copyliststu(Class*& c1, Class* c2);
 
 
 
-// Delete Memory
-//void Delete_schoolyear(schoolyear*& head);
-//void Delete_semester(semester*& head);
-//void Delete_course(course*& head);
-//void Delete_session(session*& head);
-//void Delete_class(Class*& head);
+// delete memory
+void delete_schoolyear(schoolyear*& head);
+void delete_semester(semester*& head);
+void delete_course(course*& head);
+void delete_session(session*& head);
+void delete_class(Class*& head);
 
-// Course
-//void createCourseEnrolledTime(semester*& pTemp);
-
-// Support function
-//date getCurrentDate();
+//// support function
+//date getcurrentdate();
 //bool check_date(date d);

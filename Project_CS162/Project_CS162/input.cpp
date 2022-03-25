@@ -201,3 +201,107 @@ void input_date(date &p) // OK
 	cout << "Month: "; cin >> p.month; 
 	cout << "Year: "; cin >> p.year; 
 }
+
+void uppdateCourseInfor(semester* pHeadSem) {
+	if (pHeadSem == nullptr) {
+		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
+		char a = _getch();
+		return;
+	}
+
+	int opt = 1, id_course;
+
+	system("cls");
+	cout << endl << "There are all course in this semester, please enter one ID Course!";
+	show_ID_course(pHeadSem->course_list);
+	cin >> id_course;
+	
+	course* pCurCourse = pHeadSem->course_list;
+	
+	while (pCurCourse != nullptr && pCurCourse->ID_course != id_course)
+		pCurCourse = pCurCourse->next;
+
+	if (pCurCourse == nullptr) {
+		cout << "Sorry, the id course does not exist, please enter again.";
+		return;
+	}
+
+	while (opt != 0) {
+		system("cls");
+		cout << "Which information do you want to change?";
+		cout << endl << "1.ID of Course.";
+		cout << endl << "2.Name of Course.";
+		cout << endl << "3.Teacher's name.";
+		cout << endl << "4.Credits.";
+		cout << endl << "4.Total student.";
+		cout << endl << "5.Session 1 of Course.";
+		cout << endl << "6.Session 2 of Course.";
+		cout << endl << "0.Exit.";
+		cout << endl << "Your option is: ";
+		cin >> opt;
+		update1InforCourse(pCurCourse, opt);
+
+	}
+	return;
+}
+
+void update1InforCourse(course* pCourse, int opt) {
+	if (opt == 0)
+		return;
+	switch (opt) {
+	case 1: {
+		system("cls");
+		cout << "\nOld ID of Course: " << pCourse->ID_course;
+		cout << "\nPlease enter new ID of Course: ";
+		cin >> pCourse->ID_course;
+		cout << "ID of course has been changed successfully!!";
+		break;
+	}
+	case 2: {
+		system("cls");
+		cout << "\nOld Name of Course: " << pCourse->course_name;
+		cout << "\nPlease enter Name of Course : ";
+		cin >> pCourse->course_name;
+		cout << "Name of course has been changed successfully!!";
+		break;
+	}
+	case 3: {
+		system("cls");
+		cout << "\nOld Teacher's Name of Course: " << pCourse->teacher_name;
+		cout << "\nPlease enter new Teacher's Name of Course: ";
+		cin >> pCourse->teacher_name;
+		cout << "Teacher's Name of course has been changed successfully!!";
+		break;
+	}
+	case 4: {
+		system("cls");
+		cout << "\nOld Credits of Course: " << pCourse->credits;
+		cout << "\nPlease enter new Credits of Course: ";
+		cin >> pCourse->credits;
+		cout << "Credits of course has been changed successfully!!";
+		break;
+	}
+	case 5: {
+		system("cls");
+		cout << "\nOld Session 1 is: "; show_session(pCourse->ses1);
+		cout << "\nPlease enter new Session 1: ";
+		input_session(pCourse->ses1);
+		cout << "Session 1 has been changed successfully!!";
+		break;
+	}
+	case 6: {
+		system("cls");
+		cout << "\nOld Session 2 is: "; show_session(pCourse->ses2);
+		cout << "\nPlease enter new Session 1: ";
+		input_session(pCourse->ses2);
+		cout << "Session 1 has been changed successfully!!";
+		break;
+	}
+	default: {
+		cout << endl << "You enter wrong number, please enter again!";
+		cout << "\nPress any key to continue....";
+		char a = _getch();
+		return;
+	}
+	}
+}
