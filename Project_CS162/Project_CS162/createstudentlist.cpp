@@ -95,7 +95,7 @@ void exportonestu(ofstream& fout, student* stu)
 void exportlistofstudent(Class* c, course *cour)
 {
 	ofstream fout;
-	fout.open(cour->course_name + ".csv");
+	fout.open(cour->ID_course + ".csv");
 	studentScore* cur = cour->list_score;
 	while (cur)
 	{
