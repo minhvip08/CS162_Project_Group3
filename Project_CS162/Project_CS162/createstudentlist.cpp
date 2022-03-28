@@ -112,3 +112,19 @@ void exportlistofstudent(Class* c, course *cour)
 	}
 	fout.close();
 }
+void sortbyID(Class* &c)
+{
+	student* cur = c->student_list;
+	while (cur)
+	{
+		student* next = cur->pNext;
+		while (next)
+		{
+			if (stoi(cur->id) > stoi(next->id))
+			{
+				swap(cur, next);
+				
+			}
+		}
+	}
+}

@@ -172,7 +172,7 @@ void show_ID_course(course* c);
 void createlistofstu(Class*& head, const string str);
 void copystudentinfor(student* &stu1, student* &stu2);
 void copyliststu(Class*& c1, Class* c2);
-
+void sortbyID(Class*& c);
 
 
 
