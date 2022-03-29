@@ -86,8 +86,7 @@ void exportonestu(ofstream& fout, student* stu)
 {
 	fout << stu->No << ',';
 	fout << stu->id << ',';
-	fout << stu->prf.firstname << ',';
-	fout << stu->prf.lastname << ',';
+	fout << stu->prf.firstname + " "+ stu->prf.lastname << ',';
 	fout << stu->prf.gender << ',';
 	fout << stu->prf.DOB << ',';
 	fout << stu->prf.social_id << ',' << endl;
@@ -120,11 +119,41 @@ void sortbyID(Class* &c)
 		student* next = cur->pNext;
 		while (next)
 		{
-			if (stoi(cur->id) > stoi(next->id))
-			{
-				swap(cur, next);
-				
-			}
+			if (stoi(cur->id) > stoi(next->id)) // stoi - chuyen doi string sang int
+				swap(cur, next); // hi vong la ok
 		}
 	}
+}
+void import1studentscore(ifstream& fin, studentScore* stusc)
+{
+	fin.ignore('\n');
+	fin >> stusc->id;
+	getline(fin, stusc->id, '\n');
+	getline(fin, stusc->name, '\n');
+	fin >> stusc->total;
+	fin.ignore();
+	fin >> stusc->final;
+	fin.ignore();
+	fin >> stusc->mid;
+	fin.ignore();
+	fin >> stusc->other;
+	fin.ignore();
+
+}
+void importscoretoCourse(course* &c)
+{
+	ifstream fin;
+	fin.open(c->ID_course + ".csv");
+	studentScore* stusc = c->list_score;
+	if (!fin.eof())
+	{
+		cout << "Can't open the file.\n";
+		return;
+	}
+	while (!fin.eof())
+	{
+		import1studentscore(fin, stusc);
+		stusc = stusc->pNext;
+	}
+	fin.close();
 }

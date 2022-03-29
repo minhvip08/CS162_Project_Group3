@@ -56,6 +56,7 @@ struct session {
 	string time;
 };
 struct studentScore { // course
+	int no;
 	string name;
 	string id;
 	double total;
@@ -173,7 +174,8 @@ void createlistofstu(Class*& head, const string str);
 void copystudentinfor(student* &stu1, student* &stu2);
 void copyliststu(Class*& c1, Class* c2);
 void sortbyID(Class*& c);
-
+void importscoretoCourse(course*& c);
+void import1studentscore(ifstream& fin, studentScore* stusc);
 
 
 
