@@ -176,7 +176,7 @@ void copyliststu(Class*& c1, Class* c2);
 void sortbyID(Class*& c);
 void importscoretoCourse(course*& c);
 void import1studentscore(ifstream& fin, studentScore* stusc);
-
+void updateastudentscore(course*& c);
 
 
 // delete memory

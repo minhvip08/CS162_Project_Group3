@@ -157,3 +157,93 @@ void importscoretoCourse(course* &c)
 	}
 	fin.close();
 }
+void updateastudentscore(course*& c)
+{
+	cout << "\033[2J\033[1;1H";
+	if (!c->list_score) {
+		cout << "The student list is empty!\n";
+		return;
+	}
+	string id;
+	studentScore* cur = c->list_score;
+	cout << "Enter the ID of the student you want to change score: ";
+	cin >> id;
+	bool check = false;
+	while (cur && id <= cur->id)
+	{
+		if (id == cur->id)
+		{
+			check = true;
+			break;
+		}
+		cur = cur->pNext;
+	}
+	if (!check)
+	{
+		string n;
+		cout << "Not found!\n";
+		cout << "Enter 1 to try again: ";
+		if (stoi(n) == 1)
+		{
+			updateastudentscore(c);
+		}
+		else
+			return;
+	}
+	else
+	{
+		bool c = true;
+		while (c)
+		{
+			cout << "Enter:" << endl;
+			cout << "1. Update total score." << endl;
+			cout << "2. Update final score." << endl;
+			cout << "3. Update mid score." << endl;
+			cout << "4. Update other score." << endl;
+			cout << "5. Exit." << endl << endl;
+			cout << "Your option: ";
+			int b;
+			double a;
+			switch (b)
+			{
+			case 1:
+				cout << "Enter new total score: ";
+				cin >> a;
+				cur->total = a;
+				cout << "Successful!\n";
+				system("pause");
+				cout << "\033[2J\033[1;1H";
+				break;
+			case 2:
+				cout << "Enter new final score: ";
+				cin >> a;
+				cur->final = a;
+				cout << "Successful!\n";
+				system("pause");
+				cout << "\033[2J\033[1;1H";
+				break;
+			case 3:
+				cout << "Enter new mid score: ";
+				cin >> a;
+				cur->mid = a;
+				cout << "Successful!\n";
+				system("pause");
+				cout << "\033[2J\033[1;1H";
+				break;
+			case 4:
+				cout << "Enter new total score: ";
+				cin >> a;
+				cur->other = a;
+				cout << "Successful!\n";
+				system("pause");
+				cout << "\033[2J\033[1;1H";
+				break;
+			case 5:
+				c = false;
+				break;
+			}
+		}
+		return;
+	}
+
+}
