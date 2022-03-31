@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-	menu_staff();
+	//menu_staff();
 	Menu();//start
 	//system("pause"); 
 	return 0;

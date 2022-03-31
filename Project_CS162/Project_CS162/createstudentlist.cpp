@@ -202,7 +202,7 @@ void updateastudentscore(course*& c)
 			cout << "4. Update other score." << endl;
 			cout << "5. Exit." << endl << endl;
 			cout << "Your option: ";
-			int b;
+			int b; cin >> b; 
 			double a;
 			switch (b)
 			{

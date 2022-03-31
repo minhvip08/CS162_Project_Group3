@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -150,14 +151,13 @@ void update1InforCourse(course* pCourse, int opt);
 
 
 //Login and register(missing clearscreen, type and date modification)
-void registerView(account& acc, account*&head);
-void loginView(account& acc, account* head);
+void registerView(account* &head, ifstream &fin);
+void loginView(account* &head, int type);
 void Menu();
-void profileRegisterModel(account*& head);
 void loadAccountFile(ifstream& fin, account*& head);
 void saveAccountFile(ofstream& fout, account* head);
-bool checkAccountModel(account login, account* head);
-void registerModel(account& acc, account*&head);
+bool checkAccountModel(account* acc, account* head, int type);
+bool isEmpty(ifstream& pFile);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
@@ -180,12 +180,15 @@ void updateastudentscore(course*& c);
 
 
 // delete memory
-void delete_schoolyear(schoolyear*& head);
-void delete_semester(semester*& head);
-void delete_course(course*& head);
-void delete_session(session*& head);
-void delete_class(Class*& head);
+void Delete_schoolyear(schoolyear*& head);
+void Delete_semester(semester*& head);
+void Delete_course(course*& head);
+void Delete_class(Class*& head);
+void Delete_stdScore(studentScore*& head);
+void Delete_student(student*& head);
+void Delete_enrollCourse(enrolledCourse*& head);
+void Delete_finalGPA(finalGPA*& head);
 
-//// support function
-//date getcurrentdate();
-//bool check_date(date d);
+// support function
+date getCurrentDate();
+bool check_date(date d1, date d2);

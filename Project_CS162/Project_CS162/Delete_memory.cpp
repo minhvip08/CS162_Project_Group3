@@ -2,6 +2,7 @@
 
 void Delete_schoolyear(schoolyear*& head)
 {
+	if (!head) return; 
 	while (head) {
 		schoolyear* tmp = head->next_schyear;
 		Delete_semester(head->sem);
@@ -13,6 +14,7 @@ void Delete_schoolyear(schoolyear*& head)
 
 void Delete_semester(semester*& head)
 {
+	if (!head) return; 
 	while (head) {
 		semester* tmp = head->next;
 		Delete_course(tmp->course_list);
@@ -23,6 +25,7 @@ void Delete_semester(semester*& head)
 
 void Delete_course(course*& head)
 {
+	if (!head) return;
 	while (head) {
 		course* tmp = head->next;
 		Delete_stdScore(head->list_score);
@@ -33,6 +36,7 @@ void Delete_course(course*& head)
 
 void Delete_class(Class*& head)
 {
+	if (!head) return;
 	while (head) {
 		Class* tmp = head->nextClass;
 		delete head;
@@ -42,6 +46,7 @@ void Delete_class(Class*& head)
 
 void Delete_stdScore(studentScore*& head)
 {
+	if (!head) return;
 	while (head) {
 		studentScore* tmp = head->pNext;
 		delete head;
@@ -51,6 +56,7 @@ void Delete_stdScore(studentScore*& head)
 
 void Delete_student(student*& head)
 {
+	if (!head) return;
 	while (head) {
 		// del enrolledCourse
 		Delete_enrollCourse(head->list_enrolled);
@@ -64,6 +70,7 @@ void Delete_student(student*& head)
 
 void Delete_enrollCourse(enrolledCourse*& head)
 {
+	if (!head) return;
 	while (head) {
 		Delete_stdScore(head->list_score);
 		enrolledCourse* tmp = head->next;
@@ -74,6 +81,7 @@ void Delete_enrollCourse(enrolledCourse*& head)
 
 void Delete_finalGPA(finalGPA*& head)
 {
+	if (!head) return;
 	while (head) {
 		finalGPA* tmp = head->next;
 		delete head;
