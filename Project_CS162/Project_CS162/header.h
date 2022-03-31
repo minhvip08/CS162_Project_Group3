@@ -177,7 +177,7 @@ void sortbyID(Class*& c);
 void importscoretoCourse(course*& c);
 void import1studentscore(ifstream& fin, studentScore* stusc);
 void updateastudentscore(course*& c);
-
+void viewscoreboard(course* c)
 
 // delete memory
 void Delete_schoolyear(schoolyear*& head);
