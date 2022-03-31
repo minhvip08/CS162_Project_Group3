@@ -33,6 +33,12 @@ void show_course(course* c, int i)
 	cout << "Session 2: " << endl; show_session(c->ses2);
 }
 
+void show_ID_course(course* c) {
+	if (!c) return;
+	show_ID_course(c->next);
+	cout << endl << "Course ID: " << c->ID_course << endl;
+}
+
 void show_session(session s) // OK 
 {
 	cout << "Day: " << s.date << endl;
