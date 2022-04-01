@@ -91,6 +91,7 @@ struct student  // Class
 	double gpa;
 	account acc;
 	//	course* listCourse;
+	int countEnroll = 0;
 	enrolledCourse* list_enrolled;
 	finalGPA* list_gpa;
 	student* pNext;
@@ -148,6 +149,8 @@ void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
 void uppdateCourseInfor(semester* pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
+// Quy dinh luon la student trong enroll delete va view
+void enrollCourse(course*& pList, student*& pStudent);
 
 
 //Login and register(missing clearscreen, type and date modification)
