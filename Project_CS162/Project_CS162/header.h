@@ -59,7 +59,7 @@ struct session {
 struct studentScore { // course
 	int no;
 	string id;
-	profile prf;
+	string name; 
 	double total;
 	double final;
 	double mid;
@@ -68,8 +68,8 @@ struct studentScore { // course
 };
 
 struct enrolledCourse { // student (class)
-	int id_course;
-	string name; // name of course
+	//int id_course;
+	string course_name; // name of course
 	string name_teacher; // them ten giao vien
 	int credits; // them so luong tin chi
 	session ses1; 
@@ -109,12 +109,11 @@ struct Class {
 };
 
 struct course { 
-	int ID_course;
 	string course_name;
 	string teacher_name;
 	int credits; 
-	int cur_student; // tong so hoc sinh max cua mot lop
-	int total_student; // so hoc sinh hien tai cua lop
+	int max_student; // tong so hoc sinh max cua mot lop
+	int cur_student; // so hoc sinh hien tai cua lop
 	session ses1;
 	session ses2;
 	studentScore* list_score;
@@ -122,6 +121,7 @@ struct course {
 };
 
 struct semester {
+	int mark; 
 	date start_date;
 	date end_date;
 	date start_regist; 
@@ -183,7 +183,7 @@ void sortbyID(Class*& c);
 void importscoretoCourse(course*& c);
 void import1studentscore(ifstream& fin, studentScore* stusc);
 void updateastudentscore(course*& c);
-void viewscoreboard(course* c)
+void viewscoreboard(course* c);
 
 // delete memory
 void Delete_schoolyear(schoolyear*& head);
