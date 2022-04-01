@@ -36,7 +36,7 @@ void show_course(course* c, int i)
 void show_ID_course(course* c) {
 	if (!c) return;
 	show_ID_course(c->next);
-	cout << endl << "Course ID: " << c->ID_course << endl;
+	cout << endl << "Course ID: " << c->ID_course << endl << "Name Course: " << c->course_name << endl;
 }
 
 void show_session(session s) // OK 

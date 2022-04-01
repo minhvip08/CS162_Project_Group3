@@ -58,8 +58,8 @@ struct session {
 };
 struct studentScore { // course
 	int no;
-	string name;
 	string id;
+	profile prf;
 	double total;
 	double final;
 	double mid;
@@ -69,7 +69,9 @@ struct studentScore { // course
 
 struct enrolledCourse { // student (class)
 	int id_course;
-	string name;
+	string name; // name of course
+	string name_teacher; // them ten giao vien
+	int credits; // them so luong tin chi
 	session ses1; 
 	session ses2; 
 	studentScore* list_score;
@@ -91,7 +93,7 @@ struct student  // Class
 	double gpa;
 	account acc;
 	//	course* listCourse;
-	int countEnroll = 0;
+	int countEnroll = 0; 
 	enrolledCourse* list_enrolled;
 	finalGPA* list_gpa;
 	student* pNext;
@@ -111,7 +113,8 @@ struct course {
 	string course_name;
 	string teacher_name;
 	int credits; 
-	int cur_student;
+	int cur_student; // tong so hoc sinh max cua mot lop
+	int total_student; // so hoc sinh hien tai cua lop
 	session ses1;
 	session ses2;
 	studentScore* list_score;

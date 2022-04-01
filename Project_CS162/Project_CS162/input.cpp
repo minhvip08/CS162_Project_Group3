@@ -305,3 +305,105 @@ void update1InforCourse(course* pCourse, int opt) {
 	}
 	}
 }
+
+
+void enrollCourse(course*& pList, student*& pStudent) {
+	course* pCurCourse = pList;
+	int choose(0);
+	do {
+		system("cls");
+		if (pCurCourse == nullptr) {
+			cout << "No Course";
+		}
+		cout << "There is a list of courses, please enter one of them:" << endl;
+		show_ID_course(pList);
+		cout << endl << "0. EXIT.";
+		cin >> choose;
+
+		while (pCurCourse != nullptr && pCurCourse->ID_course != choose)
+			pCurCourse = pCurCourse->next;
+
+		if (pCurCourse == nullptr) {
+			cout << "Sorry, the id course does not exist, please enter again.";
+			continue;
+		}
+
+		if (choose == 0) {
+			cout << "\nPress any key to continue....";
+			char a = _getch();
+			return;
+		}
+
+		if (pStudent->countEnroll >= 5) {
+			cout << "You cannot enroll over 5 course in this semester.";
+			cout << "\nPress any key to continue....";
+			char a = _getch();
+			continue;
+		}
+		
+		addEnrolledCourseToStudent(pCurCourse, pStudent, choose);
+
+	} while (true);
+
+
+}
+
+void addEnrolledCourseToStudent(course*& pList, student*& pStudent, int ID_course) {
+	course* pCurCrs = pList;
+	enrolledCourse* pCurECrs = pStudent->list_enrolled;
+
+	while (pCurCrs != nullptr && pCurCrs->ID_course != ID_course)
+		pCurCrs = pCurCrs->next;
+
+	if (pCurCrs->cur_student == pCurCrs->total_student) {
+		cout << "\This course is full, please choose another course! ";
+		cout << "\nPress any key to continue....";
+		char a = _getch();
+		return;
+	}
+
+	while (pCurECrs != nullptr) {
+		if (pCurECrs->id_course == pCurCrs->ID_course) {
+			cout << "\nThis course is enrolled, please choose another course! ";
+			cout << "\nPress any key to continue....";
+			char a = _getch();
+			return;
+		}
+		pCurECrs = pCurECrs->next;
+	}
+
+	studentScore* pTempStudent = pCurCrs->list_score;
+
+	while (pTempStudent != nullptr)
+		pTempStudent->pNext;
+
+	pTempStudent = new studentScore;
+
+	pTempStudent->prf = pStudent->prf;
+	pTempStudent->no = pStudent->No;
+	pTempStudent->id = pStudent->id;
+
+	
+	pCurECrs = new enrolledCourse;
+	copyCourse(pCurECrs, pCurCrs);
+
+	pStudent->countEnroll++;
+
+	cout << "Enroll successfully!";
+
+	cout << "\nPress any key to continue....";
+	char a = _getch();
+	return;
+
+}
+
+void copyCourse(enrolledCourse*& pEC, course* pC) {
+	pEC->id_course = pC->ID_course;
+	pEC->name = pC->course_name;
+	pEC->name_teacher = pC->teacher_name;
+	pEC->credits = pC->credits;
+	pEC->ses1 = pC->ses1;
+	pEC->ses2 = pC->ses2;
+	pEC->next = nullptr;
+	return;
+}
