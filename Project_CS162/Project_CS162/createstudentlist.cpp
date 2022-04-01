@@ -157,6 +157,23 @@ void importscoretoCourse(course* &c)
 	}
 	fin.close();
 }
+void viewscoreboard(course* c)
+{
+	cout << "\033[2J\033[1;1H";
+	if (!c->list_score)
+	{
+		cout << "Empty!";
+		system("pause");
+		return;
+	}
+	cout << "No\tID\tFull Name\tTotal\tTinal\tMid\tOther";
+	studentScore* sco = c->list_score;
+	while (sco)
+	{
+		cout << sco->no << "\t" << sco->id << "\t" << sco->name << "\t" << sco->total << "\t" << sco->final << "\t" << sco->mid << "\t" << sco->other << endl;
+		sco = sco->pNext;
+	}
+}
 void updateastudentscore(course*& c)
 {
 	cout << "\033[2J\033[1;1H";
