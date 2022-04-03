@@ -74,13 +74,14 @@ void registerView(account*& head, ifstream& fin) {
 }
 void loginView(account* &head, int type) 
 {
-	account* cur = new account;
-	cout << "Enter username: "; cin >> cur->username;
-	cout << "Enter your password: "; cin >> cur->password;
+	account* acc = new account;
+	cout << "Enter username: "; cin >> acc->username;
+	cout << "Enter your password: "; cin >> acc->password;
 
-	if (checkAccountModel(cur, head, type)) {
+	if (checkAccountModel(acc, head, type)) {
 		cout << "Login successful!" << endl;
-		head = cur;
+		//head = cur;
+		Menu2(acc,head);
 		//menu_staff();
 	}
 	else {
@@ -88,7 +89,65 @@ void loginView(account* &head, int type)
 		return;
 	}
 }
+void viewProfile(account*acc, account*& head)
+{
+	account* cur = head;
 
+	while (acc->username != cur->username || acc->password!=cur->password) {
+		cur = cur->pNext;
+
+		cout << cur->username << endl;
+		cout << cur->password << endl;
+	}
+	cout << "-----Profile-----"<<endl;
+	cout << "Last name : " << cur->prf.lastname<<endl;
+	cout << "First name: " << cur->prf.firstname<<endl;
+	cout << "Day of birth: " << cur->prf.DOB<<endl;
+	cout << "Gender: " << cur->prf.gender<<endl;
+	cout << "SocialID: " << cur->prf.social_id<<endl;
+	cout << "----------------" << endl;
+	cout << endl;
+	cout << "Change Profile."<<endl;
+	cout << "Back to menu"<<endl;
+	/*int choose = 0;
+	if (choose == 1)
+	{
+		enterProfile(pCur);
+		printOutListAccount(pHead, path);
+	}
+	else
+		return;*/
+}
+//void enterProfile(account*& head) {
+//
+//}
+//void changePassword(account*& head) {
+//
+//}
+void Menu2(account*cur, account*&head) {
+	int choose = 100;
+	while (choose!=1&&choose!=2&&choose!=3&&choose!=4&&choose!=5) {
+		cout << "1. View Profile" << endl;
+		cout << "2. Change Password" << endl;
+		cout << "3. MENU_STAFF" << endl;
+		cout << "4. Log Out" << endl;
+		cin >> choose;
+	}
+	switch (choose) {
+	case 1:
+		viewProfile(cur,head);
+		break;
+	case 2:
+		//changePassword(head);
+		break;
+	case 3:
+		menu_staff();
+		break;
+	case 4:
+		Menu();
+		break;
+	}
+}
 void Menu() {
 	int type = 100;
 	account* head =NULL;
@@ -100,7 +159,7 @@ void Menu() {
 			cout << "0. Exit" << endl;
 			cin >> type;
 		}
-		ifstream fin; fin.open("AccountFile1.txt");
+		ifstream fin;fin.open("AccountFile1.txt");
 		bool flag = isEmpty(fin);
 		if (!flag) {
 			loadAccountFile(fin, head);
