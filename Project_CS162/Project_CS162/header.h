@@ -68,7 +68,7 @@ struct studentScore { // course
 };
 
 struct enrolledCourse { // student (class)
-	//int id_course;
+	string id_course;
 	string course_name; // name of course
 	string name_teacher; // them ten giao vien
 	int credits; // them so luong tin chi
@@ -109,6 +109,7 @@ struct Class {
 };
 
 struct course { 
+	string ID_course;
 	string course_name;
 	string teacher_name;
 	int credits; 
@@ -174,6 +175,7 @@ void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
 void show_ID_course(course* c);
+void viewListEnrolledCourse(student* pS);
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);
@@ -198,3 +200,10 @@ void Delete_finalGPA(finalGPA*& head);
 // support function
 date getCurrentDate();
 bool check_date(date d1, date d2);
+
+
+// graphic cs161
+void SetBGColor(WORD color);
+void clrscr(void);
+void gotoxy(short x, short y);
+void SetColor(WORD color);

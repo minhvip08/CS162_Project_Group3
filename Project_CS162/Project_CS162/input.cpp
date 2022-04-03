@@ -309,7 +309,7 @@ void update1InforCourse(course* pCourse, int opt) {
 
 void enrollCourse(course*& pList, student*& pStudent) {
 	course* pCurCourse = pList;
-	int choose(0);
+	string choose(0);
 	do {
 		system("cls");
 		if (pCurCourse == nullptr) {
@@ -328,7 +328,7 @@ void enrollCourse(course*& pList, student*& pStudent) {
 			continue;
 		}
 
-		if (choose == 0) {
+		if (choose == '0') {
 			cout << "\nPress any key to continue....";
 			char a = _getch();
 			return;
@@ -348,7 +348,7 @@ void enrollCourse(course*& pList, student*& pStudent) {
 
 }
 
-void addEnrolledCourseToStudent(course*& pList, student*& pStudent, int ID_course) {
+void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course) {
 	course* pCurCrs = pList;
 	enrolledCourse* pCurECrs = pStudent->list_enrolled;
 
@@ -407,3 +407,5 @@ void copyCourse(enrolledCourse*& pEC, course* pC) {
 	pEC->next = nullptr;
 	return;
 }
+
+

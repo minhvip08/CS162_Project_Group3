@@ -138,3 +138,21 @@ void menu_staff()
 		}
 	}
 }
+
+void viewListEnrolledCourse(student* pS) {
+	enrolledCourse* pECCur = pS->list_enrolled;
+	if (pECCur == nullptr) {
+		cout << "You haven't enrolled any course yet! ";
+		cout << "\nPress any key to continue....";
+		char a = _getch();
+	}
+
+	cout << "ID Course  " << "Course's Name  " << "Teacher's Name  " << "Credits  " << "Session 1  " << "Session 2  ";
+
+	while (pECCur != nullptr) {
+		cout << pECCur->id_course << "  " << pECCur->course_name << "  " << pECCur->name_teacher << "  "
+			<< pECCur->credits << "  " << pECCur->ses1.date << "-" << pECCur->ses1.time << "  " << pECCur->ses2.date << "-" << pECCur->ses2.time;
+		pECCur = pECCur->next;
+	}
+
+}
