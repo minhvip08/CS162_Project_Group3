@@ -33,29 +33,7 @@ void registerView(account*& head, ifstream& fin) {
 		cout << "Username and password approved" << endl;
 		//registerModel(head, acc); 
 
-		int gender = 0; acc->type = 0;
-		cout << "Enter last name: "; cin.get(); getline(cin, acc->prf.lastname);
-		cout << "Enter first name: "; getline(cin, acc->prf.firstname);
-		cout << "Enter date of birth (dd/mm/yyyy): "; getline(cin, acc->prf.DOB);
-
-		while (gender != 1 && gender != 2 && gender != 3) {
-			cout << "Enter gender: " << endl;
-			cout << "1.Male" << endl;
-			cout << "2.Female" << endl;
-			cout << "3.Other" << endl;
-			cin >> gender;
-			if (gender == 1) {
-				acc->prf.gender = "Male";
-			}
-			else if (gender == 2) {
-				acc->prf.gender = "Female";
-			}
-			else if (gender == 3) {
-				cout << "Enter gender: ";
-				cin >> acc->prf.gender;
-			}
-		}
-		cout << "Enter your social ID: "; cin >> acc->prf.social_id;
+		enterProfile(acc);
 		if (!head) {
 			head = acc;
 			head->pNext = NULL;
@@ -89,38 +67,69 @@ void loginView(account* &head, int type)
 		return;
 	}
 }
+void enterProfile(account*& acc)
+{
+	int gender = 0; 
+	acc->type = 0;
+	cout << "Enter last name: "; cin.get(); getline(cin, acc->prf.lastname);
+	cout << "Enter first name: "; getline(cin, acc->prf.firstname);
+	cout << "Enter date of birth (dd/mm/yyyy): "; getline(cin, acc->prf.DOB);
+
+	while (gender != 1 && gender != 2 && gender != 3) {
+		cout << "Enter gender: " << endl;
+		cout << "1.Male" << endl;
+		cout << "2.Female" << endl;
+		cout << "3.Other" << endl;
+		cin >> gender;
+		if (gender == 1) {
+			acc->prf.gender = "Male";
+		}
+		else if (gender == 2) {
+			acc->prf.gender = "Female";
+		}
+		else if (gender == 3) {
+			cout << "Enter gender: ";
+			cin >> acc->prf.gender;
+		}
+	}
+	cout << "Enter your social ID: "; cin >> acc->prf.social_id;
+}
 void viewProfile(account*acc, account*& head)
 {
 	account* cur = head;
 
 	while (acc->username != cur->username || acc->password!=cur->password) {
 		cur = cur->pNext;
-
-		cout << cur->username << endl;
-		cout << cur->password << endl;
 	}
-	cout << "-----Profile-----"<<endl;
-	cout << "Last name : " << cur->prf.lastname<<endl;
-	cout << "First name: " << cur->prf.firstname<<endl;
-	cout << "Day of birth: " << cur->prf.DOB<<endl;
-	cout << "Gender: " << cur->prf.gender<<endl;
-	cout << "SocialID: " << cur->prf.social_id<<endl;
-	cout << "----------------" << endl;
-	cout << endl;
-	cout << "Change Profile."<<endl;
-	cout << "Back to menu"<<endl;
-	/*int choose = 0;
+	int choose = 100;
+	while (choose != 1 && choose != 0) {
+		cout << "-----Profile-----" << endl;
+		cout << "Last name : " << cur->prf.lastname << endl;
+		cout << "First name: " << cur->prf.firstname << endl;
+		cout << "Day of birth: " << cur->prf.DOB << endl;
+		cout << "Gender: " << cur->prf.gender << endl;
+		cout << "SocialID: " << cur->prf.social_id << endl;
+		cout << "----------------" << endl;
+		cout << endl;
+		cout << "1. Change Profile." << endl;
+		cout << "0. Back to menu" << endl;
+
+		cin >> choose;
+	}
 	if (choose == 1)
 	{
-		enterProfile(pCur);
-		printOutListAccount(pHead, path);
+		enterProfile(cur);
+		cout << "Change Profile successfull !" << endl;
+		ofstream fout;
+		fout.open("AccountFile1.txt");
+		saveAccountFile(fout, head);
+		fout.close();
+		viewProfile(acc,cur);
 	}
-	else
-		return;*/
+	else if (choose==0) {
+		Menu2(cur, head);
+	}
 }
-//void enterProfile(account*& head) {
-//
-//}
 //void changePassword(account*& head) {
 //
 //}

@@ -167,6 +167,7 @@ bool checkAccountModel(account* acc, account* head, int type);
 bool isEmpty(ifstream& pFile);
 void Menu2(account* acc, account*& head);
 void viewProfile(account* acc, account*& head);
+void enterProfile(account*& acc);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
