@@ -176,6 +176,7 @@ void show_date(date s);
 void menu_staff();
 void show_ID_course(course* c);
 void viewListEnrolledCourse(student* pS);
+void show_enrolled_course(enrolledCourse*);
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);
@@ -196,6 +197,7 @@ void Delete_stdScore(studentScore*& head);
 void Delete_student(student*& head);
 void Delete_enrollCourse(enrolledCourse*& head);
 void Delete_finalGPA(finalGPA*& head);
+void Delete_enrolled_course( student*& pS);
 
 // support function
 date getCurrentDate();

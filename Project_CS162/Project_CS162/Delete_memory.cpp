@@ -88,3 +88,43 @@ void Delete_finalGPA(finalGPA*& head)
 		head = tmp;
 	}
 }
+
+void Delete_enrolled_course( student*& pS) {
+	
+	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp;
+
+	system("cls");
+	if (pECCrs != nullptr) {
+		cout << "You haven't enrolled any courses yet!";
+		cout << "\n Press any key to back.... ";
+		char a = _getch();
+		return;
+	}
+
+	cout << "Please choose one of the course you want to delete";
+	show_enrolled_course(pECCrs);
+	cout << "\nExit PRESS 0.";
+	string choose;
+	cin >> choose;
+
+	if (choose == "0")
+		return;
+
+	while (pECCrs->id_course != choose) {
+		pECCrsTemp = pECCrs;
+		pECCrs = pECCrs->next;
+	}
+
+	if (pECCrs == nullptr) {
+		cout << "Don't exist course.";
+		return;
+	}
+
+	pECCrsTemp->next = pECCrs->next;
+	delete pECCrs;
+	pS->countEnroll--;
+	
+
+
+
+}

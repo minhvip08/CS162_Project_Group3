@@ -39,6 +39,13 @@ void show_ID_course(course* c) {
 	cout << endl << "Course ID: " << c->ID_course << endl << "Name Course: " << c->course_name << endl;
 }
 
+void show_enrolled_course(enrolledCourse* c) {
+	if (!c) return;
+	show_enrolled_course(c->next);
+	cout << endl << "Course ID: " << c->id_course << endl << "Name Course: " << c->course_name << endl;
+}
+
+
 void show_session(session s) // OK 
 {
 	cout << "Day: " << s.date << endl;
