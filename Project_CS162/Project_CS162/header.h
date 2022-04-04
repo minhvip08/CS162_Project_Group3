@@ -151,7 +151,7 @@ void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
-void uppdateCourseInfor(semester* pHeadSem);
+void updateCourseInfor(semester* &pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
@@ -212,3 +212,9 @@ void SetBGColor(WORD color);
 void clrscr(void);
 void gotoxy(short x, short y);
 void SetColor(WORD color);
+
+// save to file txt
+void saveSchoolyear(schoolyear* sy);
+void saveListOfClass(schoolyear* sy);
+void saveListOfSemester(schoolyear* sy);
+void saveListOfCourse(course* c, string time, int semester);
