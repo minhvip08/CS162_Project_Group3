@@ -1,5 +1,4 @@
 #include "header.h"
-
 void create_schoolyear(schoolyear* &head)
 {
 	if (!head) {
@@ -20,6 +19,7 @@ void create_schoolyear(schoolyear* &head)
 		cur->next_schyear = head;
 		head = cur;
 	}
+	saveSchoolyear(head);
 }
 
 void create_semester(schoolyear* &head)
@@ -44,14 +44,12 @@ void create_semester(schoolyear* &head)
 			++j;
 		}
 	}
-
+	++check->num_sem;
 	semester* cur = new semester; cur->course_list = NULL;
+	cur->mark = check->num_sem; 
 	cout << "Start date: "; input_date(cur->start_date);
 	cout << "End day: "; input_date(cur->end_date);
-
-	//Course enrolled time:
 	createCourseEnrolledTime(cur);
-	++check->num_sem;
 	cur->course_list = NULL;
 	if (!check->sem) {
 		check->sem = cur;
@@ -61,6 +59,7 @@ void create_semester(schoolyear* &head)
 		cur->next = check->sem;
 		check->sem = cur;
 	}
+	saveListOfSemester(check); 
 }
 
 void create_course(schoolyear* &head) // OK 
@@ -86,7 +85,7 @@ void create_course(schoolyear* &head) // OK
 		return;
 	}
 
-	cout << "There are " << check->num_sem << " currently in this schoolyear." << endl;
+	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
 	cout << "Which semester you want to add course? "; int k; cin >> k;
 	semester* s_check = check->sem;
 	if (k != check->num_sem) {
@@ -94,10 +93,9 @@ void create_course(schoolyear* &head) // OK
 	}
 
 	++s_check->num_course;
-
 	course* cur = new course; cur->list_score = nullptr; 
-	cout << "Course ID: "; cin >> cur->ID_course;
 	cin.get();
+	cout << "Course ID: "; getline(cin, cur->ID_course, '\n');
 	cout << "Course name: "; getline(cin, cur->course_name, '\n');
 	cout << "Teacher name: "; getline(cin, cur->teacher_name, '\n');
 	cout << "Number of credits: "; cin >> cur->credits;
@@ -117,6 +115,7 @@ void create_course(schoolyear* &head) // OK
 		cur->next = s_check->course_list;
 		s_check->course_list = cur;
 	}
+	saveListOfCourse(s_check->course_list, check->time, s_check->mark);
 }
 
 void input_session(session &s) // OK
@@ -163,9 +162,8 @@ void create_class(schoolyear* &head) //OK
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
 	++check->num_class;
-
 	Class* cur = new Class;
-	cout << "Class name: "; cin.get(); getline(cin, cur->class_name, '\n');
+	cout << "Class name: "; cin.ignore(10000, '\n'); getline(cin, cur->class_name, '\n');
 	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
 	if (n == 1) cur->total_student = 50;
 	else cur->total_student = n;
@@ -183,6 +181,7 @@ void create_class(schoolyear* &head) //OK
 		cur->nextClass = check->list_class;
 		check->list_class = cur;
 	}
+	saveListOfClass(check);
 }
 
 void createCourseEnrolledTime(semester*& s) 
@@ -202,21 +201,23 @@ void input_date(date &p) // OK
 	cout << "Year: "; cin >> p.year; 
 }
 
-void uppdateCourseInfor(semester* pHeadSem) {
+void uppdateCourseInfor(semester* &pHeadSem) {
 	if (pHeadSem == nullptr) {
 		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
 		char a = _getch();
 		return;
 	}
 
-	int opt = 1, id_course;
+	int opt = 1; string id_course;
 
 	system("cls");
-	cout << endl << "There are all course in this semester, please enter one ID Course!";
-	show_ID_course(pHeadSem->course_list);
+	cout << endl << "These are all courses in this semester, please enter one ID Course!";
+	course* tmp = pHeadSem->course_list; 
+	show_ID_course(tmp);
+	// kiem tra lai
 	cin >> id_course;
 	
-	course* pCurCourse = pHeadSem->course_list;
+	course* pCurCourse = tmp;
 	
 	while (pCurCourse != nullptr && pCurCourse->ID_course != id_course)
 		pCurCourse = pCurCourse->next;
@@ -240,7 +241,6 @@ void uppdateCourseInfor(semester* pHeadSem) {
 		cout << endl << "Your option is: ";
 		cin >> opt;
 		update1InforCourse(pCurCourse, opt);
-
 	}
 	return;
 }

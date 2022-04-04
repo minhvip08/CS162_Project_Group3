@@ -1,0 +1,2 @@
+Course ID,Course Name,Lecturer,Credits,Students,Session 1,Session 2
+CS162,Data structure and algorithms',Dinh Ba Tien,4,50,MON|S1(7:30),SAT|S3(13:30)
