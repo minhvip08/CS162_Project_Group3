@@ -34,10 +34,10 @@ void saveListOfSemester(schoolyear* sy)
 	ofstream fout; string s = sy->time;
 	fout.open(s + "_semester.txt");
 	semester* tmp = sy->sem;
-	fout << "No,Start day,End day,Start of registration,End of registration";
+	fout << "No,Num Courses,Start day,End day,Start of registration,End of registration";
 	while (tmp) {
 		fout << endl;
-		fout << tmp->mark << ',' << tmp->start_date.day << '/' << tmp->start_date.month << '/' << tmp->start_date.year << ',';
+		fout << tmp->mark << ',' << tmp->num_course << ',' << tmp->start_date.day << '/' << tmp->start_date.month << '/' << tmp->start_date.year << ',';
 		fout << tmp->end_date.day << '/' << tmp->end_date.month << '/' << tmp->end_date.year << ',';
 		fout << tmp->start_regist.day << '/' << tmp->start_regist.month << '/' << tmp->start_regist.year << ',';
 		fout << tmp->end_regist.day << '/' << tmp->end_date.month << '/' << tmp->end_date.month;
@@ -47,12 +47,13 @@ void saveListOfSemester(schoolyear* sy)
 	saveSchoolyear(sy); // update num_sem
 }
 
-void saveListOfCourse(course* c, string time, int semester)
+void saveListOfCourse(schoolyear* sy,course* c, string time, int semester)
 {
 	if (!c) {
 		cout << "No available courses" << endl;
 		return;
-	}char k = semester + 48;
+	}
+	char k = semester + 48;
 	ofstream fout; fout.open(time + "_sem" + k + "_course.txt");
 	fout << "Course ID,Course Name,Lecturer,Credits,Students,Session 1,Session 2";
 	while (c) {
@@ -63,4 +64,5 @@ void saveListOfCourse(course* c, string time, int semester)
 		c = c->next;
 	}
 	fout.close();
+	saveListOfSemester(sy);
 }

@@ -1,12 +1,14 @@
 #include "Header.h"
-void show_semester(semester* s, int i)
+void show_semester(schoolyear* head, semester* s)
 {
-	if (!s) return;
-	show_semester(s->next, i - 1);
-	cout << "Semester: " << i << endl;
-	show_date(s->start_date); show_date(s->end_date);
-	cout << "Number of course: " << s->num_course << endl;
-
+	semester* tmp = s; 
+	while (tmp) {
+		cout << "Semester: " << tmp->mark << endl;
+		cout << "Start date: " << endl; show_date(s->start_date); 
+		cout << "End date: " << endl; show_date(s->end_date);
+		cout << "Number of course: " << s->num_course << endl;
+		tmp = tmp->next;
+	}
 	while (1) {
 		int n;
 		cout << "1. View course list" << endl;
@@ -15,7 +17,16 @@ void show_semester(semester* s, int i)
 
 		if (n == 0) break;
 		switch (n) {
-		case 1: show_course(s->course_list, s->num_course); break;
+			case 1: {
+				semester* s_tmp = s;
+				cout << "There are currently " << head->num_sem << " semesters in this schoolyear" << endl;
+				cout << "Which semester you want to view its courses: "; int x; cin >> x;
+				if (x != head->num_sem) {
+					int h = x; while (h < head->num_sem) { s_tmp = s_tmp->next; ++h; }
+				}
+				readListOfCourse(head->time, s_tmp->course_list, x);
+				show_course(s_tmp->course_list, s_tmp->num_course); break;
+			}
 		}
 	}
 }
@@ -59,8 +70,8 @@ void show_class(Class* head, int i) //OK
 	cout << "Class number: " << i << endl;
 	cout << "Class name: " << head->class_name << endl;
 	cout << "Number of current students: " << head->total_student << endl;
-	cout << "Start day: " << endl; show_date(head->start_date);
-	cout << "End day: " << endl; show_date(head->end_day);
+	/*cout << "Start day: " << endl; show_date(head->start_date);
+	cout << "End day: " << endl; show_date(head->end_day);*/
 }
 
 void show_date(date s) // OK
@@ -71,39 +82,43 @@ void show_date(date s) // OK
 
 void show_schoolyear(schoolyear* head)
 {
+	if (!head) return; schoolyear* tmp = head; 
+	int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl; 
+	cout << "which schoolyear you want to view information: ";
+	int x; cin >> x;
+	while (x > i) {
+		cout << "invalid schoolyear" << endl << "input again" << endl;
+		cin >> x;
+	}
+
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+
 	while (1) {
-		schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
-		while (tmp) {
-			cout << i << ". " << tmp->time << '\t'; ++i;
-			tmp = tmp->next_schyear;
-		} cout << endl;
-		cout << "Go back to main Menu, press 0; else press 1 to continue";
-		int k; cin >> k;
-		if (k == 0) break;
+		cout << "1. View list of semesters" << endl;
+		cout << "2. View list of classes" << endl;
+		cout << "0. Back to School Year Menu" << endl;
 
-		cout << "Which schoolyear you want to view information: "; int x; cin >> x;
-		schoolyear* check = head;
-		if (x > 1) {
-			int j = 1; while (j < x) { check = check->next_schyear; ++j; }
-		}
-
-		while (1) {
-			cout << "1. View list of semesters" << endl;
-			cout << "2. View list of classes" << endl;
-			cout << "0. Back to School Year Menu" << endl;
-
-			int choice; cout << "You choose: "; cin >> choice;
-			if (choice == 0) break;
-			switch (choice) {
-			case 1: show_semester(check->sem, check->num_sem); break;
-			case 2: show_class(check->list_class, check->num_class); break;
-				//case 0: break; 
+		int choice; cout << "You choose: "; cin >> choice;
+		if (choice == 0) break;
+		switch (choice) {
+			case 1: {
+				readSemester(check->sem, check->time);
+				show_semester(check, check->sem); break;
+			}
+			case 2: {
+				readListOfClass(check->list_class, check->time);
+				show_class(check->list_class, check->num_class);
+				break;
 			}
 		}
 	}
-
-
-
 }
 
 void menu_staff()
@@ -133,17 +148,8 @@ void menu_staff()
 
 	system("cls");
 
-	while (1) {
-		int choice;
-		cout << "1. View list schoolyear" << endl;
-		cout << "0. Exit" << endl;
-		cout << "Choose your choice: "; cin >> choice;
-
-		switch (choice) {
-		case 1: show_schoolyear(sy); break;
-		case 0: return;
-		}
-	}
+	menu_view();
+	Delete_schoolyear(sy);
 }
 
 void viewListEnrolledCourse(student* pS) {
@@ -162,4 +168,21 @@ void viewListEnrolledCourse(student* pS) {
 		pECCur = pECCur->next;
 	}
 
+}
+
+void menu_view()
+{
+	schoolyear* sy = nullptr;
+	int n;
+	while (true) {
+		cout << "1. View list schoolyear" << endl;
+		cout << "0. Exit" << endl;
+		cin >> n;
+		if (!n) break;
+		switch (n) {
+		case 1:
+			readSchoolyear(sy);
+			show_schoolyear(sy); break;
+		}
+	}
 }

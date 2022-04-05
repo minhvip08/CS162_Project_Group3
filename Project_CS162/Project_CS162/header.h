@@ -180,6 +180,7 @@ void menu_staff();
 void show_ID_course(course* c);
 void viewListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
+void menu_view();
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);
@@ -217,4 +218,12 @@ void SetColor(WORD color);
 void saveSchoolyear(schoolyear* sy);
 void saveListOfClass(schoolyear* sy);
 void saveListOfSemester(schoolyear* sy);
-void saveListOfCourse(course* c, string time, int semester);
+void saveListOfCourse(schoolyear* sy, course* c, string time, int semester);
+
+// Read data from file txt
+void readSchoolyear(schoolyear*& sy);
+void readListOfClass(Class*& cl, string time);
+void readListOfCourse(string time, course*& c, int semester);
+void readSemester(semester*& s, string time);
+void read_date(ifstream& fin, date& d, bool check);
+

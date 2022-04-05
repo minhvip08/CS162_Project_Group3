@@ -1,11 +1,7 @@
 #include "header.h"
 void create_schoolyear(schoolyear* &head)
 {
-	if (!head) {
-		cout << "List of schoolyear is empty" << endl;
-		cout << "Pls input new schoolyear" << endl;
-	}
-
+	readSchoolyear(head);
 	schoolyear* cur = new schoolyear;
 	cin.get();
 	cout << "Input time (ex 2021-2022): "; getline(cin, cur->time, '\n');
@@ -115,7 +111,7 @@ void create_course(schoolyear* &head) // OK
 		cur->next = s_check->course_list;
 		s_check->course_list = cur;
 	}
-	saveListOfCourse(s_check->course_list, check->time, s_check->mark);
+	saveListOfCourse(check,s_check->course_list, check->time, s_check->mark);
 }
 
 void input_session(session &s) // OK
@@ -407,5 +403,3 @@ void copyCourse(enrolledCourse*& pEC, course* pC) {
 	pEC->next = nullptr;
 	return;
 }
-
-
