@@ -18,21 +18,14 @@ void registerView(account*& head, ifstream& fin) {
 	} while (!flag);
 
 	bool check; 
-	if (!isEmpty(fin)) {
-		check = false;
-	}
-	else {
-		check = checkAccountModel(acc, head, 0);
-	}
+	check = checkAccountModel(acc, head, 0, true);
 	if (check) {
-		cout << "Username or password exist" << endl;
+		cout << "Username exist" << endl;
 		//	system("pause");
 		return;
 	}
-	else if (!check) {
-		cout << "Username and password approved" << endl;
-		//registerModel(head, acc); 
-
+	else {
+		cout << "Username approved" << endl;
 		enterProfile(acc);
 		if (!head) {
 			head = acc;
@@ -56,7 +49,7 @@ void loginView(account* &head, int type)
 	cout << "Enter username: "; cin >> acc->username;
 	cout << "Enter your password: "; cin >> acc->password;
 
-	if (checkAccountModel(acc, head, type)) {
+	if (checkAccountModel(acc, head, type, false)) {
 		cout << "Login successful!" << endl;
 		//head = cur;
 		Menu2(acc,head);
@@ -98,7 +91,7 @@ void viewProfile(account*acc, account*& head)
 {
 	account* cur = head;
 
-	while (acc->username != cur->username || acc->password!=cur->password) {
+	while (acc->username != cur->username) {
 		cur = cur->pNext;
 	}
 	int choose = 100;
@@ -130,9 +123,7 @@ void viewProfile(account*acc, account*& head)
 		Menu2(cur, head);
 	}
 }
-//void changePassword(account*& head) {
-//
-//}
+
 void Menu2(account*cur, account*&head) {
 	int choose = 100;
 	while (choose!=1&&choose!=2&&choose!=3&&choose!=4&&choose!=5) {

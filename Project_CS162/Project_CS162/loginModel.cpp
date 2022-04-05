@@ -47,15 +47,20 @@ void saveAccountFile(ofstream& fout, account* head)
 	}
 }
 
-bool checkAccountModel(account* acc, account* head, int type)
+bool checkAccountModel(account* acc, account* head, int type, bool isReg)
 {
 	if (!head) return false;
 	else {
 		account* cur = head;
 		while (cur) {
 			if (cur->type == type) {
-				if (cur->username == acc->username && cur->password == acc->password) {
-					return true;
+				if (cur->username == acc->username) {
+					if (isReg) {
+						return true;
+					}
+					if (cur->password == acc->password) {
+						return true;
+					}
 				}
 			}
 			cur = cur->pNext;

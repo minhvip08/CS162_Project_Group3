@@ -151,7 +151,7 @@ void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
-void updateCourseInfor(semester* &pHeadSem);
+void uppdateCourseInfor(semester* pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
@@ -163,7 +163,7 @@ void loginView(account* &head, int type);
 void Menu();
 void loadAccountFile(ifstream& fin, account*& head);
 void saveAccountFile(ofstream& fout, account* head);
-bool checkAccountModel(account* acc, account* head, int type);
+bool checkAccountModel(account* acc, account* head, int type, bool isReg);
 bool isEmpty(ifstream& pFile);
 void Menu2(account* acc, account*& head);
 void viewProfile(account* acc, account*& head);
@@ -180,7 +180,6 @@ void menu_staff();
 void show_ID_course(course* c);
 void viewListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
-void menu_view();
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);
@@ -213,17 +212,3 @@ void SetBGColor(WORD color);
 void clrscr(void);
 void gotoxy(short x, short y);
 void SetColor(WORD color);
-
-// save to file txt
-void saveSchoolyear(schoolyear* sy);
-void saveListOfClass(schoolyear* sy);
-void saveListOfSemester(schoolyear* sy);
-void saveListOfCourse(schoolyear* sy, course* c, string time, int semester);
-
-// Read data from file txt
-void readSchoolyear(schoolyear*& sy);
-void readListOfClass(Class*& cl, string time);
-void readListOfCourse(string time, course*& c, int semester);
-void readSemester(semester*& s, string time);
-void read_date(ifstream& fin, date& d, bool check);
-
