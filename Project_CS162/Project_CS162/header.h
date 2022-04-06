@@ -151,7 +151,7 @@ void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
-void uppdateCourseInfor(semester* pHeadSem);
+void uppdateCourseInfor(semester*&pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
@@ -168,6 +168,7 @@ bool isEmpty(ifstream& pFile);
 void Menu2(account* acc, account*& head);
 void viewProfile(account* acc, account*& head);
 void enterProfile(account*& acc);
+void changePassword(account* acc, account*& head);
 
 // Output to console
 void show_schoolyear(schoolyear* head);

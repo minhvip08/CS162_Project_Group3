@@ -1,3 +1,4 @@
+
 #include "header.h"
 void registerView(account*& head, ifstream& fin) {
 	bool flag = true;
@@ -60,6 +61,7 @@ void loginView(account* &head, int type)
 		return;
 	}
 }
+
 void enterProfile(account*& acc)
 {
 	int gender = 0; 
@@ -123,10 +125,38 @@ void viewProfile(account*acc, account*& head)
 		Menu2(cur, head);
 	}
 }
-
+void changePassword(account* acc, account*& head)
+{
+	string pwd;
+	cout << "Enter old password : ";
+	cin >> pwd;
+	while (pwd != acc->password)
+	{
+		cout << "Incorrect password! Try again!" << endl;
+		cout << "Enter old password : ";
+		cin >> pwd;
+	}
+	cout << "Enter new password: ";
+	cin >> pwd;
+	account* cur = head;
+	while (cur != NULL)
+	{
+		if (acc->username==cur->username)
+		{
+			cur->password = pwd;
+			break;
+		}
+		cur = cur->pNext;
+	}
+	cout << "Change password successfully!"<<endl;
+	ofstream fout;
+	fout.open("AccountFile1.txt");
+	saveAccountFile(fout, head);
+	fout.close();
+}
 void Menu2(account*cur, account*&head) {
 	int choose = 100;
-	while (choose!=1 && choose!=2 && choose!=3 && choose!=4 && choose!=5) {
+	while (choose!=1 && choose!=2 && choose!=3 && choose!=4) {
 		cout << "1. View Profile" << endl;
 		cout << "2. Change Password" << endl;
 		cout << "3. MENU_STAFF" << endl;
@@ -138,7 +168,7 @@ void Menu2(account*cur, account*&head) {
 		viewProfile(cur,head);
 		break;
 	case 2:
-		//changePassword(head);
+		changePassword(cur,head);
 		break;
 	case 3:
 		menu_staff();
