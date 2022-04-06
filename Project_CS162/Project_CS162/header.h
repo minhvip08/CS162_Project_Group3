@@ -212,3 +212,16 @@ void SetBGColor(WORD color);
 void clrscr(void);
 void gotoxy(short x, short y);
 void SetColor(WORD color);
+
+void saveSchoolyear(schoolyear* sy);
+void saveListOfClass(schoolyear* sy);
+void saveListOfSemester(schoolyear* sy);
+void saveListOfCourse(schoolyear* sy, course* c, string time, int semester);
+
+// Read data from file txt
+void readSchoolyear(schoolyear*& sy);
+void readListOfClass(Class*& cl, string time);
+void readListOfCourse(string time, course*& c, int semester);
+void readSemester(semester*& s, string time);
+void read_date(ifstream& fin, date& d, bool check);
+void menu_view(); 

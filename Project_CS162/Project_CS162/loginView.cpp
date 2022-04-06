@@ -126,7 +126,7 @@ void viewProfile(account*acc, account*& head)
 
 void Menu2(account*cur, account*&head) {
 	int choose = 100;
-	while (choose!=1&&choose!=2&&choose!=3&&choose!=4&&choose!=5) {
+	while (choose!=1 && choose!=2 && choose!=3 && choose!=4 && choose!=5) {
 		cout << "1. View Profile" << endl;
 		cout << "2. Change Password" << endl;
 		cout << "3. MENU_STAFF" << endl;
@@ -148,6 +148,7 @@ void Menu2(account*cur, account*&head) {
 		break;
 	}
 }
+
 void Menu() {
 	int type = 100;
 	account* head =NULL;
@@ -208,7 +209,10 @@ void Menu() {
 				}
 				switch (n) {
 				case 1:
-					loginView(head, 1);
+					if (flag)
+						cout << "There is no available account. PLease create a new account" << endl;
+					else
+						loginView(head, 1);
 					break;
 				}
 			}
