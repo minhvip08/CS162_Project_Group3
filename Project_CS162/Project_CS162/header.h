@@ -141,7 +141,11 @@ struct schoolyear {
 	Class* list_class;
 	schoolyear* next_schyear;
 };
-
+// ViewscoreboardStaff
+bool findstuID(student* stu, studentScore*& ss, course* c);
+double GPAofCourse(studentScore*& stu);
+void scoreboardofclass(Class* cur_class, semester* cur_semester, course* c, int i, double GPA);
+void CaloverallGPA(student*& s);
 
 // Create functions (Input data)
 void create_schoolyear(schoolyear*& head);
