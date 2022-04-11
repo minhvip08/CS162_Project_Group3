@@ -144,7 +144,7 @@ struct schoolyear {
 // ViewscoreboardStaff
 bool findstuID(student* stu, studentScore*& ss, course* c);
 double GPAofCourse(studentScore*& stu);
-void scoreboardofclass(Class* cur_class, semester* cur_semester, course* c, int i, double GPA);
+void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c);
 void CaloverallGPA(student*& s);
 
 // Create functions (Input data)

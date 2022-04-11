@@ -18,32 +18,40 @@ double GPAofCourse(studentScore*& stu)
 {
 	return stu->total = stu->final * 0.4 + stu->mid * 0.3 + stu->other * 0.3;
 }
-void scoreboardofclass(Class* cur_class, semester* cur_semester, course* c, int i, double GPA)
+void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 {
-	if (!cur_class->student_list || !cur_semester->course_list || !c->next)
+	if (!cur_stu)
 	{
-		cout << "\nThe end!";
+		cout << "\n\t\tThe end!";
+		system("pause");
 		return;
 	}
-	student* stu = cur_class->student_list;
-	while (stu)
+	if (!c)
 	{
-		studentScore* ss;
-		if (findstuID(stu, ss, c))
+		return;
+	}
+	studentScore* stuscore;
+	double cnt = 0;
+	double GPA = 0;
+	if (findstuID(cur_stu, stuscore, c))
+	{
+		cout << "\nStudent ID: " << cur_stu->id << endl;
+		while (c)
 		{
-			cout << "\n" << "Final mark of this student in " << c->ID_course << " is: " << ss->final << endl;
-			cout << GPAofCourse(ss) << endl;
-			scoreboardofclass(cur_class, cur_semester, c->next, i + 1, GPA + ss->total);
-			GPA = 0;
+			cout << c->course_name << ":";
+			cout << "\nFinal mark: " << GPAofCourse(stuscore) << endl;
+			GPA += stuscore->final;
+			++cnt;
+			if (!c->next)
+			{
+				cout << "GPA in this semester: " << GPA / cnt;
+				CaloverallGPA(cur_stu);
+				cout << "\nOverall GPA: " << cur_stu->gpa;
+			}
+			c = c->next;
 		}
-		stu = stu->pNext;
 	}
-	if (!c->next)
-	{
-		cout << "\nGPA in this semester: " << GPA / i;
-		cout << "\nOverall GPA is: " << stu->gpa;
-		return;
-	}
+	scoreboardofclass(cur_stu->pNext, cur_semester, cur_semester->course_list);
 }
 void CaloverallGPA(student* &s)
 {
