@@ -3,9 +3,9 @@ bool findstuID(student* stu, studentScore* &ss, course* c) {
 	if (!c->list_score)
 	{
 		cout << "Error";
-		return;
+		return false;
 	}
-	studentScore* ss = c->list_score;
+	ss = c->list_score;
 	while (ss)
 	{
 		if (ss->id == stu->id)

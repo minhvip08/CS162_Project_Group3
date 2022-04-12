@@ -305,7 +305,7 @@ void update1InforCourse(course* pCourse, int opt) {
 
 void enrollCourse(course*& pList, student*& pStudent) {
 	course* pCurCourse = pList;
-	string choose(0);
+	string choose("0");
 	do {
 		system("cls");
 		if (pCurCourse == nullptr) {
@@ -324,7 +324,7 @@ void enrollCourse(course*& pList, student*& pStudent) {
 			continue;
 		}
 
-		if (choose == '0') {
+		if (choose == "0") {
 			cout << "\nPress any key to continue....";
 			char a = _getch();
 			return;
@@ -351,7 +351,7 @@ void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_co
 	while (pCurCrs != nullptr && pCurCrs->ID_course != ID_course)
 		pCurCrs = pCurCrs->next;
 
-	if (pCurCrs->cur_student == pCurCrs->total_student) {
+	if (pCurCrs->cur_student == pCurCrs->max_student) {
 		cout << "\This course is full, please choose another course! ";
 		cout << "\nPress any key to continue....";
 		char a = _getch();
@@ -375,7 +375,7 @@ void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_co
 
 	pTempStudent = new studentScore;
 
-	pTempStudent->prf = pStudent->prf;
+	pTempStudent->name = pStudent->prf.firstname + pStudent->prf.lastname;
 	pTempStudent->no = pStudent->No;
 	pTempStudent->id = pStudent->id;
 
@@ -395,7 +395,7 @@ void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_co
 
 void copyCourse(enrolledCourse*& pEC, course* pC) {
 	pEC->id_course = pC->ID_course;
-	pEC->name = pC->course_name;
+	pEC->course_name = pC->course_name;
 	pEC->name_teacher = pC->teacher_name;
 	pEC->credits = pC->credits;
 	pEC->ses1 = pC->ses1;
