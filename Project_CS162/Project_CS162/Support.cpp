@@ -50,3 +50,53 @@ bool checkValidDate(date d)
 		return true;
 	}
 }
+bool checkCurrentSchoolyear(schoolyear* sy) {
+	date d = getCurrentDate();
+	int cnt1 = 0, cnt2 = 0;
+	for (int i = 0; i < 4; i++) {
+		cnt1 *= 10; cnt1 += ((int)sy->time[i] - 48);
+	}
+	for (int i = 5; i < 9; i++) {
+		cnt2 *= 10; cnt2 += ((int)sy->time[i] - 48);
+	}
+	int month = d.month;
+	if (month < 9 && cnt2 == d.year) return true;
+	else if (month > 9 && cnt1 == d.year) return true;
+	else return false;
+}
+
+bool checkExistSchoolyear(schoolyear* head, string s)
+{
+	if (!head) return true;
+	schoolyear* tmp = head;
+	while (tmp) {
+		if (s == tmp->time) return false;
+		tmp = tmp->next_schyear;
+	}
+	return true;
+}
+
+void showCurrentSchoolyear(schoolyear* head)
+{
+	if (!head) return;
+	schoolyear* tmp = head;
+	while (tmp) {
+		if (checkCurrentSchoolyear(tmp) == true) {
+			cout << "The current schoolyear is: " << tmp->time << endl;
+			break;
+		}
+		tmp = tmp->next_schyear;
+	}
+}
+bool checkValidSchoolyear(schoolyear* sy)
+{
+	string check = sy->time; 
+	int cnt1 = 0, cnt2 = 0; 
+	for (int i = 0; i < 4; i++) {
+		cnt1 *= 10; cnt1 += (int)check[i]; 
+	} 
+	for (int i = 0; i < 4; i++) {
+		cnt2 *= 10; cnt2 += (int)check[i];
+	}
+	if (cnt2 - cnt1 == 1) return true; 
+}

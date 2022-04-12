@@ -1,3 +1,17 @@
-Course ID,Course Name,Lecturer,Credits,Students,Session 1,Session 2
-MTH212,Calculus 2,Thu Van,4,50,FRI|S3(13:30),FRI|S4(15:30)
-CS162,Introduction to CS2,Dinh Ba Tien,4,50,MON|S1(7:30),SAT|S3(13:30)
+2
+MTH212
+Calculus 2
+Thu Van
+4
+50
+0
+FRI	S3(13:30)
+FRI	S4(15:30)
+CS162
+Introduction to CS2
+Dinh Ba Tien
+4
+50
+0
+MON	S1(7:30)
+SAT	S3(13:30)

@@ -1,3 +1,25 @@
-Course ID,Course Name,Lecturer,Credits,Students,Session 1,Session 2
-MTH211,Caculus 1,Nguyen Le Hoang Anh,4,50,MON|S2(09:30),WED|S4(15:30)
-CS161,Introduction to CS1,Dinh Ba Tien,4,50,MON|S1(7:30),SAT|S3(13:30)
+3
+PHY1
+General Physics 1
+Mrs.Thu
+4
+50
+0
+MON	S1(7:30)
+THU	S2(09:30)
+MTH211
+Calculus 1
+Nguyen Le Hoang Anh
+4
+50
+0
+WED	S3(13:30)
+WED	S4(15:30)
+CS161
+Introduction to CS1
+Dinh Ba Tien
+4
+50
+0
+TUE	S1(7:30)
+SAT	S2(09:30)

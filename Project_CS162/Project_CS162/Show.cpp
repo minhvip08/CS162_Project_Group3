@@ -1,17 +1,19 @@
 #include "Header.h"
 void show_semester(schoolyear* head, semester* s)
 {
+	readSemester(s, head->time);
 	semester* tmp = s; 
 	while (tmp) {
 		cout << "Semester: " << tmp->mark << endl;
-		cout << "Start date: " << endl; show_date(s->start_date); 
-		cout << "End date: " << endl; show_date(s->end_date);
-		cout << "Number of course: " << s->num_course << endl;
+		cout << "Start date: " << endl; show_date(tmp->start_date); 
+		cout << "End date: " << endl; show_date(tmp->end_date);
+		cout << "Number of course: " << tmp->num_course << endl;
 		tmp = tmp->next;
 	}
 	while (1) {
 		int n;
 		cout << "1. View course list" << endl;
+		// cout << "2. Update course information" << endl;
 		cout << "0. Go backward" << endl;
 		cout << "You choose: "; cin >> n;
 
@@ -82,6 +84,7 @@ void show_date(date s) // OK
 
 void show_schoolyear(schoolyear* head)
 {
+	readSchoolyear(head); 
 	if (!head) return; schoolyear* tmp = head; 
 	int i = 1;
 	while (tmp) {
@@ -109,7 +112,7 @@ void show_schoolyear(schoolyear* head)
 		if (choice == 0) break;
 		switch (choice) {
 			case 1: {
-				readSemester(check->sem, check->time);
+				//readSemester(check->sem, check->time);
 				show_semester(check, check->sem); break;
 			}
 			case 2: {
@@ -181,7 +184,7 @@ void menu_view()
 		if (!n) break;
 		switch (n) {
 		case 1:
-			readSchoolyear(sy);
+			//readSchoolyear(sy);
 			show_schoolyear(sy); break;
 		}
 	}
