@@ -30,7 +30,6 @@ void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 	{
 		return;
 	}
-	scoreboardofclass(cur_stu->pNext, cur_semester, cur_semester->course_list);
 	studentScore* stuscore;
 	double cnt = 0;
 	double GPA = 0;
@@ -52,7 +51,7 @@ void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 			c = c->next;
 		}
 	}
-	
+	scoreboardofclass(cur_stu->pNext, cur_semester, cur_semester->course_list);
 }
 void CaloverallGPA(student* &s)
 {
