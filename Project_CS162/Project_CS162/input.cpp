@@ -2,11 +2,20 @@
 void create_schoolyear(schoolyear* &head)
 {
 	readSchoolyear(head);
-	schoolyear* cur = new schoolyear;
-	cin.get();
-	cout << "Input time (ex 2021-2022): "; getline(cin, cur->time, '\n');
-	cur->sem = NULL;
-	cur->list_class = NULL;
+	showCurrentSchoolyear(head); 
+	schoolyear* cur = new schoolyear; cin.get();
+	string tmp; 
+	cout << "Input time (ex 2021-2022): "; getline(cin, tmp, '\n');
+	bool flag = checkExistSchoolyear(head, tmp);
+	while (!flag) {
+		cout << "The schoolyear is already valid, please input another schoolyear time" << endl;
+		//cout << "Input time (ex 2021-2022): "; 
+		getline(cin, tmp, '\n');
+		flag = checkExistSchoolyear(head, tmp);
+	}
+	cur->time = tmp;
+	cur->sem = nullptr;
+	cur->list_class = nullptr;
 	if (!head) {
 		head = cur;
 		head->next_schyear = NULL;
@@ -16,10 +25,12 @@ void create_schoolyear(schoolyear* &head)
 		head = cur;
 	}
 	saveSchoolyear(head);
+	cout << "Schoolyear created successfully!!!" << endl;
 }
 
 void create_semester(schoolyear* &head)
 {
+	readSchoolyear(head); 
 	if (!head) {
 		cout << "You haven't added a new schoolyear" << endl; 
 		return;
@@ -40,9 +51,16 @@ void create_semester(schoolyear* &head)
 			++j;
 		}
 	}
+	if (check->num_sem == 3) {
+		cout << "There are fully 3 semesters in this schoolyear, you can't add more" << endl;
+		return;
+	}
+	else cout << "There are currently " << check->num_sem << " semesters in this schoolyear" << endl; 
+	readSemester(check->sem, check->time);
 	++check->num_sem;
 	semester* cur = new semester; cur->course_list = NULL;
 	cur->mark = check->num_sem; 
+	cout << "Semester number: " << cur->mark << endl;
 	cout << "Start date: "; input_date(cur->start_date);
 	cout << "End day: "; input_date(cur->end_date);
 	createCourseEnrolledTime(cur);
@@ -60,6 +78,7 @@ void create_semester(schoolyear* &head)
 
 void create_course(schoolyear* &head) // OK 
 {
+	readSchoolyear(head); 
 	if (!head) {
 		cout << "You haven't input a schoolyear" << endl;
 		return;
@@ -75,7 +94,7 @@ void create_course(schoolyear* &head) // OK
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
-
+	readSemester(check->sem, check->time);
 	if (!check->sem) {
 		cout << "You haven't add a semester for this schoolyear" << endl;
 		return;
@@ -87,7 +106,7 @@ void create_course(schoolyear* &head) // OK
 	if (k != check->num_sem) {
 		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
 	}
-
+	readListOfCourse(check->time, s_check->course_list, k);
 	++s_check->num_course;
 	course* cur = new course; cur->list_score = nullptr; 
 	cin.get();
@@ -95,10 +114,10 @@ void create_course(schoolyear* &head) // OK
 	cout << "Course name: "; getline(cin, cur->course_name, '\n');
 	cout << "Teacher name: "; getline(cin, cur->teacher_name, '\n');
 	cout << "Number of credits: "; cin >> cur->credits;
-	cout << "Total student(press 1 for default 50): "; int n; cin >> n; 
-	if (n == 1) cur->cur_student = 50;
-	else cur->cur_student = n; 
-
+	cout << "Maximum student(press 1 for default 50): "; int n; cin >> n; 
+	if (n == 1) cur->max_student = 50;
+	else cur->max_student = n; 
+	cur->cur_student = 0;
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
 
@@ -142,6 +161,7 @@ void input_session(session &s) // OK
 
 void create_class(schoolyear* &head) //OK
 {
+	readSchoolyear(head);
 	if (!head) {
 		cout << "You haven't create new schoolyear" << endl;
 		return;
@@ -157,14 +177,15 @@ void create_class(schoolyear* &head) //OK
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
+	readListOfClass(check->list_class, check->time);
 	++check->num_class;
 	Class* cur = new Class;
 	cout << "Class name: "; cin.ignore(10000, '\n'); getline(cin, cur->class_name, '\n');
 	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
 	if (n == 1) cur->total_student = 50;
 	else cur->total_student = n;
-	cout << "Start date: "; input_date(cur->start_date);
-	cout << "End date: "; input_date(cur->end_day);
+	/*cout << "Start date: "; input_date(cur->start_date);
+	cout << "End date: "; input_date(cur->end_day);*/
 
 
 	cur->student_list = NULL;

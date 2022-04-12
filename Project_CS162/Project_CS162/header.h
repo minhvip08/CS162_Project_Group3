@@ -137,6 +137,7 @@ struct schoolyear {
 	string time;
 	int num_sem = 0;
 	int num_class = 0;
+	bool cur = false; 
 	semester* sem;
 	Class* list_class;
 	schoolyear* next_schyear;
@@ -212,7 +213,12 @@ void Delete_enrolled_course( student*& pS);
 // support function
 date getCurrentDate();
 bool check_date(date d1, date d2);
-
+bool checkValidSchoolyear(schoolyear* sy);
+void showCurrentSchoolyear(schoolyear* head);
+bool checkExistSchoolyear(schoolyear* head, string s);
+bool checkCurrentSchoolyear(schoolyear* sy);
+bool checkValidDate(date d);
+bool leap(int n);
 
 // graphic cs161
 void SetBGColor(WORD color);
@@ -232,3 +238,5 @@ void readListOfCourse(string time, course*& c, int semester);
 void readSemester(semester*& s, string time);
 void read_date(ifstream& fin, date& d, bool check);
 void menu_view(); 
+
+
