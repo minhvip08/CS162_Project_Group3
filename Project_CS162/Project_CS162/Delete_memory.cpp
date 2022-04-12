@@ -91,7 +91,7 @@ void Delete_finalGPA(finalGPA*& head)
 
 void Delete_enrolled_course( student*& pS) {
 	
-	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp;
+	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp = nullptr;
 
 	system("cls");
 	if (pECCrs != nullptr) {
@@ -110,7 +110,7 @@ void Delete_enrolled_course( student*& pS) {
 	if (choose == "0")
 		return;
 
-	while (pECCrs->id_course != choose) {
+	while (choose != pECCrs->id_course ) {
 		pECCrsTemp = pECCrs;
 		pECCrs = pECCrs->next;
 	}

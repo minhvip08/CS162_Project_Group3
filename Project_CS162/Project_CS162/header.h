@@ -159,6 +159,8 @@ void uppdateCourseInfor(semester*&pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
+void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course);
+void copyCourse(enrolledCourse*& pEC, course* pC);
 
 
 //Login and register(missing clearscreen, type and date modification)
