@@ -189,3 +189,25 @@ void menu_view()
 		}
 	}
 }
+void menu_student() {
+	int opt = 0;
+	cout << "1. Enroll a course" << endl;
+	cout << "2. View a list of enrolled course" << endl;//delete after viewing
+	cout << "3. View a list of classes" << endl;
+	cout << "4. View a list of student in a class" << endl;
+	cout << "5. View a list of students in a course" << endl;
+	cout << "6. View his/her scoreboard" << endl;
+	cout << "0. Exit" << endl;
+	while (true) {
+		cin >> opt;
+		switch (opt) {
+			case 0: break;
+			case 1: ; break;
+			case 2: ; break;
+			case 3: ; break;
+			case 4: ; break;
+			case 5: ; break;
+			case 6: ; break;
+		}
+	}
+}

@@ -218,7 +218,7 @@ void input_date(date &p) // OK
 	cout << "Year: "; cin >> p.year; 
 }
 
-void uppdateCourseInfor(semester* &pHeadSem) {
+void updateCourseInfor(semester* &pHeadSem) {
 	if (pHeadSem == nullptr) {
 		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
 		char a = _getch();
@@ -352,7 +352,7 @@ void enrollCourse(course*& pList, student*& pStudent) {
 		}
 
 		if (pStudent->countEnroll >= 5) {
-			cout << "You cannot enroll over 5 course in this semester.";
+			cout << "You cannot enroll over 5 courses in this semester.";
 			cout << "\nPress any key to continue....";
 			char a = _getch();
 			continue;

@@ -156,7 +156,7 @@ void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
-void uppdateCourseInfor(semester*&pHeadSem);
+void updateCourseInfor(semester*&pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
@@ -164,7 +164,7 @@ void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_co
 void copyCourse(enrolledCourse*& pEC, course* pC);
 
 
-//Login and register(missing clearscreen, type and date modification)
+//Login and register
 void registerView(account* &head, ifstream &fin);
 void loginView(account* &head, int type);
 void Menu();
@@ -172,7 +172,7 @@ void loadAccountFile(ifstream& fin, account*& head);
 void saveAccountFile(ofstream& fout, account* head);
 bool checkAccountModel(account* acc, account* head, int type, bool isReg);
 bool isEmpty(ifstream& pFile);
-void Menu2(account* acc, account*& head);
+void Menu2(account* acc, account*& head, int type);
 void viewProfile(account* acc, account*& head);
 void enterProfile(account*& acc);
 void changePassword(account* acc, account*& head);

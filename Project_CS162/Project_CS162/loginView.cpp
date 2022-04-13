@@ -53,7 +53,7 @@ void loginView(account* &head, int type)
 	if (checkAccountModel(acc, head, type, false)) {
 		cout << "Login successful!" << endl;
 		//head = cur;
-		Menu2(acc,head);
+		Menu2(acc,head,type);
 		//menu_staff();
 	}
 	else {
@@ -122,7 +122,7 @@ void viewProfile(account*acc, account*& head)
 		viewProfile(acc,cur);
 	}
 	else if (choose==0) {
-		Menu2(cur, head);
+		Menu2(cur, head,cur->type);
 	}
 }
 void changePassword(account* acc, account*& head)
@@ -154,12 +154,17 @@ void changePassword(account* acc, account*& head)
 	saveAccountFile(fout, head);
 	fout.close();
 }
-void Menu2(account*cur, account*&head) {
-	int choose = 100;
+void Menu2(account*cur, account*&head, int type) {
+	int choose = 0;
 	while (choose!=1 && choose!=2 && choose!=3 && choose!=4) {
 		cout << "1. View Profile" << endl;
 		cout << "2. Change Password" << endl;
-		cout << "3. MENU_STAFF" << endl;
+		if (type == 0) {
+			cout << "3. MENU_STAFF" << endl;
+		}
+		else if(type==1) {
+			cout << "3. MENU_STUDENT" << endl;
+		}
 		cout << "4. Log Out" << endl;
 		cin >> choose;
 	}
@@ -171,10 +176,15 @@ void Menu2(account*cur, account*&head) {
 		changePassword(cur,head);
 		break;
 	case 3:
-		menu_staff();
+		if (type == 0) {
+			menu_staff();
+		}
+		else if (type == 1) {
+			menu_student();
+		}
 		break;
 	case 4:
-		Menu();
+		//Menu();
 		break;
 	}
 }
