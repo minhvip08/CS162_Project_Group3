@@ -1,4 +1,3 @@
-
 #include "header.h"
 void registerView(account*& head, ifstream& fin) {
 	bool flag = true;

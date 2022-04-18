@@ -239,4 +239,6 @@ void readSemester(semester*& s, string time);
 void read_date(ifstream& fin, date& d, bool check);
 void menu_view(); 
 
-
+bool checkAvailClass(string s, string year);
+bool checkConflictSession(session ses1, session ses2);
+void Delete_course_staff(course*& c);

@@ -120,6 +120,12 @@ void create_course(schoolyear* &head) // OK
 	cur->cur_student = 0;
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
+	while (!checkConflictSession(cur->ses1, cur->ses2)) {
+		cout << "Two sessions has to be different in date and time" << endl;
+		cout << "Please input again" << endl;
+		cout << "Session 1: "; input_session(cur->ses1);
+		cout << "Session 2: "; input_session(cur->ses2);
+	}
 
 	cur->list_score = NULL;
 	if (!s_check->course_list) {
@@ -180,14 +186,17 @@ void create_class(schoolyear* &head) //OK
 	readListOfClass(check->list_class, check->time);
 	++check->num_class;
 	Class* cur = new Class;
-	cout << "Class name: "; cin.ignore(10000, '\n'); getline(cin, cur->class_name, '\n');
+	cout << "Class name: "; cin.ignore(10000, '\n'); string a; getline(cin, a, '\n'); 
+	while (!checkAvailClass(a, check->time)) {
+		cout << "Name of class is not available for this schoolyear" << endl;
+		cout << "Please input again" << endl;
+		cout << "Class name: "; getline(cin, a, '\n');
+	}
+	cur->class_name = a; 
 	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
 	if (n == 1) cur->total_student = 50;
 	else cur->total_student = n;
-	/*cout << "Start date: "; input_date(cur->start_date);
-	cout << "End date: "; input_date(cur->end_day);*/
-
-
+	
 	cur->student_list = NULL;
 
 	if (!check->list_class) {
@@ -225,14 +234,15 @@ void updateCourseInfor(semester* &pHeadSem) {
 		return;
 	}
 
-	int opt = 1; string id_course;
+	int opt = 100; string id_course;
 
-	system("cls");
-	cout << endl << "These are all courses in this semester, please enter one ID Course!";
+	//system("cls");
+	cout << "These are all courses in this semester, please enter one ID Course!";
 	course* tmp = pHeadSem->course_list; 
 	show_ID_course(tmp);
-	// kiem tra lai
-	cin >> id_course;
+	// kiem tra lai -> nhap so ko nhap ID
+	getline(cin, id_course, '\n'); 
+	//cin >> id_course;
 	
 	course* pCurCourse = tmp;
 	
@@ -267,7 +277,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		return;
 	switch (opt) {
 	case 1: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE COURSE ID-----";
 		cout << "\nOld ID of Course: " << pCourse->ID_course;
 		cout << "\nPlease enter new ID of Course: ";
 		cin >> pCourse->ID_course;
@@ -275,7 +286,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		break;
 	}
 	case 2: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE COURSE NAME-----";
 		cout << "\nOld Name of Course: " << pCourse->course_name;
 		cout << "\nPlease enter Name of Course : ";
 		cin >> pCourse->course_name;
@@ -283,7 +295,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		break;
 	}
 	case 3: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE LECTURER'S NAME OF COURSE-----";
 		cout << "\nOld Teacher's Name of Course: " << pCourse->teacher_name;
 		cout << "\nPlease enter new Teacher's Name of Course: ";
 		cin >> pCourse->teacher_name;
@@ -291,7 +304,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		break;
 	}
 	case 4: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE COURSE'S CREDITS-----";
 		cout << "\nOld Credits of Course: " << pCourse->credits;
 		cout << "\nPlease enter new Credits of Course: ";
 		cin >> pCourse->credits;
@@ -299,7 +313,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		break;
 	}
 	case 5: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE SESSION 1-----";
 		cout << "\nOld Session 1 is: "; show_session(pCourse->ses1);
 		cout << "\nPlease enter new Session 1: ";
 		input_session(pCourse->ses1);
@@ -307,7 +322,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		break;
 	}
 	case 6: {
-		system("cls");
+		//system("cls");
+		cout << "-----UPDATE SESSION 2-----";
 		cout << "\nOld Session 2 is: "; show_session(pCourse->ses2);
 		cout << "\nPlease enter new Session 1: ";
 		input_session(pCourse->ses2);
@@ -321,21 +337,20 @@ void update1InforCourse(course* pCourse, int opt) {
 		return;
 	}
 	}
+	//saveListOfCourse(); 
 }
 
 
 void enrollCourse(course*& pList, student*& pStudent) {
+	if (!pList) return; 
 	course* pCurCourse = pList;
 	string choose("0");
 	do {
-		system("cls");
-		if (pCurCourse == nullptr) {
-			cout << "No Course";
-		}
-		cout << "There is a list of courses, please enter one of them:" << endl;
+		//system("cls");
+		cout << "List of course: " << endl;
 		show_ID_course(pList);
 		cout << endl << "0. EXIT.";
-		cin >> choose;
+		cout << "Enter ID course: "; cin >> choose;
 
 		while (pCurCourse != nullptr && pCurCourse->ID_course != choose)
 			pCurCourse = pCurCourse->next;
@@ -365,6 +380,7 @@ void enrollCourse(course*& pList, student*& pStudent) {
 
 }
 
+// viet them save enrolled (se bo sung sau)
 void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course) {
 	course* pCurCrs = pList;
 	enrolledCourse* pCurECrs = pStudent->list_enrolled;

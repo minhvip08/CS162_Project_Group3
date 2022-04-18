@@ -123,8 +123,41 @@ void Delete_enrolled_course( student*& pS) {
 	pECCrsTemp->next = pECCrs->next;
 	delete pECCrs;
 	pS->countEnroll--;
-	
+}
 
+void Delete_course_staff(course*& c) {
+	if (!c) {
+		cout << "Empty course list" << endl;
+		return;
+	}
+	show_ID_course(c);
+	string tmp; cout << "Enter ID of course you want to delete: "; getline(cin, tmp, '\n');
+	course* tmpc = c;
+	while (tmpc) {
+		if (tmpc->next->ID_course == tmp) break;
+		tmpc = tmpc->next;
+	}
+	course* del = tmpc->next;
+	if (!tmpc) {
+		cout << "Invalid course" << endl << "Your action can't be done" << endl;
+		return;
+	}
 
+	cout << "Course information: " << endl;
+	cout << "ID: " << del->ID_course << endl;
+	cout << "Name: " << del->course_name << endl;
+	cout << "Teacher: " << del->teacher_name << endl;
+	cout << "Credits: " << del->credits << endl;
+	cout << "Current students: " << tmpc->next->cur_student << endl;
 
+	cout << "Are you sure you want to delete: \n"; int n;
+	cout << "1. Yes" << endl << "2. No" << endl;
+	cin >> n;
+	if (n == 2) return;
+	else if (n == 1) {
+		course* after = tmpc->next->next;
+		tmpc->next = after;
+		delete del;
+	}
+	cout << "Course deleted successfully" << endl;
 }

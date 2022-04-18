@@ -13,7 +13,8 @@ void show_semester(schoolyear* head, semester* s)
 	while (1) {
 		int n;
 		cout << "1. View course list" << endl;
-		// cout << "2. Update course information" << endl;
+		cout << "2. Update course information" << endl;
+		cout << "3. Delete a course" << endl; 
 		cout << "0. Go backward" << endl;
 		cout << "You choose: "; cin >> n;
 
@@ -28,6 +29,26 @@ void show_semester(schoolyear* head, semester* s)
 				}
 				readListOfCourse(head->time, s_tmp->course_list, x);
 				show_course(s_tmp->course_list, s_tmp->num_course); break;
+			}
+			case 2: {
+				semester* s_tmp = s;
+				cout << "There are currently " << head->num_sem << " semesters in this schoolyear" << endl;
+				cout << "Which semester you want to update its courses' information: "; int x; cin >> x;
+				if (x != head->num_sem) {
+					int h = x; while (h < head->num_sem) { s_tmp = s_tmp->next; ++h; }
+				}
+				updateCourseInfor(s_tmp);
+				break;
+			}
+			case 3: {
+				semester* s_tmp = s;
+				cout << "There are currently " << head->num_sem << " semesters in this schoolyear" << endl;
+				cout << "Which semester you want to update its courses' information: "; int x; cin >> x;
+				if (x != head->num_sem) {
+					int h = x; while (h < head->num_sem) { s_tmp = s_tmp->next; ++h; }
+				}
+				Delete_course_staff(s_tmp->course_list);
+				break;
 			}
 		}
 	}
@@ -48,8 +69,12 @@ void show_course(course* c, int i)
 
 void show_ID_course(course* c) {
 	if (!c) return;
-	show_ID_course(c->next);
-	cout << endl << "Course ID: " << c->ID_course << endl << "Name Course: " << c->course_name << endl;
+//	show_ID_course(c->next);
+	while (c) {
+		cout << "Course ID: " << c->ID_course << '\t' << "Name Course: " << c->course_name << endl;
+		c = c->next; 
+	}
+	
 }
 
 void show_enrolled_course(enrolledCourse* c) {
@@ -72,8 +97,6 @@ void show_class(Class* head, int i) //OK
 	cout << "Class number: " << i << endl;
 	cout << "Class name: " << head->class_name << endl;
 	cout << "Number of current students: " << head->total_student << endl;
-	/*cout << "Start day: " << endl; show_date(head->start_date);
-	cout << "End day: " << endl; show_date(head->end_day);*/
 }
 
 void show_date(date s) // OK

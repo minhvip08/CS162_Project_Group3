@@ -100,3 +100,22 @@ bool checkValidSchoolyear(schoolyear* sy)
 	}
 	if (cnt2 - cnt1 == 1) return true; 
 }
+
+bool checkAvailClass(string s, string year)
+{
+	int tmp1 = 0, tmp2 = 0; int i = -1;
+	while (tmp1 < 100 && tmp2 < 100) {
+		++i;
+		tmp1 *= 10; tmp2 *= 10;
+		tmp1 += (int)s[i]; tmp2 += (int)year[i + 2];
+	}
+
+	if (tmp1 == tmp2) return true;
+	else return false;
+}
+
+bool checkConflictSession(session ses1, session ses2)
+{
+	if (ses1.date == ses2.date && ses1.time == ses2.time) return false;
+	else return true;
+}
