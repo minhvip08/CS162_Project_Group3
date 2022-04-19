@@ -78,30 +78,31 @@ void printStudentsAccount(Class*& cl, account*& head) {
 		ifstream fin;
 		fin.open(cl->class_name + ".txt");
 		if (!fin.is_open()) {
-			cout << "No class yet";
-			break;
+			cout << cl->class_name<< " has not been created"<<endl;
 		}
-		string a;
-		getline(fin, a, '\n');
-		while (!fin.eof()) {
-			account* cur_acc = new account;
-			cur_acc->type = 1;
-			string a; getline(fin, a, ',');
-			getline(fin, cur_acc->username, ',');
-			cur_acc->password = "12345678";
-			getline(fin, cur_acc->prf.lastname, ',');
-			getline(fin, cur_acc->prf.firstname, ',');
-			getline(fin, cur_acc->prf.DOB, ',');
-			getline(fin, cur_acc->prf.gender, ',');
-			getline(fin, cur_acc->prf.social_id, '\n');
+		else {
+			string a;
+			getline(fin, a, '\n');
+			while (!fin.eof()) {
+				account* cur_acc = new account;
+				cur_acc->type = 1;
+				string a; getline(fin, a, ',');
+				getline(fin, cur_acc->username, ',');
+				cur_acc->password = "12345678";
+				getline(fin, cur_acc->prf.lastname, ',');
+				getline(fin, cur_acc->prf.firstname, ',');
+				getline(fin, cur_acc->prf.DOB, ',');
+				getline(fin, cur_acc->prf.gender, ',');
+				getline(fin, cur_acc->prf.social_id, '\n');
 
-			if (!head) {
-				head = cur_acc;
-				head->pNext = NULL;
-			}
-			else {
-				cur_acc->pNext = head;
-				head = cur_acc;
+				if (!head) {
+					head = cur_acc;
+					head->pNext = NULL;
+				}
+				else {
+					cur_acc->pNext = head;
+					head = cur_acc;
+				}
 			}
 		}
 		fin.close();
@@ -113,20 +114,23 @@ void printStudentsAccount(Class*& cl, account*& head) {
 }
 void collectStudentsAccount(account*&head) {
 	schoolyear*sy=NULL;
-	Class* cl = NULL;
 	Class* temp = NULL;
 	readSchoolyear(sy);
 	if(!sy) {
+		system("cls");
+		cout << "No school year has been created yet" << endl;
 		return;
 	}
 	while (sy) {
-		//cout << "No23123"<<endl;
+		Class* cl = NULL;
 		readListOfClass(cl, sy->time);
-		printStudentsAccount(cl, head);
+		if (cl) {
+			printStudentsAccount(cl, head);
+		}
+		else {
+			system("cls");
+			cout << "List of classes in "<<sy->time<<" is empty"<<endl;
+		}
 		sy = sy->next_schyear;
 	}
-	/*if (!cl) {
-		return;
-	}*/
-
 }

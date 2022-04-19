@@ -201,13 +201,13 @@ void Menu() {
 			cin >> type;
 		}
 		if (type == 1) {
+			ifstream fin; fin.open("Staff_acc.txt");
+			bool flag = isEmpty(fin);
+			if (!flag) {
+				loadAccountFile(fin, head);
+			}
+			fin.close();
 			while (true) {
-				ifstream fin; fin.open("Staff_acc.txt");
-				bool flag = isEmpty(fin);
-				if (!flag) {
-					loadAccountFile(fin, head);
-				}
-				fin.close();
 				//system("cls");
 				int n; bool login = true;
 				cout << "-------STAFF-------" << endl;
@@ -215,7 +215,9 @@ void Menu() {
 				cout << "2. Register" << endl;
 				cout << "0. Go back to main menu" << endl;
 
-				cin >> n; if (n == 0) {
+				cin >> n; 
+				if (n == 0) {
+					head = NULL;
 					type = -1;
 					break;
 				}
@@ -236,20 +238,31 @@ void Menu() {
 			}
 		}
 		else if (type == 2) {
+			collectStudentsAccount(head);
+			ifstream fin; fin.open("Student_acc.txt");
+			bool flag = isEmpty(fin);
+			if (!flag) {
+				loadAccountFile(fin, head);
+			}
+			fin.close();
 			while (true) {
-				collectStudentsAccount(head);
 				//	system("cls");
 				int n;
 				cout << "-------STUDENT-------" << endl;
 				cout << "1. Login" << endl;
 				cout << "0. Go back to main menu" << endl;
-				cin >> n; if (n == 0) {
+				cin >> n; 
+				if (n == 0) {
+					head = NULL;
 					type = -1;
 					break;
 				}
 				switch (n) {
 				case 1:
-					loginView(head, 1);
+					if (flag)
+						cout << "There is no available account. PLease wait for staff to create" << endl;
+					else
+						loginView(head, 1);
 					break;
 				}
 			}
