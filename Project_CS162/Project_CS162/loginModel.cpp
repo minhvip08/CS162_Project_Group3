@@ -73,3 +73,60 @@ bool isEmpty(ifstream& pFile)
 {
 	return pFile.peek() == ifstream::traits_type::eof();
 }
+void printStudentsAccount(Class*& cl, account*& head) {
+	while (cl) {
+		ifstream fin;
+		fin.open(cl->class_name + ".txt");
+		if (!fin.is_open()) {
+			cout << "No class yet";
+			break;
+		}
+		string a;
+		getline(fin, a, '\n');
+		while (!fin.eof()) {
+			account* cur_acc = new account;
+			cur_acc->type = 1;
+			string a; getline(fin, a, ',');
+			getline(fin, cur_acc->username, ',');
+			cur_acc->password = "12345678";
+			getline(fin, cur_acc->prf.lastname, ',');
+			getline(fin, cur_acc->prf.firstname, ',');
+			getline(fin, cur_acc->prf.DOB, ',');
+			getline(fin, cur_acc->prf.gender, ',');
+			getline(fin, cur_acc->prf.social_id, '\n');
+
+			if (!head) {
+				head = cur_acc;
+				head->pNext = NULL;
+			}
+			else {
+				cur_acc->pNext = head;
+				head = cur_acc;
+			}
+		}
+		fin.close();
+		cl = cl->nextClass;
+	}
+	ofstream fout;
+	fout.open("Student_acc.txt");
+	saveAccountFile(fout, head);
+}
+void collectStudentsAccount(account*&head) {
+	schoolyear*sy=NULL;
+	Class* cl = NULL;
+	Class* temp = NULL;
+	readSchoolyear(sy);
+	if(!sy) {
+		return;
+	}
+	while (sy) {
+		//cout << "No23123"<<endl;
+		readListOfClass(cl, sy->time);
+		printStudentsAccount(cl, head);
+		sy = sy->next_schyear;
+	}
+	/*if (!cl) {
+		return;
+	}*/
+
+}

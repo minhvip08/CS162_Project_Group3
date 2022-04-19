@@ -1,3 +1,4 @@
+
 #include "header.h"
 void registerView(account*& head, ifstream& fin) {
 	bool flag = true;
@@ -38,7 +39,7 @@ void registerView(account*& head, ifstream& fin) {
 
 		cout << "Register Successful !" << endl;
 		ofstream fout;
-		fout.open("AccountFile1.txt");
+		fout.open("Staff_acc.txt");
 		saveAccountFile(fout, head);
 		fout.close();
 	}
@@ -115,7 +116,7 @@ void viewProfile(account*acc, account*& head)
 		enterProfile(cur);
 		cout << "Change Profile successfull !" << endl;
 		ofstream fout;
-		fout.open("AccountFile1.txt");
+		fout.open("Staff_acc.txt");
 		saveAccountFile(fout, head);
 		fout.close();
 		viewProfile(acc,cur);
@@ -149,7 +150,7 @@ void changePassword(account* acc, account*& head)
 	}
 	cout << "Change password successfully!"<<endl;
 	ofstream fout;
-	fout.open("AccountFile1.txt");
+	fout.open("Staff_acc.txt");
 	saveAccountFile(fout, head);
 	fout.close();
 }
@@ -199,14 +200,14 @@ void Menu() {
 			cout << "0. Exit" << endl;
 			cin >> type;
 		}
-		ifstream fin;fin.open("AccountFile1.txt");
-		bool flag = isEmpty(fin);
-		if (!flag) {
-			loadAccountFile(fin, head);
-		}
-		fin.close();
 		if (type == 1) {
 			while (true) {
+				ifstream fin; fin.open("Staff_acc.txt");
+				bool flag = isEmpty(fin);
+				if (!flag) {
+					loadAccountFile(fin, head);
+				}
+				fin.close();
 				//system("cls");
 				int n; bool login = true;
 				cout << "-------STAFF-------" << endl;
@@ -230,13 +231,13 @@ void Menu() {
 					system("pause");
 					login = false;
 					break;
-
 				}
 				if (!login) break;
 			}
 		}
 		else if (type == 2) {
 			while (true) {
+				collectStudentsAccount(head);
 				//	system("cls");
 				int n;
 				cout << "-------STUDENT-------" << endl;
@@ -248,10 +249,7 @@ void Menu() {
 				}
 				switch (n) {
 				case 1:
-					if (flag)
-						cout << "There is no available account. PLease create a new account" << endl;
-					else
-						loginView(head, 1);
+					loginView(head, 1);
 					break;
 				}
 			}

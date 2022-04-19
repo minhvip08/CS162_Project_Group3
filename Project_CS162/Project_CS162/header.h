@@ -176,6 +176,8 @@ void Menu2(account* acc, account*& head, int type);
 void viewProfile(account* acc, account*& head);
 void enterProfile(account*& acc);
 void changePassword(account* acc, account*& head);
+void printStudentsAccount(Class*&cl,account*& head);
+void collectStudentsAccount(account*& head);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
@@ -185,6 +187,7 @@ void show_session(session head);
 void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
+void menu_student();
 void show_ID_course(course* c);
 void viewListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
