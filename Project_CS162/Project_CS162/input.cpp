@@ -227,7 +227,7 @@ void input_date(date &p) // OK
 	cout << "Year: "; cin >> p.year; 
 }
 
-void updateCourseInfor(semester* &pHeadSem) {
+void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem) {
 	if (pHeadSem == nullptr) {
 		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
 		char a = _getch();
@@ -237,14 +237,12 @@ void updateCourseInfor(semester* &pHeadSem) {
 	int opt = 100; string id_course;
 
 	//system("cls");
-	cout << "These are all courses in this semester, please enter one ID Course!";
+	cout << "These are all courses in this semester, please enter one ID Course!" << endl;
 	course* tmp = pHeadSem->course_list; 
-	show_ID_course(tmp);
-	// kiem tra lai -> nhap so ko nhap ID
-	getline(cin, id_course, '\n'); 
-	//cin >> id_course;
+	show_ID_course(tmp); // kiem tra lai -> nhap so ko nhap ID
+	cin >> id_course;
 	
-	course* pCurCourse = tmp;
+	course* pCurCourse = pHeadSem->course_list;
 	
 	while (pCurCourse != nullptr && pCurCourse->ID_course != id_course)
 		pCurCourse = pCurCourse->next;
@@ -255,7 +253,7 @@ void updateCourseInfor(semester* &pHeadSem) {
 	}
 
 	while (opt != 0) {
-		system("cls");
+		//system("cls");
 		cout << "Which information do you want to change?";
 		cout << endl << "1.ID of Course.";
 		cout << endl << "2.Name of Course.";
@@ -268,6 +266,7 @@ void updateCourseInfor(semester* &pHeadSem) {
 		cout << endl << "Your option is: ";
 		cin >> opt;
 		update1InforCourse(pCurCourse, opt);
+		saveListOfCourse(sy, tmp, sy->time, pHeadSem->mark);
 	}
 	return;
 }
@@ -337,7 +336,6 @@ void update1InforCourse(course* pCourse, int opt) {
 		return;
 	}
 	}
-	//saveListOfCourse(); 
 }
 
 

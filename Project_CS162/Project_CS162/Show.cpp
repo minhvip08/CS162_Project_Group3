@@ -1,5 +1,5 @@
 #include "Header.h"
-void show_semester(schoolyear* head, semester* s)
+void show_semester(schoolyear* &head, semester* &s)
 {
 	readSemester(s, head->time);
 	semester* tmp = s; 
@@ -37,7 +37,8 @@ void show_semester(schoolyear* head, semester* s)
 				if (x != head->num_sem) {
 					int h = x; while (h < head->num_sem) { s_tmp = s_tmp->next; ++h; }
 				}
-				updateCourseInfor(s_tmp);
+				readListOfCourse(head->time, s_tmp->course_list, x);
+				uppdateCourseInfor(head, s_tmp);
 				break;
 			}
 			case 3: {
@@ -47,7 +48,8 @@ void show_semester(schoolyear* head, semester* s)
 				if (x != head->num_sem) {
 					int h = x; while (h < head->num_sem) { s_tmp = s_tmp->next; ++h; }
 				}
-				Delete_course_staff(s_tmp->course_list);
+				readListOfCourse(head->time, s_tmp->course_list, x);
+				Delete_course_staff(head, s_tmp->course_list, head->time, x);
 				break;
 			}
 		}
@@ -69,7 +71,6 @@ void show_course(course* c, int i)
 
 void show_ID_course(course* c) {
 	if (!c) return;
-//	show_ID_course(c->next);
 	while (c) {
 		cout << "Course ID: " << c->ID_course << '\t' << "Name Course: " << c->course_name << endl;
 		c = c->next; 

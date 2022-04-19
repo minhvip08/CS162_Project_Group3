@@ -89,7 +89,7 @@ void Delete_finalGPA(finalGPA*& head)
 	}
 }
 
-void Delete_enrolled_course( student*& pS) {
+void Delete_enrolled_course(student*& pS) {
 	
 	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp = nullptr;
 
@@ -125,23 +125,23 @@ void Delete_enrolled_course( student*& pS) {
 	pS->countEnroll--;
 }
 
-void Delete_course_staff(course*& c) {
+void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {
 	if (!c) {
 		cout << "Empty course list" << endl;
 		return;
 	}
 	show_ID_course(c);
-	string tmp; cout << "Enter ID of course you want to delete: "; getline(cin, tmp, '\n');
+	string tmp; cout << "Enter ID of course you want to delete: "; cin >> tmp; 
 	course* tmpc = c;
 	while (tmpc) {
 		if (tmpc->next->ID_course == tmp) break;
 		tmpc = tmpc->next;
 	}
-	course* del = tmpc->next;
 	if (!tmpc) {
 		cout << "Invalid course" << endl << "Your action can't be done" << endl;
 		return;
 	}
+	course* del = tmpc->next;
 
 	cout << "Course information: " << endl;
 	cout << "ID: " << del->ID_course << endl;
@@ -159,5 +159,9 @@ void Delete_course_staff(course*& c) {
 		tmpc->next = after;
 		delete del;
 	}
+	semester* cur = sy->sem;
+	while (cur && cur->mark != sem) cur = cur->next;
+	--cur->num_course;
 	cout << "Course deleted successfully" << endl;
+	saveListOfCourse(sy, c, sy->time, sem);
 }

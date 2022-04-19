@@ -56,14 +56,17 @@ struct session {
 	string date;
 	string time;
 };
-struct studentScore { // course
-	int no;
-	string id;
-	string name; 
+struct score {
 	double total;
 	double final;
 	double mid;
 	double other;
+};
+struct studentScore { // course
+	int no;
+	string id;
+	string name; 
+	score stscore; 
 	studentScore* pNext;
 };
 
@@ -156,7 +159,7 @@ void input_session(session& s);
 void create_class(schoolyear*& head);
 void input_date(date& p);
 void createCourseEnrolledTime(semester*& s);
-void updateCourseInfor(semester*&pHeadSem);
+void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(course*& pList, student*& pStudent);
@@ -181,7 +184,7 @@ void collectStudentsAccount(account*& head);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
-void show_semester(semester* s, int i);
+void show_semester(schoolyear*& head, semester*& s);
 void show_course(course* c, int i);
 void show_session(session head);
 void show_class(Class* head, int i);
@@ -244,4 +247,4 @@ void menu_view();
 
 bool checkAvailClass(string s, string year);
 bool checkConflictSession(session ses1, session ses2);
-void Delete_course_staff(course*& c);
+void Delete_course_staff(schoolyear*& sy, course*& c, string time, int semester);

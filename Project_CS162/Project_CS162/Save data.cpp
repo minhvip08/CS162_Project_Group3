@@ -64,10 +64,6 @@ void saveListOfSemester(schoolyear* sy)
 
 void saveListOfCourse(schoolyear* sy,course* c, string time, int semester)
 {
-	/*if (!c) {
-		cout << "No available courses" << endl;
-		return;
-	}*/
 	course* cur = c; int cnt = 0;
 	while (cur) {
 		++cnt;
