@@ -119,26 +119,23 @@ bool checkConflictSession(session ses1, session ses2)
 	if (ses1.date == ses2.date && ses1.time == ses2.time) return false;
 	else return true;
 }
-bool changeacctostu(account* acc, schoolyear* scy, student*& stu)
+void changeacctostu(account* acc, schoolyear* scy, student*& stu)
 {
-	if (!scy)
-		return false;
 	while (scy->next_schyear) // get cur_scy
 		scy = scy->next_schyear;
 	Class* c = scy->list_class;
 	while (c)
 	{
-		student* cur;
+		student* cur = c->student_list;
 		while (cur)
 		{
 			if (acc->username == cur->id)
 			{
 				stu = cur;
-				return true;
+				return;
 			}
 			cur = cur->pNext;
 		}
 		c = c->nextClass;
 	}
-	return false;
 }
