@@ -139,3 +139,23 @@ void changeacctostu(account* acc, schoolyear* scy, student*& stu)
 		c = c->nextClass;
 	}
 }
+
+bool alreadyEnrolled(string id, enrolledCourse* c)
+{
+	if (!c) return false;
+	enrolledCourse* tmp = c;
+	while (tmp) {
+		if (tmp->id_course == id) return true;
+		tmp = tmp->next;
+	}
+	return false;
+}
+
+int currentSemeser()
+{
+	date d = getCurrentDate();
+	if (9 <= d.month && d.month <= 12) return 1;
+	else if (1 <= d.month && d.month <= 4) return 2;
+	else if (5 <= d.month && d.month <= 8) return 3;
+	else return 0;
+}

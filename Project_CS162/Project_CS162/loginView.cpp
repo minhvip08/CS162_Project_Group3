@@ -180,7 +180,7 @@ void Menu2(account*cur, account*&head, int type) {
 			menu_staff();
 		}
 		else if (type == 1) {
-			menu_student();
+			//menu_student(); kiem tra lai sau
 		}
 		break;
 	case 4:

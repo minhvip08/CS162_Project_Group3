@@ -16,7 +16,7 @@ bool findstuID(student* stu, studentScore* &ss, course* c) {
 }
 double GPAofCourse(studentScore*& stu)
 {
-	return stu->total = stu->final * 0.4 + stu->mid * 0.3 + stu->other * 0.3;
+	return stu->stscore.total = stu->stscore.final * 0.4 + stu->stscore.mid * 0.3 + stu->stscore.other * 0.3;
 }
 void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 {
@@ -40,7 +40,7 @@ void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 		{
 			cout << c->course_name << ":";
 			cout << "\nFinal mark: " << GPAofCourse(stuscore) << endl;
-			GPA += stuscore->final;
+			GPA += stuscore->stscore.final;
 			++cnt;
 			if (!c->next)
 			{

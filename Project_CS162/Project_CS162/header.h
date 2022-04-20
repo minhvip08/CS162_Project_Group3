@@ -162,7 +162,7 @@ void createCourseEnrolledTime(semester*& s);
 void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
-void enrollCourse(course*& pList, student*& pStudent);
+void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu);
 void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course);
 void copyCourse(enrolledCourse*& pEC, course* pC);
 
@@ -190,9 +190,9 @@ void show_session(session head);
 void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
-void menu_student();
+void menu_student(schoolyear*& sy, int semester, student*& stu);
 void show_ID_course(course* c);
-void viewListEnrolledCourse(student* pS);
+void showListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
 
 //Load students in csv file
@@ -214,7 +214,7 @@ void Delete_stdScore(studentScore*& head);
 void Delete_student(student*& head);
 void Delete_enrollCourse(enrolledCourse*& head);
 void Delete_finalGPA(finalGPA*& head);
-void Delete_enrolled_course( student*& pS);
+void Delete_enrolled_course(string time, student*& pS, int sem);
 
 // support function
 date getCurrentDate();
@@ -248,3 +248,7 @@ void menu_view();
 bool checkAvailClass(string s, string year);
 bool checkConflictSession(session ses1, session ses2);
 void Delete_course_staff(schoolyear*& sy, course*& c, string time, int semester);
+void save_enrollcourse_stu(string time, student* s, int semester);
+bool alreadyEnrolled(string id, enrolledCourse* c);
+int currentSemeser();
+void readListEnrolled(student*& s, int semester);

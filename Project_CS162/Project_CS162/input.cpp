@@ -227,33 +227,38 @@ void input_date(date &p) // OK
 	cout << "Year: "; cin >> p.year; 
 }
 
-void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem) {
-	if (pHeadSem == nullptr) {
+void uppdateCourseInfor(schoolyear*& sy, semester*& sem) {
+	if (sem == nullptr) {
 		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
 		char a = _getch();
 		return;
 	}
 
-	int opt = 100; string id_course;
-
 	//system("cls");
 	cout << "These are all courses in this semester, please enter one ID Course!" << endl;
-	course* tmp = pHeadSem->course_list; 
-	show_ID_course(tmp); // kiem tra lai -> nhap so ko nhap ID
-	cin >> id_course;
-	
-	course* pCurCourse = pHeadSem->course_list;
-	
-	while (pCurCourse != nullptr && pCurCourse->ID_course != id_course)
-		pCurCourse = pCurCourse->next;
-
-	if (pCurCourse == nullptr) {
-		cout << "Sorry, the id course does not exist, please enter again.";
-		return;
+	int i = 0; course* tmp = sem->course_list;
+	while (tmp) {
+		++i;
+		cout << i << '.' << "Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
 	}
-
+	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = sem->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h; 
+		}
+	}
+	course* c = sem->course_list;
+	int opt = 100;
 	while (opt != 0) {
 		//system("cls");
+		cout << "Course: " << cur->course_name << endl;
 		cout << "Which information do you want to change?";
 		cout << endl << "1.ID of Course.";
 		cout << endl << "2.Name of Course.";
@@ -265,8 +270,8 @@ void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem) {
 		cout << endl << "0.Exit.";
 		cout << endl << "Your option is: ";
 		cin >> opt;
-		update1InforCourse(pCurCourse, opt);
-		saveListOfCourse(sy, tmp, sy->time, pHeadSem->mark);
+		update1InforCourse(cur, opt);
+		saveListOfCourse(sy, c, sy->time, sem->mark);
 	}
 	return;
 }
@@ -289,7 +294,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		cout << "-----UPDATE COURSE NAME-----";
 		cout << "\nOld Name of Course: " << pCourse->course_name;
 		cout << "\nPlease enter Name of Course : ";
-		cin >> pCourse->course_name;
+		cin.get(); 
+		getline(cin, pCourse->course_name, '\n');
 		cout << "Name of course has been changed successfully!!";
 		break;
 	}
@@ -298,7 +304,8 @@ void update1InforCourse(course* pCourse, int opt) {
 		cout << "-----UPDATE LECTURER'S NAME OF COURSE-----";
 		cout << "\nOld Teacher's Name of Course: " << pCourse->teacher_name;
 		cout << "\nPlease enter new Teacher's Name of Course: ";
-		cin >> pCourse->teacher_name;
+		cin.get();
+		getline(cin, pCourse->teacher_name, '\n');
 		cout << "Teacher's Name of course has been changed successfully!!";
 		break;
 	}
@@ -339,93 +346,76 @@ void update1InforCourse(course* pCourse, int opt) {
 }
 
 
-void enrollCourse(course*& pList, student*& pStudent) {
-	if (!pList) return; 
-	course* pCurCourse = pList;
-	string choose("0");
-	do {
-		//system("cls");
-		cout << "List of course: " << endl;
-		show_ID_course(pList);
-		cout << endl << "0. EXIT.";
-		cout << "Enter ID course: "; cin >> choose;
-
-		while (pCurCourse != nullptr && pCurCourse->ID_course != choose)
-			pCurCourse = pCurCourse->next;
-
-		if (pCurCourse == nullptr) {
-			cout << "Sorry, the id course does not exist, please enter again.";
-			continue;
-		}
-
-		if (choose == "0") {
-			cout << "\nPress any key to continue....";
-			char a = _getch();
-			return;
-		}
-
-		if (pStudent->countEnroll >= 5) {
-			cout << "You cannot enroll over 5 courses in this semester.";
-			cout << "\nPress any key to continue....";
-			char a = _getch();
-			continue;
-		}
-		
-		addEnrolledCourseToStudent(pCurCourse, pStudent, choose);
-
-	} while (true);
-
-
-}
-
-// viet them save enrolled (se bo sung sau)
-void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course) {
-	course* pCurCrs = pList;
-	enrolledCourse* pCurECrs = pStudent->list_enrolled;
-
-	while (pCurCrs != nullptr && pCurCrs->ID_course != ID_course)
-		pCurCrs = pCurCrs->next;
-
-	if (pCurCrs->cur_student == pCurCrs->max_student) {
-		cout << "\This course is full, please choose another course! ";
+void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
+	// kiem tra ngay thang cho phep enroll
+	readListEnrolled(stu, sem);
+	if (stu->countEnroll >= 5) {
+		cout << "You cannot enroll over 5 course in this semester.";
 		cout << "\nPress any key to continue....";
 		char a = _getch();
 		return;
 	}
-
-	while (pCurECrs != nullptr) {
-		if (pCurECrs->id_course == pCurCrs->ID_course) {
-			cout << "\nThis course is enrolled, please choose another course! ";
-			cout << "\nPress any key to continue....";
-			char a = _getch();
-			return;
-		}
-		pCurECrs = pCurECrs->next;
+	semester* stmp = sy->sem; course* c = new course;
+	while (sem != stmp->mark) {
+		stmp = stmp->next;
 	}
+	c = stmp->course_list;
+	if (!c) return;
+	course* tmpc = c; int i = 0;
+	while (tmpc) {
+		++i;
+		cout << i << ".ID Course: " << tmpc->ID_course << '\t' << "Course Name: " << tmpc->course_name << endl;
+		tmpc = tmpc->next;
+	} cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = c;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+	if (alreadyEnrolled(cur->ID_course, stu->list_enrolled)) {
+		cout << "You're already enrolled in this course" << endl;
+		return;
+	}
+	if (cur->cur_student == cur->max_student) {
+		cout << "The course is full of slots" << endl << "You can't enroll in this course" << endl;
+		cout << "\nPress any key to continue....";
+		char a = _getch();
+		return;
+	}
+	++cur->cur_student;
+	addEnrolledCourseToStudent(cur, stu);
+}
 
-	studentScore* pTempStudent = pCurCrs->list_score;
+void addEnrolledCourseToStudent(course* c, student*& stu) {
 
-	while (pTempStudent != nullptr)
-		pTempStudent->pNext;
-
-	pTempStudent = new studentScore;
-
-	pTempStudent->name = pStudent->prf.firstname + pStudent->prf.lastname;
-	pTempStudent->no = pStudent->No;
-	pTempStudent->id = pStudent->id;
-
+	cout << "------COURSE INFORMATION------" << endl;
+	cout << "ID: " << c->ID_course << endl;
+	cout << "Name: " << c->course_name << endl;
+	cout << "Teacher: " << c->teacher_name << endl;
+	cout << "Credits: " << c->credits << endl;
+	cout << "Current students: " << c->cur_student << endl;
+	cout << "Session 1: " << c->ses1.date << '\t' << c->ses1.time << endl;
+	cout << "Session 2: " << c->ses2.date << '\t' << c->ses2.time << endl;
 	
-	pCurECrs = new enrolledCourse;
-	copyCourse(pCurECrs, pCurCrs);
-
-	pStudent->countEnroll++;
-
-	cout << "Enroll successfully!";
-
-	cout << "\nPress any key to continue....";
-	char a = _getch();
-	return;
-
+	enrolledCourse* pnew = new enrolledCourse;
+	copyCourse(pnew, c);
+	enrolledCourse* tmp = stu->list_enrolled;
+	++stu->countEnroll; 
+	if (!tmp) {
+		tmp = pnew;
+		tmp->next = nullptr;
+	}
+	else {
+		pnew->next = tmp;
+		tmp = pnew;
+	}
+	cout << "Enroll successfully!\n";
 }
 
 void copyCourse(enrolledCourse*& pEC, course* pC) {

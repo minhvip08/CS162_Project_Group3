@@ -88,3 +88,25 @@ void saveListOfCourse(schoolyear* sy,course* c, string time, int semester)
 	fout.close();
 	saveListOfSemester(sy);
 }
+
+void save_enrollcourse_stu(string time, student* s, int semester)
+{
+	if (!s->list_enrolled) return;
+	ofstream fout; fout.open(time + '_' + s->id + "_sem" + (char)semester + "enrolled.txt");
+	enrolledCourse* c = s->list_enrolled; int cnt = 0;
+	while (c) {
+		++cnt;
+		c = c->next;
+	}
+	fout << cnt << endl;
+	enrolledCourse* tmp = s->list_enrolled;
+	while (tmp) {
+		fout << tmp->id_course << endl;
+		fout << tmp->course_name << endl;
+		fout << tmp->name_teacher << endl;
+		fout << tmp->ses1.date << '\t' << tmp->ses1.time << endl;
+		fout << tmp->ses2.date << '\t' << tmp->ses2.time << endl;
+		tmp = tmp->next;
+	}
+	fout.close();
+}

@@ -118,5 +118,30 @@ void read_date(ifstream& fin, date& d, bool check)
 	else {
 		fin >> d.year; getline(fin, a, '\n');
 	}
+}
 
+void readListEnrolled(student*& s, int semester)
+{
+	ifstream fin; fin.open(s->id + "_sem" + (char)semester + "enrolled.txt");
+	if (isEmpty(fin)) {
+		cout << "You haven't enrolled in any course" << endl;
+	}
+	int n; fin >> n;
+	s->countEnroll = n;
+	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
+	fin.get();
+	for (int i = 0; i < n; i++) {
+		getline(fin, cur->id_course, '\n');
+		getline(fin, cur->course_name, '\n');
+		getline(fin, cur->name_teacher, '\n');
+		getline(fin, cur->ses1.date, '\t'); getline(fin, cur->ses1.time, '\n');
+		getline(fin, cur->ses2.date, '\t'); getline(fin, cur->ses2.time, '\n');
+		if (i == n - 1) {
+			cur->next = nullptr;
+		}
+		else {
+			cur->next = new enrolledCourse;
+			cur = cur->next;
+		}
+	}
 }
