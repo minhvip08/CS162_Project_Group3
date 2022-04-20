@@ -192,7 +192,7 @@ void create_class(schoolyear* &head) //OK
 		cout << "Please input again" << endl;
 		cout << "Class name: "; getline(cin, a, '\n');
 	}
-	cur->class_name = a; 
+	cur->class_name = a; account* cur_acc = NULL; collectOneClassAccount(cur->class_name,cur_acc);
 	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
 	if (n == 1) cur->total_student = 50;
 	else cur->total_student = n;

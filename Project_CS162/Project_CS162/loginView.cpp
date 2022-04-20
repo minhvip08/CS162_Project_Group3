@@ -15,10 +15,10 @@ void registerView(account*& head, ifstream& fin) {
 			cout << "Not alike" << endl;
 			flag = false;
 		}
-		else flag = true; 
+		else flag = true;
 	} while (!flag);
 
-	bool check; 
+	bool check;
 	check = checkAccountModel(acc, head, 0, true);
 	if (check) {
 		cout << "Username exist" << endl;
@@ -44,7 +44,7 @@ void registerView(account*& head, ifstream& fin) {
 		fout.close();
 	}
 }
-void loginView(account* &head, int type) 
+void loginView(account*& head, int type)
 {
 	account* acc = new account;
 	cout << "Enter username: "; cin >> acc->username;
@@ -53,7 +53,7 @@ void loginView(account* &head, int type)
 	if (checkAccountModel(acc, head, type, false)) {
 		cout << "Login successful!" << endl;
 		//head = cur;
-		Menu2(acc,head,type);
+		Menu2(acc, head, type);
 		//menu_staff();
 	}
 	else {
@@ -64,7 +64,7 @@ void loginView(account* &head, int type)
 
 void enterProfile(account*& acc)
 {
-	int gender = 0; 
+	int gender = 0;
 	acc->type = 0;
 	cout << "Enter last name: "; cin.get(); getline(cin, acc->prf.lastname);
 	cout << "Enter first name: "; getline(cin, acc->prf.firstname);
@@ -89,7 +89,7 @@ void enterProfile(account*& acc)
 	}
 	cout << "Enter your social ID: "; cin >> acc->prf.social_id;
 }
-void viewProfile(account*acc, account*& head)
+void viewProfile(account* acc, account*& head)
 {
 	account* cur = head;
 
@@ -119,10 +119,10 @@ void viewProfile(account*acc, account*& head)
 		fout.open("Staff_acc.txt");
 		saveAccountFile(fout, head);
 		fout.close();
-		viewProfile(acc,cur);
+		viewProfile(acc, cur);
 	}
-	else if (choose==0) {
-		Menu2(cur, head,cur->type);
+	else if (choose == 0) {
+		Menu2(cur, head, cur->type);
 	}
 }
 void changePassword(account* acc, account*& head)
@@ -141,28 +141,28 @@ void changePassword(account* acc, account*& head)
 	account* cur = head;
 	while (cur != NULL)
 	{
-		if (acc->username==cur->username)
+		if (acc->username == cur->username)
 		{
 			cur->password = pwd;
 			break;
 		}
 		cur = cur->pNext;
 	}
-	cout << "Change password successfully!"<<endl;
+	cout << "Change password successfully!" << endl;
 	ofstream fout;
 	fout.open("Staff_acc.txt");
 	saveAccountFile(fout, head);
 	fout.close();
 }
-void Menu2(account*cur, account*&head, int type) {
+void Menu2(account* cur, account*& head, int type) {
 	int choose = 0;
-	while (choose!=1 && choose!=2 && choose!=3 && choose!=4) {
+	while (choose != 1 && choose != 2 && choose != 3 && choose != 4) {
 		cout << "1. View Profile" << endl;
 		cout << "2. Change Password" << endl;
 		if (type == 0) {
 			cout << "3. MENU_STAFF" << endl;
 		}
-		else if(type==1) {
+		else if (type == 1) {
 			cout << "3. MENU_STUDENT" << endl;
 		}
 		cout << "4. Log Out" << endl;
@@ -170,17 +170,18 @@ void Menu2(account*cur, account*&head, int type) {
 	}
 	switch (choose) {
 	case 1:
-		viewProfile(cur,head);
+		viewProfile(cur, head);
 		break;
 	case 2:
-		changePassword(cur,head);
+		changePassword(cur, head);
 		break;
 	case 3:
 		if (type == 0) {
 			menu_staff();
 		}
 		else if (type == 1) {
-			//menu_student(); kiem tra lai sau
+			cout << "MENU_STU" << endl;
+			//menu_student(head,sy);
 		}
 		break;
 	case 4:
@@ -191,7 +192,7 @@ void Menu2(account*cur, account*&head, int type) {
 
 void Menu() {
 	int type = 100;
-	account* head =NULL;
+	account* head = NULL;
 	while (true) {
 		while (type != 1 && type != 2 && type != 0) {
 			cout << "Staff or Student?" << endl;
@@ -215,7 +216,7 @@ void Menu() {
 				cout << "2. Register" << endl;
 				cout << "0. Go back to main menu" << endl;
 
-				cin >> n; 
+				cin >> n;
 				if (n == 0) {
 					head = NULL;
 					type = -1;
@@ -238,20 +239,20 @@ void Menu() {
 			}
 		}
 		else if (type == 2) {
-			collectStudentsAccount(head);
 			ifstream fin; fin.open("Student_acc.txt");
 			bool flag = isEmpty(fin);
 			if (!flag) {
 				loadAccountFile(fin, head);
+				fin.close();
 			}
-			fin.close();
+
 			while (true) {
 				//	system("cls");
 				int n;
 				cout << "-------STUDENT-------" << endl;
 				cout << "1. Login" << endl;
 				cout << "0. Go back to main menu" << endl;
-				cin >> n; 
+				cin >> n;
 				if (n == 0) {
 					head = NULL;
 					type = -1;

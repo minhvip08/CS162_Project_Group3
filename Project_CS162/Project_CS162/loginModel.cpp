@@ -32,7 +32,9 @@ void saveAccountFile(ofstream& fout, account* head)
 		cout << "Error" << endl; // kt lai
 		return;
 	}
-	fout << "Type,Username,Password,Last name,First name,DOB,Gender,Social ID";
+	if (head->type == 0) {
+		fout << "Type,Username,Password,Last name,First name,DOB,Gender,Social ID";
+	}
 	while (head != NULL) {
 		fout << endl; 
 		fout << head->type << ',';
@@ -113,8 +115,8 @@ void printStudentsAccount(Class*& cl, account*& head) {
 	saveAccountFile(fout, head);
 }
 void collectStudentsAccount(account*&head) {
-	schoolyear*sy=NULL;
-	Class* temp = NULL;
+	schoolyear* sy = NULL;
+	Class* check = NULL;
 	readSchoolyear(sy);
 	if(!sy) {
 		system("cls");
@@ -129,8 +131,57 @@ void collectStudentsAccount(account*&head) {
 		}
 		else {
 			system("cls");
-			cout << "List of classes in "<<sy->time<<" is empty"<<endl;
+			cout << "List of classes in " << sy->time << " is empty" << endl;
 		}
 		sy = sy->next_schyear;
 	}
+
+}
+void collectOneClassAccount(string class_name,account*&head) {
+	ifstream fin;
+	fin.open(class_name + ".txt");
+	if (!fin.is_open()) {
+		cout << class_name << " has not been created" << endl;
+	}
+	else {
+		string a;
+		getline(fin, a, '\n');
+		while (!fin.eof()) {
+			account* cur_acc = new account;
+			cur_acc->type = 1;
+			string a; getline(fin, a, ',');
+			getline(fin, cur_acc->username, ',');
+			cur_acc->password = "12345678";
+			getline(fin, cur_acc->prf.lastname, ',');
+			getline(fin, cur_acc->prf.firstname, ',');
+			getline(fin, cur_acc->prf.DOB, ',');
+			getline(fin, cur_acc->prf.gender, ',');
+			getline(fin, cur_acc->prf.social_id, '\n');
+
+			if (!head) {
+				head = cur_acc;
+				head->pNext = NULL;
+			}
+			else {
+				cur_acc->pNext = head;
+				head = cur_acc;
+			}
+		}
+	}
+	fin.close();
+	bool check = false;
+	ifstream fin2;
+	fin2.open("Student_acc.txt");
+	if (!fin2.is_open()) {
+		check = true;
+	}	
+	fin2.close();
+
+	ofstream fout;
+	fout.open("Student_acc.txt", ios::app);
+	if (check) {
+		fout << "Type,Username,Password,Last name,First name,DOB,Gender,Social ID";
+	}
+	saveAccountFile(fout, head);
+	fout.close();
 }

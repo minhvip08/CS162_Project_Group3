@@ -180,7 +180,7 @@ void viewProfile(account* acc, account*& head);
 void enterProfile(account*& acc);
 void changePassword(account* acc, account*& head);
 void printStudentsAccount(Class*&cl,account*& head);
-void collectStudentsAccount(account*& head);
+void collectOneClassAccount(string class_name, account*& head);
 
 // Output to console
 void show_schoolyear(schoolyear* head);
