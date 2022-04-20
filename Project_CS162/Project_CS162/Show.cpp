@@ -213,25 +213,47 @@ void menu_view()
 		}
 	}
 }
-void menu_student() {
-	int opt = 0;
-	cout << "1. Enroll a course" << endl;
-	cout << "2. View a list of enrolled course" << endl;//delete after viewing
-	cout << "3. View a list of classes" << endl;
-	cout << "4. View a list of student in a class" << endl;
-	cout << "5. View a list of students in a course" << endl;
-	cout << "6. View his/her scoreboard" << endl;
-	cout << "0. Exit" << endl;
+
+void menu_student(account* head, schoolyear* sy) {
+	student* cur_stu = NULL;
+	changeacctostu(head, sy, cur_stu);
 	while (true) {
+		string opt;
+		cout << "1. Enroll a course" << endl;
+		cout << "2. View a list of enrolled course" << endl;
+		cout << "3. Remove enrolled course" << endl;
+		cout << "4. View a list of his/her courses" << endl;
+		cout << "5. View his/her scoreboard" << endl;
+		cout << "0. Exit" << endl;
+		cout << "Choose: ";
 		cin >> opt;
-		switch (opt) {
-			case 0: break;
-			case 1: ; break;
-			case 2: ; break;
-			case 3: ; break;
-			case 4: ; break;
-			case 5: ; break;
-			case 6: ; break;
+		int opt_ = stoi(opt);
+		switch (opt_) {
+		case 0: break;
+		case 1:
+			enrollCourse(sy->sem->course_list, cur_stu);
+			//current schoolyear current semester
+			break;
+		case 2:
+			viewListEnrolledCourse(cur_stu);
+			break;
+		case 3:
+			Delete_enrolled_course(cur_stu);
+			break;
+		case 4:
+			enrolledCourse * cur_erC = cur_stu->list_enrolled;
+			if (cur_erC != nullptr) {
+				cout << "You haven't enrolled any courses yet!";
+				cout << "\n Press any key to back.... ";
+				char a = _getch();
+			}
+			else {
+				show_enrolled_course(cur_erC);
+			}
+			break;
+		case 5:
+			//viewHisHerScore(cur_stu, sy);
+			break;
 		}
 	}
 }
