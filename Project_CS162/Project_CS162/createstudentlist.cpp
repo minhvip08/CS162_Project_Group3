@@ -5,6 +5,9 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 	int no = 0;
 	ifstream fin;
 	fin.open(str + ".csv");
+	if (isEmpty(fin)) {
+		cout << "No data\n"; return;
+	}
 	if (!fin.eof())
 	{
 		cout << "Can't open the file!\n";
@@ -14,32 +17,21 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 	while (!fin.eof())
 	{
 		++no;
-		if (head -> student_list == nullptr)
-		{
-			head->student_list = new student;
-			head->student_list->No = no;
-			getline(fin, head->student_list->id, ',');
-			getline(fin, head->student_list->prf.firstname, ',');
-			getline(fin, head->student_list->prf.lastname, ',');
-			getline(fin, head->student_list->prf.DOB, '/');
-			getline(fin, head->student_list->prf.gender, ',');
-			getline(fin, head->student_list->prf.social_id, ',');
-			head->student_list->pNext = nullptr;
-			cur = head->student_list;
+		fin >> cur->No; 
+		fin.get(); 
+		getline(fin, cur->id, ',');
+		getline(fin, cur->prf.firstname, ',');
+		getline(fin, cur->prf.lastname, ',');
+		getline(fin, cur->prf.gender, ',');
+		getline(fin, cur->prf.DOB, ',');
+		getline(fin, cur->prf.social_id, '\n');
+		if (fin.eof()) {
 			cur->pNext = nullptr;
+			break;
 		}
-		else
-		{
+		else {
 			cur->pNext = new student;
 			cur = cur->pNext;
-			cur->No = no;
-			getline(fin, cur->id, ',');
-			getline(fin, cur->prf.firstname, ',');
-			getline(fin, cur->prf.lastname, ',');
-			getline(fin, cur->prf.gender, ',');
-			getline(fin, cur->prf.DOB, ',');
-			getline(fin, cur->prf.social_id, ',');
-			cur->pNext = nullptr;
 		}
 	}
 	fin.close();
@@ -130,13 +122,13 @@ void import1studentscore(ifstream& fin, studentScore* stusc)
 	fin >> stusc->id;
 	getline(fin, stusc->id, '\n');
 	getline(fin, stusc->name, '\n');
-	fin >> stusc->total;
+	fin >> stusc->stscore.total;
 	fin.ignore();
-	fin >> stusc->final;
+	fin >> stusc->stscore.final;
 	fin.ignore();
-	fin >> stusc->mid;
+	fin >> stusc->stscore.mid;
 	fin.ignore();
-	fin >> stusc->other;
+	fin >> stusc->stscore.other;
 	fin.ignore();
 
 }
@@ -170,13 +162,13 @@ void viewscoreboard(course* c)
 	studentScore* sco = c->list_score;
 	while (sco)
 	{
-		cout << sco->no << "\t" << sco->id << "\t" << sco->name << "\t" << sco->total << "\t" << sco->final << "\t" << sco->mid << "\t" << sco->other << endl;
+		cout << sco->no << "\t" << sco->id << "\t" << sco->name << "\t" << sco->stscore.total << "\t" << sco->stscore.final << "\t" << sco->stscore.mid << "\t" << sco->stscore.other << endl;
 		sco = sco->pNext;
 	}
 }
 void updateastudentscore(course*& c)
 {
-	cout << "\033[2J\033[1;1H";
+	//cout << "\033[2J\033[1;1H";
 	if (!c->list_score) {
 		cout << "The student list is empty!\n";
 		return;
@@ -226,34 +218,34 @@ void updateastudentscore(course*& c)
 			case 1:
 				cout << "Enter new total score: ";
 				cin >> a;
-				cur->total = a;
+				cur->stscore.total = a;
 				cout << "Successful!\n";
 				system("pause");
-				cout << "\033[2J\033[1;1H";
+				//cout << "\033[2J\033[1;1H";
 				break;
 			case 2:
 				cout << "Enter new final score: ";
 				cin >> a;
-				cur->final = a;
+				cur->stscore.final = a;
 				cout << "Successful!\n";
 				system("pause");
-				cout << "\033[2J\033[1;1H";
+				//cout << "\033[2J\033[1;1H";
 				break;
 			case 3:
 				cout << "Enter new mid score: ";
 				cin >> a;
-				cur->mid = a;
+				cur->stscore.mid = a;
 				cout << "Successful!\n";
 				system("pause");
-				cout << "\033[2J\033[1;1H";
+				//cout << "\033[2J\033[1;1H";
 				break;
 			case 4:
 				cout << "Enter new total score: ";
 				cin >> a;
-				cur->other = a;
+				cur->stscore.other = a;
 				cout << "Successful!\n";
 				system("pause");
-				cout << "\033[2J\033[1;1H";
+				//cout << "\033[2J\033[1;1H";
 				break;
 			case 5:
 				c = false;
