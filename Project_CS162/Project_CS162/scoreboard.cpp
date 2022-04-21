@@ -53,6 +53,29 @@ void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c)
 	}
 	scoreboardofclass(cur_stu->pNext, cur_semester, cur_semester->course_list);
 }
+void viewHisHerScoreBoard(student* cur_stu)
+{
+	enrolledCourse* enrollC = cur_stu->list_enrolled;
+	if (!enrollC) {
+		cout << "You haven't enrolled any course yet!" << endl;
+		return;
+	}
+	studentScore* stu_score = enrollC->list_score;
+	while (enrollC) {
+		if (!stu_score) {
+			cout << "Your score in "<< enrollC->course_name <<"has not been marked yet!" << endl;
+		}
+		else {
+			cout << "Course Name: " << enrollC->course_name << endl;
+			cout << "Other mark: " << stu_score->stscore.other << endl;
+			cout << "Midterm mark: " << stu_score->stscore.mid << endl;
+			cout << "Final mark: " << stu_score->stscore.final << endl;
+			cout << "Total mark:" << stu_score->stscore.total << endl;
+			cout << endl;
+		}
+		enrollC = enrollC->next;
+	}
+}
 void CaloverallGPA(student* &s)
 {
 	if (!s->list_gpa)
