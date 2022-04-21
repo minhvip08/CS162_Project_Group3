@@ -3,7 +3,9 @@ void loadAccountFile(ifstream& fin, account*& head) {
 	if (!head) {
 		head = new account;
 	}
-	account* cur = head; string a; getline(fin, a, '\n');
+	account* cur = head;
+	
+	//string a; getline(fin, a, '\n');
 	while (!fin.eof()) {
 		fin >> cur->type;
 		string a; getline(fin, a, ',');
@@ -32,11 +34,8 @@ void saveAccountFile(ofstream& fout, account* head)
 		cout << "Error" << endl; // kt lai
 		return;
 	}
-	if (head->type == 0) {
-		fout << "Type,Username,Password,Last name,First name,DOB,Gender,Social ID";
-	}
 	while (head != NULL) {
-		fout << endl; 
+		//fout << endl; 
 		fout << head->type << ',';
 		fout << head->username << ',';
 		fout << head->password << ',';
@@ -45,7 +44,9 @@ void saveAccountFile(ofstream& fout, account* head)
 		fout << head->prf.DOB << ',';
 		fout << head->prf.gender << ',';
 		fout << head->prf.social_id;
+		fout << endl;
 		head = head->pNext;
+		//if (head) fout << endl; 
 	}
 }
 
@@ -75,79 +76,16 @@ bool isEmpty(ifstream& pFile)
 {
 	return pFile.peek() == ifstream::traits_type::eof();
 }
-void printStudentsAccount(Class*& cl, account*& head) {
-	while (cl) {
-		ifstream fin;
-		fin.open(cl->class_name + ".txt");
-		if (!fin.is_open()) {
-			cout << cl->class_name<< " has not been created"<<endl;
-		}
-		else {
-			string a;
-			getline(fin, a, '\n');
-			while (!fin.eof()) {
-				account* cur_acc = new account;
-				cur_acc->type = 1;
-				string a; getline(fin, a, ',');
-				getline(fin, cur_acc->username, ',');
-				cur_acc->password = "12345678";
-				getline(fin, cur_acc->prf.lastname, ',');
-				getline(fin, cur_acc->prf.firstname, ',');
-				getline(fin, cur_acc->prf.DOB, ',');
-				getline(fin, cur_acc->prf.gender, ',');
-				getline(fin, cur_acc->prf.social_id, '\n');
 
-				if (!head) {
-					head = cur_acc;
-					head->pNext = NULL;
-				}
-				else {
-					cur_acc->pNext = head;
-					head = cur_acc;
-				}
-			}
-		}
-		fin.close();
-		cl = cl->nextClass;
-	}
-	ofstream fout;
-	fout.open("Student_acc.txt");
-	saveAccountFile(fout, head);
-}
-void collectStudentsAccount(account*&head) {
-	schoolyear* sy = NULL;
-	Class* check = NULL;
-	readSchoolyear(sy);
-	if(!sy) {
-		system("cls");
-		cout << "No school year has been created yet" << endl;
+void collectOneClassAccount(string class_name,account*&head) {
+	ifstream fin; account* cur_acc = new account; head = cur_acc; 
+	fin.open(class_name + ".csv");
+	if (!fin.is_open()) {
+		cout << class_name << " file has not been imported" << endl;
 		return;
 	}
-	while (sy) {
-		Class* cl = NULL;
-		readListOfClass(cl, sy->time);
-		if (cl) {
-			printStudentsAccount(cl, head);
-		}
-		else {
-			system("cls");
-			cout << "List of classes in " << sy->time << " is empty" << endl;
-		}
-		sy = sy->next_schyear;
-	}
-
-}
-void collectOneClassAccount(string class_name,account*&head) {
-	ifstream fin;
-	fin.open(class_name + ".txt");
-	if (!fin.is_open()) {
-		cout << class_name << " has not been created" << endl;
-	}
 	else {
-		string a;
-		getline(fin, a, '\n');
 		while (!fin.eof()) {
-			account* cur_acc = new account;
 			cur_acc->type = 1;
 			string a; getline(fin, a, ',');
 			getline(fin, cur_acc->username, ',');
@@ -157,31 +95,22 @@ void collectOneClassAccount(string class_name,account*&head) {
 			getline(fin, cur_acc->prf.DOB, ',');
 			getline(fin, cur_acc->prf.gender, ',');
 			getline(fin, cur_acc->prf.social_id, '\n');
-
-			if (!head) {
-				head = cur_acc;
-				head->pNext = NULL;
+			fin.ignore();
+			if (fin.eof()) {
+				cur_acc->pNext = NULL;
+				break;
 			}
 			else {
-				cur_acc->pNext = head;
-				head = cur_acc;
+				cur_acc->pNext = new account;
+				cur_acc = cur_acc->pNext;
 			}
 		}
+			
 	}
 	fin.close();
-	bool check = false;
-	ifstream fin2;
-	fin2.open("Student_acc.txt");
-	if (!fin2.is_open()) {
-		check = true;
-	}	
-	fin2.close();
 
 	ofstream fout;
 	fout.open("Student_acc.txt", ios::app);
-	if (check) {
-		fout << "Type,Username,Password,Last name,First name,DOB,Gender,Social ID";
-	}
 	saveAccountFile(fout, head);
 	fout.close();
 }

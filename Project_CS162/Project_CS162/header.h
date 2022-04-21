@@ -168,7 +168,7 @@ void copyCourse(enrolledCourse*& pEC, course* pC);
 
 
 //Login and register
-void registerView(account* &head, ifstream &fin);
+void registerView(account* &head);
 void loginView(account* &head, int type);
 void Menu();
 void loadAccountFile(ifstream& fin, account*& head);
@@ -177,9 +177,8 @@ bool checkAccountModel(account* acc, account* head, int type, bool isReg);
 bool isEmpty(ifstream& pFile);
 void Menu2(account* acc, account*& head, int type);
 void viewProfile(account* acc, account*& head);
-void enterProfile(account*& acc);
+void enterProfile(account*& acc, int type);
 void changePassword(account* acc, account*& head);
-void printStudentsAccount(Class*&cl,account*& head);
 void collectOneClassAccount(string class_name, account*& head);
 
 // Output to console
