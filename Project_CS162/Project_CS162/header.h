@@ -194,6 +194,10 @@ void menu_student(schoolyear*& sy, int semester, student*& stu);
 void show_ID_course(course* c);
 void showListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
+//function 18
+void showStudentsInClass(Class* pC);
+//function 20
+void showStudentsInCourse(course* pC);
 
 //Load students in csv file
 void createlistofstu(Class*& head, const string str);

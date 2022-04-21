@@ -197,6 +197,34 @@ void viewListEnrolledCourse(student* pS) {
 
 }
 
+void showStudentsInClass(Class* pC) {
+	student* pStudentHead = pC->student_list;
+	system("cls");
+	cout << "No\tID\tName\t\Birthday\n";
+	while (pStudentHead != nullptr) {
+		cout << pStudentHead->No << '\t';
+		cout << pStudentHead->id << '\t';
+		cout << pStudentHead->prf.firstname << ' ' << pStudentHead->prf.lastname << '\t';
+		cout << pStudentHead->prf.DOB << "\n";
+		pStudentHead = pStudentHead->pNext;
+	}
+}
+
+//Vi la show student trong bien student score khong phai bien student nen bat buoc phai cap nhat 
+//thong tin student score ngay tu dau chu khong duoc de thi xong nhap diem moi cap nhat
+void showStudentsInCourse(course* pC) {
+	studentScore* pStuCrs = pC->list_score;
+	system("cls");
+	cout << "No\tID\tName";
+	while (pStuCrs != nullptr) {
+		cout << pStuCrs->no << "\t";
+		cout << pStuCrs->id << "\t";
+		cout << pStuCrs->name << "\t";
+		pStuCrs = pStuCrs->pNext;
+	}
+
+}
+
 void menu_view()
 {
 	schoolyear* sy = nullptr;
