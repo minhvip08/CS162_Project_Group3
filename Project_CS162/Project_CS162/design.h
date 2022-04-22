@@ -9,10 +9,6 @@ const int KEY_DOWN = 80;
 const int KEY_LEFT = 75;
 const int KEY_RIGHT = 77;
 
-// Fixed the console size
-const int ConsoleWidth = 200;
-const int ConsoleHeight = 200;
-
 //Color text (choose from 1 to 16 colors)
 void SetColor(WORD color);
 

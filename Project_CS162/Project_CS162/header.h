@@ -9,7 +9,8 @@
 #include <Windows.h>
 using namespace std;
 
-/*schoolyear: add head;
+/*schoolyear: add head
+;
 semester: add head; // use recursion to output
 student list: add head; // use recursion to output
 course: add head;
@@ -29,7 +30,7 @@ struct profile {
 struct account {
 	string username;
 	string password;
-	int type; // 0 = student, 1 = staff.
+	int type; // 0 = staff, 1 = student
 	profile prf;
 	account* pNext;
 };

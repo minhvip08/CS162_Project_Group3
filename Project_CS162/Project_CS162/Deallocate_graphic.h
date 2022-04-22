@@ -9,7 +9,7 @@ void Delete_student(student*& head);
 void Delete_enrollCourse(enrolledCourse*& head);
 void Delete_finalGPA(finalGPA*& head);
 
-void SetBGColor(WORD color);
-void clrscr(void);
-void gotoxy(short x, short y);
-void SetColor(WORD color);
+//void SetBGColor(WORD color);
+//void clrscr(void);
+//void gotoxy(short x, short y);
+//void SetColor(WORD color);
