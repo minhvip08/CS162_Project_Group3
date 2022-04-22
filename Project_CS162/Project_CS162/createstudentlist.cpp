@@ -1,5 +1,6 @@
 #include "header.h"
-
+#include "Support.h"
+#include "Data.h"
 void createlistofstu(Class*& head, const string str) //str is the id of the class
 {
 	int no = 0;
@@ -102,19 +103,6 @@ void exportlistofstudent(Class* c, course *cour)
 		cur = cur->pNext;
 	}
 	fout.close();
-}
-void sortbyID(Class* &c)
-{
-	student* cur = c->student_list;
-	while (cur)
-	{
-		student* next = cur->pNext;
-		while (next)
-		{
-			if (stoi(cur->id) > stoi(next->id)) // stoi - chuyen doi string sang int
-				swap(cur, next); // hi vong la ok
-		}
-	}
 }
 void import1studentscore(ifstream& fin, studentScore* stusc)
 {

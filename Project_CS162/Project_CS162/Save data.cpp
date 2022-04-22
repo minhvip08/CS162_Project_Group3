@@ -1,4 +1,5 @@
 #include "header.h"
+#include "Data.h"
 void saveSchoolyear(schoolyear* sy)
 {
 	//if (!sy) return;

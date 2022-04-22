@@ -1,4 +1,6 @@
 #include "header.h"
+#include "Login.h"
+#include "Support.h"
 void loadAccountFile(ifstream& fin, account*& head) {
 	if (!head) {
 		head = new account;
@@ -72,10 +74,6 @@ bool checkAccountModel(account* acc, account* head, int type, bool isReg)
 	}
 }
 
-bool isEmpty(ifstream& pFile)
-{
-	return pFile.peek() == ifstream::traits_type::eof();
-}
 
 void collectOneClassAccount(string class_name,account*&head) {
 	ifstream fin; account* cur_acc = new account; head = cur_acc; 

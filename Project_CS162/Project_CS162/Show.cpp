@@ -1,4 +1,10 @@
 #include "Header.h"
+#include "OutputConsole.h"
+#include "Data.h"
+#include "Input.h"
+#include "Support.h"
+#include "Deallocate_graphic.h"
+#include "Menu.h"
 void show_semester(schoolyear* &head, semester* &s)
 {
 	readSemester(s, head->time);
@@ -70,18 +76,18 @@ void show_course(course* c, int i)
 }
 
 void show_ID_course(course* c) {
-	if (!c) return;
+	/*if (!c) return;
 	while (c) {
 		cout << "Course ID: " << c->ID_course << '\t' << "Name Course: " << c->course_name << endl;
 		c = c->next; 
-	}
+	}*/
 	
 }
 
 void show_enrolled_course(enrolledCourse* c) {
-	if (!c) return;
+	/*if (!c) return;
 	show_enrolled_course(c->next);
-	cout << endl << "Course ID: " << c->id_course << endl << "Name Course: " << c->course_name << endl;
+	cout << endl << "Course ID: " << c->id_course << endl << "Name Course: " << c->course_name << endl;*/
 }
 
 
@@ -179,22 +185,56 @@ void menu_staff()
 	Delete_schoolyear(sy);
 }
 
-void viewListEnrolledCourse(student* pS) {
-	enrolledCourse* pECCur = pS->list_enrolled;
-	if (pECCur == nullptr) {
+void showListEnrolledCourse(student* pS) {
+	// choose schoolyear
+	schoolyear* sy = new schoolyear;
+	readSchoolyear(sy);
+	int i = 0; schoolyear* tmpsch = sy; cout << "List of schoolyear: " << endl;
+	while (tmpsch) {
+		++i;
+		cout << i << '.' << tmpsch->time << endl;
+	}
+	cout << "Which schoolyear you want to view your courses: "; int x; cin >> x;
+	while (x > i) {
+		cout << "invalid schoolyear" << endl << "input again" << endl;
+		cin >> x;
+	}
+
+	schoolyear* check = sy;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+
+	// choose semester
+	cout << "There are " << check->num_sem << " semesters in this schoolyear" << endl;
+	cout << "Which semester you want to view your courses: ";
+	int xx; cin >> xx; semester* s_tmp = new semester;
+	while (xx > check->num_sem) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> xx;
+	}
+
+	readListEnrolled(check->time, pS, xx);
+
+	enrolledCourse* cur = pS->list_enrolled;
+	if (cur == nullptr) {
 		cout << "You haven't enrolled any course yet! ";
 		cout << "\nPress any key to continue....";
 		char a = _getch();
+		return;
 	}
 
-	cout << "ID Course  " << "Course's Name  " << "Teacher's Name  " << "Credits  " << "Session 1  " << "Session 2  ";
-
-	while (pECCur != nullptr) {
-		cout << pECCur->id_course << "  " << pECCur->course_name << "  " << pECCur->name_teacher << "  "
-			<< pECCur->credits << "  " << pECCur->ses1.date << "-" << pECCur->ses1.time << "  " << pECCur->ses2.date << "-" << pECCur->ses2.time;
-		pECCur = pECCur->next;
+	int j = 0;
+	while (cur != nullptr) {
+		++j;
+		cout << "******COURSE NUMBER: " << j << "******\n";
+		cout << "  * ID: " << cur->id_course << endl;
+		cout << "  * Course name: " << cur->id_course << endl;
+		cout << "  * Teacher's name: " << cur->name_teacher << endl;
+		cout << "  * Credits: " << cur->credits << endl;
+		cout << "  * Session 1: " << cur->ses1.date << '\t' << cur->ses1.time << endl;
+		cout << "  * Session 2: " << cur->ses2.date << '\t' << cur->ses2.time << endl;
+		cur = cur->next;
 	}
-
 }
 
 void showStudentsInClass(Class* pC) {
@@ -258,20 +298,23 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		int opt_ = stoi(opt);
 		switch (opt_) {
 		case 0: break;
-		case 1:
+		case 1: {
 			int sem = currentSemeser();
 			readListEnrolled(sy->time, cur_stu, sem);
 			enrollCourse(sy, sy->time, sem, cur_stu);
 			//current schoolyear current semester
 			break;
-		case 2:
+		}
+		case 2: {
 			showListEnrolledCourse(cur_stu);
 			break;
-		case 3:
+		}
+		case 3: {
 			int sem = currentSemeser();
 			readListEnrolled(sy->time, cur_stu, sem);
 			Delete_enrolled_course(sy->time, cur_stu, sem);
 			break;
+		}
 		case 4: {
 			int sem = currentSemeser();
 			readListEnrolled(sy->time, cur_stu, sem);
@@ -306,3 +349,4 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		}
 	}
 }
+

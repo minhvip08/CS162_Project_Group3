@@ -1,4 +1,5 @@
 #include "header.h"
+#include "Support.h"
 date getCurrentDate()
 {
 	date d; 
@@ -163,4 +164,9 @@ bool checkEnrollTime(semester* s) {
 	date end = s->end_regist;
 	if (check_date(sta, end)) return true;
 	else return false;
+}
+
+bool isEmpty(ifstream& pFile)
+{
+	return pFile.peek() == ifstream::traits_type::eof();
 }

@@ -1,4 +1,6 @@
 #include "Header.h"
+#include "Data.h"
+#include "Support.h"
 void readSchoolyear(schoolyear*& sy)
 {
 	ifstream fin; fin.open("Schoolyear.txt");
@@ -110,14 +112,14 @@ void readSemester(semester*& s, string time)
 
 void read_date(ifstream& fin, date& d, bool check)
 {
-	fin >> d.day; string a; getline(fin, a, '/');
+	/*fin >> d.day; string a; getline(fin, a, '/');
 	fin >> d.month; getline(fin, a, '/');
 	if (check) {
 		fin >> d.year; getline(fin, a, ',');
 	}
 	else {
 		fin >> d.year; getline(fin, a, '\n');
-	}
+	}*/
 }
 
 void readListEnrolled(string time, student*& s, int semester)

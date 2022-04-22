@@ -1,4 +1,5 @@
 #include "header.h"
+#include "Scoreboard.h"
 bool findstuID(student* stu, studentScore* &ss, course* c) {
 	if (!c->list_score)
 	{

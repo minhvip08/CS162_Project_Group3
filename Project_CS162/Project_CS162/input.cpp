@@ -1,4 +1,8 @@
 #include "header.h"
+#include "Data.h"
+#include "Support.h"
+#include "OutputConsole.h"
+#include "Input.h"
 void create_schoolyear(schoolyear* &head)
 {
 	readSchoolyear(head);
@@ -276,7 +280,7 @@ void uppdateCourseInfor(schoolyear*& sy, semester*& sem) {
 	return;
 }
 
-void update1InforCourse(course* pCourse, int opt) {
+void update1InforCourse(course* &pCourse, int opt) {
 	if (opt == 0)
 		return;
 	switch (opt) {

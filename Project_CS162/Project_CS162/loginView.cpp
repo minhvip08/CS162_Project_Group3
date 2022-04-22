@@ -1,5 +1,7 @@
-
 #include "header.h"
+#include "Support.h"
+#include "Login.h"
+#include "Menu.h"
 void registerView(account*& head, ifstream& fin) {
 	bool flag = true;
 	account* acc = new account;

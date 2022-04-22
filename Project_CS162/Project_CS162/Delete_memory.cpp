@@ -1,5 +1,6 @@
 #include "Header.h"
-
+#include "Deallocate_graphic.h"
+#include "Data.h"
 void Delete_schoolyear(schoolyear*& head)
 {
 	if (!head) return; 
