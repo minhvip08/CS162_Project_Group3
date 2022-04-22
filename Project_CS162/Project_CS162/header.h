@@ -163,8 +163,7 @@ void uppdateCourseInfor(schoolyear*& sy, semester*& pHeadSem);
 void update1InforCourse(course* pCourse, int opt);
 // Quy dinh luon la student trong enroll delete va view
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu);
-void addEnrolledCourseToStudent(course*& pList, student*& pStudent, string ID_course);
-void copyCourse(enrolledCourse*& pEC, course* pC);
+void addEnrolledCourseToStudent(course* c, student*& stu); void copyCourse(enrolledCourse*& pEC, course* pC);
 
 
 //Login and register
@@ -189,7 +188,7 @@ void show_session(session head);
 void show_class(Class* head, int i);
 void show_date(date s);
 void menu_staff();
-void menu_student(schoolyear*& sy, int semester, student*& stu);
+void menu_student(schoolyear*& sy, int semester, student*& stu, account* head);
 void show_ID_course(course* c);
 void showListEnrolledCourse(student* pS);
 void show_enrolled_course(enrolledCourse*);
@@ -254,4 +253,6 @@ void Delete_course_staff(schoolyear*& sy, course*& c, string time, int semester)
 void save_enrollcourse_stu(string time, student* s, int semester);
 bool alreadyEnrolled(string id, enrolledCourse* c);
 int currentSemeser();
-void readListEnrolled(student*& s, int semester);
+void readListEnrolled(string time, student*& s, int semester);
+bool checkEnrollTime(semester* s);
+void changeacctostu(account* acc, schoolyear* scy, student*& stu);

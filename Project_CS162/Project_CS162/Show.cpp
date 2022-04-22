@@ -242,7 +242,7 @@ void menu_view()
 	}
 }
 
-void menu_student(account* head, schoolyear* sy) {
+void menu_student(schoolyear*& sy, int semester, account* head) {
 	student* cur_stu = NULL;
 	changeacctostu(head, sy, cur_stu);
 	while (true) {
@@ -259,29 +259,50 @@ void menu_student(account* head, schoolyear* sy) {
 		switch (opt_) {
 		case 0: break;
 		case 1:
-			enrollCourse(sy->sem->course_list, cur_stu);
+			int sem = currentSemeser();
+			readListEnrolled(sy->time, cur_stu, sem);
+			enrollCourse(sy, sy->time, sem, cur_stu);
 			//current schoolyear current semester
 			break;
 		case 2:
-			viewListEnrolledCourse(cur_stu);
+			showListEnrolledCourse(cur_stu);
 			break;
 		case 3:
-			Delete_enrolled_course(cur_stu);
+			int sem = currentSemeser();
+			readListEnrolled(sy->time, cur_stu, sem);
+			Delete_enrolled_course(sy->time, cur_stu, sem);
 			break;
-		case 4:
-			enrolledCourse * cur_erC = cur_stu->list_enrolled;
-			if (cur_erC != nullptr) {
+		case 4: {
+			int sem = currentSemeser();
+			readListEnrolled(sy->time, cur_stu, sem);
+			enrolledCourse* tmp = cur_stu->list_enrolled;
+			if (tmp != nullptr) {
 				cout << "You haven't enrolled any courses yet!";
 				cout << "\n Press any key to back.... ";
 				char a = _getch();
 			}
 			else {
-				show_enrolled_course(cur_erC);
+				int i = 0;
+				while (tmp) {
+					cout << "******COURSE NUMBER: " << i << "******\n";
+					cout << "  * ID: " << tmp->id_course << endl;
+					cout << "  * Course name: " << tmp->id_course << endl;
+					cout << "  * Teacher's name: " << tmp->name_teacher << endl;
+					cout << "  * Credits: " << tmp->credits << endl;
+					cout << "  * Session 1: " << tmp->ses1.date << '\t' << tmp->ses1.time << endl;
+					cout << "  * Session 2: " << tmp->ses2.date << '\t' << tmp->ses2.time << endl;
+					tmp = tmp->next;
+				}
 			}
 			break;
+		}
 		case 5:
 			//viewHisHerScore(cur_stu, sy);
 			break;
+		default: {
+			cout << "You input wrong number '\nPlease input again: ";
+			break;
+		}
 		}
 	}
 }

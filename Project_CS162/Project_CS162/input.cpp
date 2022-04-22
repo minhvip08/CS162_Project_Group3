@@ -345,10 +345,17 @@ void update1InforCourse(course* pCourse, int opt) {
 	}
 }
 
-
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	// kiem tra ngay thang cho phep enroll
-	readListEnrolled(stu, sem);
+	semester* check = sy->sem; 
+	while (check->mark != sem) {
+		check = check->next; 
+	}
+	if (!checkEnrollTime(check)) {
+		cout << "Out of time for registration" << endl;
+		return;
+	}
+	readListEnrolled(time,stu, sem);
 	if (stu->countEnroll >= 5) {
 		cout << "You cannot enroll over 5 course in this semester.";
 		cout << "\nPress any key to continue....";
@@ -390,6 +397,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	}
 	++cur->cur_student;
 	addEnrolledCourseToStudent(cur, stu);
+	save_enrollcourse_stu(time, stu, sem);
 }
 
 void addEnrolledCourseToStudent(course* c, student*& stu) {

@@ -121,8 +121,6 @@ bool checkConflictSession(session ses1, session ses2)
 }
 void changeacctostu(account* acc, schoolyear* scy, student*& stu)
 {
-	while (scy->next_schyear) // get cur_scy
-		scy = scy->next_schyear;
 	Class* c = scy->list_class;
 	while (c)
 	{
@@ -158,4 +156,11 @@ int currentSemeser()
 	else if (1 <= d.month && d.month <= 4) return 2;
 	else if (5 <= d.month && d.month <= 8) return 3;
 	else return 0;
+}
+
+bool checkEnrollTime(semester* s) {
+	date sta = s->start_regist;
+	date end = s->end_regist;
+	if (check_date(sta, end)) return true;
+	else return false;
 }

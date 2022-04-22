@@ -89,11 +89,11 @@ void Delete_finalGPA(finalGPA*& head)
 	}
 }
 
-void Delete_enrolled_course(student*& pS) {
+void Delete_enrolled_course(string time, student*& pS, int sem) {
 	
 	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp = nullptr;
 
-	system("cls");
+	//system("cls");
 	if (pECCrs != nullptr) {
 		cout << "You haven't enrolled any courses yet!";
 		cout << "\n Press any key to back.... ";
@@ -101,28 +101,55 @@ void Delete_enrolled_course(student*& pS) {
 		return;
 	}
 
-	cout << "Please choose one of the course you want to delete";
-	show_enrolled_course(pECCrs);
-	cout << "\nExit PRESS 0.";
-	string choose;
-	cin >> choose;
-
-	if (choose == "0")
-		return;
-
-	while (choose != pECCrs->id_course ) {
-		pECCrsTemp = pECCrs;
-		pECCrs = pECCrs->next;
+	cout << "Please choose one of the course you want to delete\n";
+	int i = 0; enrolledCourse* tmp = pS->list_enrolled;
+	while (tmp) {
+		++i;
+		cout << i << ".ID Course: " << tmp->id_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	} cout << "0. Exit" << endl;
+	int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	enrolledCourse* cur = pS->list_enrolled;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+	if (cur) {
+		cout << "------COURSE INFORMATION------" << endl;
+		cout << "ID: " << cur->id_course << endl;
+		cout << "Name: " << cur->course_name << endl;
+		cout << "Teacher: " << cur->name_teacher << endl;
+		cout << "Credits: " << cur->credits << endl;
+		cout << "Session 1: " << cur->ses1.date << '\t' << cur->ses1.time << endl;
+		cout << "Session 2: " << cur->ses2.date << '\t' << cur->ses2.time << endl;
 	}
 
-	if (pECCrs == nullptr) {
-		cout << "Don't exist course.";
-		return;
+	cout << "Are you sure you want to delete: \n"; int n;
+	cout << "1. Yes" << endl << "2. No" << endl;
+	cin >> n;
+	if (n == 2) return;
+	else if (n == 1) {
+		if (cur == pECCrs) {
+			enrolledCourse* after = cur->next;
+			pECCrs = after;
+			delete cur;
+		}
+		else {
+			enrolledCourse* before = pECCrs;
+			while (before->next != cur)
+				before = before->next;
+			enrolledCourse* after = cur->next;
+			before->next = after;
+			delete cur;
+		}
 	}
-
-	pECCrsTemp->next = pECCrs->next;
-	delete pECCrs;
-	pS->countEnroll--;
+	--pS->countEnroll;
+	save_enrollcourse_stu(time, pS, sem);
 }
 
 void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {
@@ -130,38 +157,56 @@ void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {
 		cout << "Empty course list" << endl;
 		return;
 	}
-	show_ID_course(c);
-	string tmp; cout << "Enter ID of course you want to delete: "; cin >> tmp; 
-	course* tmpc = c;
-	while (tmpc) {
-		if (tmpc->next->ID_course == tmp) break;
-		tmpc = tmpc->next;
+	int i = 0; course* tmp = c;
+	while (tmp) {
+		++i;
+		cout << i << '.' << "Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
 	}
-	if (!tmpc) {
-		cout << "Invalid course" << endl << "Your action can't be done" << endl;
-		return;
+	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
 	}
-	course* del = tmpc->next;
-
-	cout << "Course information: " << endl;
-	cout << "ID: " << del->ID_course << endl;
-	cout << "Name: " << del->course_name << endl;
-	cout << "Teacher: " << del->teacher_name << endl;
-	cout << "Credits: " << del->credits << endl;
-	cout << "Current students: " << tmpc->next->cur_student << endl;
-
+	if (x == 0) return;
+	course* cur = c;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+	if (cur) {
+		cout << "Course information: " << endl;
+		cout << "ID: " << cur->ID_course << endl;
+		cout << "Name: " << cur->course_name << endl;
+		cout << "Teacher: " << cur->teacher_name << endl;
+		cout << "Credits: " << cur->credits << endl;
+		cout << "Current students: " << cur->next->cur_student << endl;
+	}
+	
 	cout << "Are you sure you want to delete: \n"; int n;
 	cout << "1. Yes" << endl << "2. No" << endl;
 	cin >> n;
 	if (n == 2) return;
 	else if (n == 1) {
-		course* after = tmpc->next->next;
-		tmpc->next = after;
-		delete del;
+		if (cur == c) {
+			course* after = cur->next;
+			c = after;
+			delete cur;
+		}
+		else {
+			course* before = c;
+			while (before->next != cur)
+				before = before->next;
+			course* after = cur->next;
+			before->next = after;
+			delete cur;
+		}
 	}
-	semester* cur = sy->sem;
-	while (cur && cur->mark != sem) cur = cur->next;
-	--cur->num_course;
+
+	semester* se = sy->sem;
+	while (se && se->mark != sem) se = se->next;
+	--se->num_course;
 	cout << "Course deleted successfully" << endl;
 	saveListOfCourse(sy, c, sy->time, sem);
 }

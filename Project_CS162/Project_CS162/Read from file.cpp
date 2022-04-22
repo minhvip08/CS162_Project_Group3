@@ -120,15 +120,18 @@ void read_date(ifstream& fin, date& d, bool check)
 	}
 }
 
-void readListEnrolled(student*& s, int semester)
+void readListEnrolled(string time, student*& s, int semester)
 {
-	ifstream fin; fin.open(s->id + "_sem" + (char)semester + "enrolled.txt");
+	ifstream fin; fin.open(time+ '_' + s->id + "_sem" + (char)semester + "enrolled.txt");
+	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
 	if (isEmpty(fin)) {
 		cout << "You haven't enrolled in any course" << endl;
+		cur = nullptr; 
+		return; 
 	}
 	int n; fin >> n;
 	s->countEnroll = n;
-	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
+
 	fin.get();
 	for (int i = 0; i < n; i++) {
 		getline(fin, cur->id_course, '\n');
