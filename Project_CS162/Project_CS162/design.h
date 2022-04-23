@@ -15,10 +15,6 @@ void SetColor(WORD color);
 //Color background (choose from 1 to 16 colors)
 void SetBGColor(WORD color);
 
-
-//Clear the screen (only with WindowsAPI)
-void clrscr(void);
-
 //Move the cursor to select(x: column,  y: row)
 void gotoxy(short x, short y);
 

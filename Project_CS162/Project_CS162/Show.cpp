@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "header.h"
 #include "OutputConsole.h"
 #include "Data.h"
 #include "Input.h"
@@ -156,6 +156,7 @@ void show_schoolyear(schoolyear* head)
 
 void menu_staff()
 {
+	system("cls");
 	int n; cout << "WELCOME" << endl;
 	cout << "1. Creat new schoolyear" << endl;
 	cout << "2. Create new semester to current schoolyear" << endl;
@@ -283,6 +284,7 @@ void menu_view()
 }
 
 void menu_student(schoolyear*& sy, int semester, account* head) {
+	system("cls");
 	student* cur_stu = NULL;
 	changeacctostu(head, sy, cur_stu);
 	while (true) {
@@ -290,7 +292,7 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		cout << "1. Enroll a course" << endl;
 		cout << "2. View a list of enrolled course" << endl;
 		cout << "3. Remove enrolled course" << endl;
-		cout << "4. View a list of his/her courses" << endl;
+		cout << "4. View a list of his/her courses in this semester" << endl;
 		cout << "5. View his/her scoreboard" << endl;
 		cout << "0. Exit" << endl;
 		cout << "Choose: ";
@@ -299,7 +301,7 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		switch (opt_) {
 		case 0: break;
 		case 1: {
-			int sem = currentSemeser();
+			int sem = currentSemester();
 			readListEnrolled(sy->time, cur_stu, sem);
 			enrollCourse(sy, sy->time, sem, cur_stu);
 			//current schoolyear current semester
@@ -310,13 +312,13 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 			break;
 		}
 		case 3: {
-			int sem = currentSemeser();
+			int sem = currentSemester();
 			readListEnrolled(sy->time, cur_stu, sem);
 			Delete_enrolled_course(sy->time, cur_stu, sem);
 			break;
 		}
 		case 4: {
-			int sem = currentSemeser();
+			int sem = currentSemester();
 			readListEnrolled(sy->time, cur_stu, sem);
 			enrolledCourse* tmp = cur_stu->list_enrolled;
 			if (tmp != nullptr) {

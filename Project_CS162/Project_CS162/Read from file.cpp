@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "header.h"
 #include "Data.h"
 #include "Support.h"
 void readSchoolyear(schoolyear*& sy)
@@ -10,8 +10,9 @@ void readSchoolyear(schoolyear*& sy)
 		return;
 	}
 	int n; fin >> n; 
-	schoolyear* tmp = new schoolyear; sy = tmp; fin.get(); 
+	schoolyear* tmp = new schoolyear; sy = tmp; //fin.get(); 
 	for (int i = 0; i < n; i++) {
+		fin.get();
 		getline(fin, tmp->time, '\n');
 		fin >> tmp->num_sem; fin >> tmp->num_class; 
 		tmp->sem = nullptr; 

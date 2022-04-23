@@ -1,5 +1,5 @@
 #pragma once
-#include "Header.h"
+#include "header.h"
 void show_semester(schoolyear*& head, semester*& s);
 void show_course(course* c, int i);
 void show_ID_course(course* c);

@@ -74,7 +74,6 @@ bool checkAccountModel(account* acc, account* head, int type, bool isReg)
 	}
 }
 
-
 void collectOneClassAccount(string class_name,account*&head) {
 	ifstream fin; account* cur_acc = new account; head = cur_acc; 
 	fin.open(class_name + ".csv");
@@ -83,6 +82,7 @@ void collectOneClassAccount(string class_name,account*&head) {
 		return;
 	}
 	else {
+		string a; getline(fin, a, '\n');
 		while (!fin.eof()) {
 			cur_acc->type = 1;
 			string a; getline(fin, a, ',');
@@ -103,7 +103,6 @@ void collectOneClassAccount(string class_name,account*&head) {
 				cur_acc = cur_acc->pNext;
 			}
 		}
-			
 	}
 	fin.close();
 

@@ -150,7 +150,7 @@ bool alreadyEnrolled(string id, enrolledCourse* c)
 	return false;
 }
 
-int currentSemeser()
+int currentSemester()
 {
 	date d = getCurrentDate();
 	if (9 <= d.month && d.month <= 12) return 1;

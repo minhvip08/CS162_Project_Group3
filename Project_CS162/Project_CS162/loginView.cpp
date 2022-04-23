@@ -3,9 +3,7 @@
 #include "Login.h"
 #include "Menu.h"
 #include"design.h"
-#include<chrono>
-#include <tchar.h>
-#include <thread>
+#include"Data.h"
 void loginDraw(short opt, int type) {
 	short opt_ = opt;
 	SetColor(4);
@@ -64,8 +62,6 @@ void loginMenu(account*& head, int type) {
 
 		char keyBoard = {};
 		string art = headline();
-		//while(true) {
-			//clrscr();
 			system("cls");
 			SetColor(rand() % 14 + 1);
 			cout << art << endl;
@@ -133,7 +129,6 @@ void loginMenu(account*& head, int type) {
 			}
 			cout << endl;
 			system("pause");
-		//}
 	}
 }
 void Intro() {
@@ -145,17 +140,16 @@ void Intro() {
 	SetColor(15);
 	string art = headline();
 
-	clrscr();
+	system("cls");
 	for (int i = 0; i < art.length(); i++) {
 		cout << art[i];
 		if (art[i] != ' ') {
-			chrono::microseconds wait(10);
+			chrono::microseconds wait(1);
 			this_thread::sleep_for(wait);
 		}
 	}
-	do {
-		clrscr();
-		//system("cls");
+	while(true) {
+		system("cls");
 		SetColor(rand() % 14 + 1);
 		cout << art << endl;
 		SetColor(15);
@@ -193,6 +187,7 @@ void Intro() {
 				break;
 			}
 		} while (keyBoard != '\r');
+
 		switch (opt) {
 		case 1:
 			loginMenu(head, 0);
@@ -213,7 +208,7 @@ void Intro() {
 			ShowConsoleCursor(true);
 			return;
 		}
-	} while (opt != 3);
+	}
 }
 //void moveChoice() {
 //
@@ -226,8 +221,6 @@ void registerView(account*& head) {
 	bool flag = true;
 	account* acc = new account;
 	string repassword;
-	/*SetColor(rand() % 14+1);
-	gotoxy(40, 8);*/
 	cout << "Enter username: "; cin >> acc->username;
 	do
 	{
@@ -444,14 +437,13 @@ void Menu2(account*cur, account*&head, int type) {
 	int row = 4;//rows of menu lines
 	int y = 7;
 	ShowConsoleCursor(true);
-	SetColor(rand()%14+1);
-
+	SetColor(1);
 	gotoxy(7, y+1);
 	cout << "View Profile" << endl;
-	SetColor(rand() % 14 + 1);
+	SetColor(2);
 	gotoxy(7, y+2);
 	cout << "Change Password" << endl;
-	SetColor(rand() % 14 + 1);
+	SetColor(3);
 	gotoxy(7, y+3);
 	if (type == 0) {
 		cout << "MENU_STAFF" << endl;
@@ -459,7 +451,7 @@ void Menu2(account*cur, account*&head, int type) {
 	else if(type==1) {
 		cout << "MENU_STUDENT" << endl;
 	}
-	SetColor(rand() % 14 + 1);
+	SetColor(4);
 	gotoxy(7, y+4);
 	cout << "Log Out" << endl;
 	gotoxy(7, y + 1);
@@ -477,12 +469,13 @@ void Menu2(account*cur, account*&head, int type) {
 			menu_staff();
 		}
 		else if (type == 1) {
-			cout << "STU" << endl;
-			//menu_student();
+			schoolyear* sy = NULL;
+			readSchoolyear(sy);
+			int sem = currentSemester();
+			menu_student(sy,sem,head);
 		}
 		break;
 	case 4:
-		//Menu();
 		break;
 	}
 }
