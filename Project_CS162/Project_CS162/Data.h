@@ -19,4 +19,5 @@ void exportlistofstudent(course* cour);
 void import1studentscore(ifstream& fin, studentScore* stusc);
 void importscoretoCourse(course*& c);
 void copyliststu(Class*& c1, Class* c2);
-void collectOneClassAccount(string class_name, account*& head);
+void collectOneClassAccount(string class_name, account*& head); 
+void readListOfStu(student*& stu, string class_name);

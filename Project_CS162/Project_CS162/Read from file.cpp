@@ -32,7 +32,7 @@ void readListOfClass(Class*& cl, string time)
 {
 	ifstream fin; fin.open(time + "_class.txt");
 	if (isEmpty(fin)) {
-		cout << "List of classes in this choolyear is empty" << endl;
+		cout << "List of classes in this schoolyear is empty" << endl;
 		return;
 	}
 	int n; fin >> n; 
@@ -52,6 +52,39 @@ void readListOfClass(Class*& cl, string time)
 	fin.close();
 }
 
+void readListOfStu(student*& stu, string class_name)
+{
+	//int no = 0;
+	ifstream fin;
+	fin.open(class_name + ".csv");
+	if (isEmpty(fin)) {
+		cout << class_name << " file has not been imported" << endl;
+		return;
+	}
+	student* cur = new student; 
+	stu = cur;
+	string a; getline(fin, a, '\n');
+	while (!fin.eof()) {
+		fin >> cur->No;
+		string a; getline(fin, a, ',');
+		getline(fin, cur->id, ',');
+		getline(fin, cur->prf.lastname, ',');
+		getline(fin, cur->prf.firstname, ',');
+		getline(fin, cur->prf.DOB, ',');
+		getline(fin, cur->prf.gender, ',');
+		getline(fin, cur->prf.social_id, '\n');
+
+		if (fin.eof()) {
+			cur->pNext = NULL;
+			break;
+		}
+		else {
+			cur->pNext = new student;
+			cur = cur->pNext;
+		}
+	}
+	fin.close();
+}
 void readListOfCourse(string time, course*& c, int semester)
 {
 	char k = semester + 48;
@@ -126,6 +159,10 @@ void read_date(ifstream& fin, date& d, bool check)
 void readListEnrolled(string time, student*& s, int semester)
 {
 	ifstream fin; fin.open(time+ '_' + s->id + "_sem" + (char)semester + "enrolled.txt");
+	if (!fin.is_open()) {
+		cout << "You haven't course" << endl;
+		return;
+	}
 	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
 	if (isEmpty(fin)) {
 		cout << "You haven't enrolled in any course" << endl;

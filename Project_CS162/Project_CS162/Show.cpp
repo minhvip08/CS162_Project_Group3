@@ -162,6 +162,7 @@ void menu_staff()
 	cout << "2. Create new semester to current schoolyear" << endl;
 	cout << "3. Add course to semester" << endl;
 	cout << "4. Add class to this schoolyear " << endl;
+
 	cout << "0. Exit" << endl;
 	cout << "Choose your choice: "; cin >> n;
 
@@ -179,9 +180,6 @@ void menu_staff()
 		}
 		cout << "Choose your choice: "; cin >> n;
 	}
-
-	system("cls");
-
 	menu_view();
 	Delete_schoolyear(sy);
 }
@@ -238,15 +236,15 @@ void showListEnrolledCourse(student* pS) {
 	}
 }
 
-void showStudentsInClass(Class* pC) {
+void showStudentsInClass(Class*pC) {
 	student* pStudentHead = pC->student_list;
-	system("cls");
-	cout << "No\tID\tName\t\Birthday\n";
-	while (pStudentHead != nullptr) {
-		cout << pStudentHead->No << '\t';
-		cout << pStudentHead->id << '\t';
-		cout << pStudentHead->prf.firstname << ' ' << pStudentHead->prf.lastname << '\t';
-		cout << pStudentHead->prf.DOB << "\n";
+	if (!pStudentHead) {
+		cout << "No Data" << endl; return;
+	}
+	//system("cls");
+	cout << "No\tID\t\tName\t\t\tBirthday\t\tGender\tSocial ID\n";
+	while (pStudentHead != NULL) {
+		cout << pStudentHead->No << '\t'<<pStudentHead->id << '\t'<< pStudentHead->prf.lastname << ' ' << pStudentHead->prf.firstname << '\t'<<'\t'<< pStudentHead->prf.DOB << "\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
 		pStudentHead = pStudentHead->pNext;
 	}
 }
@@ -263,15 +261,45 @@ void showStudentsInCourse(course* pC) {
 		cout << pStuCrs->name << "\t";
 		pStuCrs = pStuCrs->pNext;
 	}
-
 }
-
+void showEveryClasses(schoolyear*&sy) {
+	readSchoolyear(sy);
+	int i = 0;
+	while (sy != NULL) {
+		readListOfClass(sy->list_class, sy->time);
+		if (!sy->list_class) {
+			sy = sy->next_schyear;
+		}
+		else {
+			while (sy->list_class) {
+				i++;
+				cout << i <<"."<< sy->list_class->class_name << endl;
+				readListOfStu(sy->list_class->student_list, sy->list_class->class_name);
+				if (!sy->list_class->student_list) {
+					sy->list_class = sy->list_class->nextClass;
+				}
+				else {
+					//cout << sy->list_class->student_list->id;
+					showStudentsInClass(sy->list_class);
+					sy->list_class = sy->list_class->nextClass;
+				}
+			}
+			sy = sy->next_schyear;
+		}
+		/*int opt = 0;
+		cin >> opt;*/
+	}
+	
+}
 void menu_view()
 {
+	system("cls");
 	schoolyear* sy = nullptr;
 	int n;
 	while (true) {
 		cout << "1. View list schoolyear" << endl;
+		cout << "2. View a list of students in a class " << endl;
+		cout << "3. View a list of students in a course" << endl;
 		cout << "0. Exit" << endl;
 		cin >> n;
 		if (!n) break;
@@ -279,6 +307,12 @@ void menu_view()
 		case 1:
 			//readSchoolyear(sy);
 			show_schoolyear(sy); break;
+		case 2:
+			showEveryClasses(sy);
+			system("pause");
+			break;
+		case 3:
+			break;
 		}
 	}
 }
@@ -303,6 +337,7 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		case 1: {
 			int sem = currentSemester();
 			readListEnrolled(sy->time, cur_stu, sem);
+			system("pause");
 			enrollCourse(sy, sy->time, sem, cur_stu);
 			//current schoolyear current semester
 			break;
@@ -344,10 +379,9 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		case 5:
 			//viewHisHerScore(cur_stu, sy);
 			break;
-		default: {
+		default:
 			cout << "You input wrong number '\nPlease input again: ";
 			break;
-		}
 		}
 	}
 }

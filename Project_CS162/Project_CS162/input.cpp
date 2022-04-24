@@ -1,7 +1,7 @@
 #include "header.h"
 #include "Data.h"
 #include "Support.h"
-#include "OutputConsole.h"
+#include"OutputConsole.h"
 #include "Input.h"
 void create_schoolyear(schoolyear* &head)
 {
@@ -118,14 +118,14 @@ void create_course(schoolyear* &head) // OK
 	cout << "Course name: "; getline(cin, cur->course_name, '\n');
 	cout << "Teacher name: "; getline(cin, cur->teacher_name, '\n');
 	cout << "Number of credits: "; cin >> cur->credits;
-	cout << "Maximum student(press 1 for default 50): "; int n; cin >> n; 
+	cout << "Maximum students(press 1 for default 50): "; int n; cin >> n; 
 	if (n == 1) cur->max_student = 50;
 	else cur->max_student = n; 
 	cur->cur_student = 0;
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
 	while (!checkConflictSession(cur->ses1, cur->ses2)) {
-		cout << "Two sessions has to be different in date and time" << endl;
+		cout << "Two sessions have to be different in date and time" << endl;
 		cout << "Please input again" << endl;
 		cout << "Session 1: "; input_session(cur->ses1);
 		cout << "Session 2: "; input_session(cur->ses2);
