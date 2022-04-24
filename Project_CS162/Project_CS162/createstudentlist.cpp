@@ -76,31 +76,31 @@ void copyliststu(Class*& c1, Class* c2) // c1 is the new class (dont have any st
 	}
 
 }
-void exportonestu(ofstream& fout, student* stu)
+void exportonestu(ofstream& fout, studentScore* stu)
 {
-	fout << stu->No << ',';
-	fout << stu->id << ',';
-	fout << stu->prf.firstname + " "+ stu->prf.lastname << ',';
-	fout << stu->prf.gender << ',';
-	fout << stu->prf.DOB << ',';
-	fout << stu->prf.social_id << ',' << endl;
+	fout << stu->no << ",";
+	fout << stu->id << ",";
+	fout << stu->name << ",";
+	fout << stu->stscore.total << ",";
+	fout << stu->stscore.mid << ",";
+	fout << stu->stscore.final << ",";
+	fout << stu->stscore.other <<endl;
 }
-void exportlistofstudent(Class* c, course *cour)
+void exportlistofstudent(course *cour)
 {
 	ofstream fout;
 	fout.open(cour->ID_course + ".csv");
+	if (!fout.is_open())
+	{
+		cout << "Error!" << endl;
+		system("pause");
+		return;
+	}
+	fout << "No,ID,Fullname,Total,Mid,Final,Other" << endl;
 	studentScore* cur = cour->list_score;
 	while (cur)
 	{
-		student* stu = c->student_list;
-		while (stu)
-		{
-			if (stu->id == cur->id)
-			{
-				exportonestu(fout, stu);
-			}
-			stu = stu->pNext;
-		}
+		exportonestu(fout, cur);
 		cur = cur->pNext;
 	}
 	fout.close();
@@ -119,7 +119,6 @@ void import1studentscore(ifstream& fin, studentScore* stusc)
 	fin.ignore();
 	fin >> stusc->stscore.other;
 	fin.ignore();
-
 }
 void importscoretoCourse(course* &c)
 {

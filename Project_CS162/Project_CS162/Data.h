@@ -14,8 +14,8 @@ void readListEnrolled(string time, student*& s, int semester);
 // csv file
 void createlistofstu(Class*& head, const string str);
 void copystudentinfor(student*& stu1, student*& stu2);
-void exportonestu(ofstream& fout, student* stu);
-void exportlistofstudent(Class* c, course* cour);
+void exportonestu(ofstream& fout, studentScore* stu);
+void exportlistofstudent(course* cour);
 void import1studentscore(ifstream& fin, studentScore* stusc);
 void importscoretoCourse(course*& c);
 void copyliststu(Class*& c1, Class* c2);

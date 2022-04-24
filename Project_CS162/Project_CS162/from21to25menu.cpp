@@ -81,18 +81,18 @@ void exportstulist_menu(schoolyear* scy)
 	}
 
 	int i = 0;
-	cout << "List of classes:" << endl;
+	cout << "List of course:" << endl;
 	string str;
-	printlistclass(scy->list_class, 1);
+	printcourse(scy->sem->course_list, 1);
 	cout << "\n0. Exit" << endl;
-	cout << "Enter name of the class you want to export list of students: ";
-	c = scy->list_class;
+	cout << "Enter name of course you want to export list of students: ";
+	course* c = scy->sem->course_list;
 	cin >> str;
 	if (stoi(str) == 0)
 		return;
 	while (c)
 	{
-		if (str == c->class_name)
+		if (str == c->ID_course)
 		{
 			exportlistofstudent(c);
 			//system("pause");
