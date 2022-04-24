@@ -4,6 +4,7 @@
 #include "Scoreboard.h"
 void createlistofstu(Class*& head, const string str) //str is the id of the class
 {
+	int no = 0;
 	ifstream fin;
 	fin.open(str + ".csv");
 	if (isEmpty(fin)) {
@@ -14,10 +15,10 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 		cout << "Can't open the file!\n";
 		return;
 	}
-
+	student* cur = head->student_list;
 	while (!fin.eof())
 	{
-		student* cur = new student;
+		++no;
 		fin >> cur->No; 
 		fin.get(); 
 		getline(fin, cur->id, ',');
@@ -26,16 +27,13 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 		getline(fin, cur->prf.gender, ',');
 		getline(fin, cur->prf.DOB, ',');
 		getline(fin, cur->prf.social_id, '\n');
-		if (!head->student_list)
-		{
-			cur = head->student_list;
+		if (fin.eof()) {
 			cur->pNext = nullptr;
+			break;
 		}
-		else
-		{
-			student* tmp = head->student_list;
-			head->student_list = cur;
-			head->student_list->pNext = tmp;
+		else {
+			cur->pNext = new student;
+			cur = cur->pNext;
 		}
 	}
 	fin.close();
@@ -100,19 +98,10 @@ void exportlistofstudent(course *cour)
 	}
 	fout << "No,ID,Fullname,Total,Mid,Final,Other" << endl;
 	studentScore* cur = cour->list_score;
-	studentScore* tmp = nullptr;
-	while (cur->pNext)
-	{
-		tmp = cur;
-		cur = cur->pNext;
-	}
-	while (tmp != cour->list_score)
+	while (cur)
 	{
 		exportonestu(fout, cur);
-		cur = tmp;
-		tmp = cour->list_score;
-		while (tmp->pNext != cur)
-			tmp = tmp->pNext;
+		cur = cur->pNext;
 	}
 	fout.close();
 }
@@ -135,33 +124,16 @@ void importscoretoCourse(course* &c)
 {
 	ifstream fin;
 	fin.open(c->ID_course + ".csv");
-	studentScore* cur = c->list_score;
-	if (!fin.is_open())
-	{
-		cout << "Can't open the file.\n";
-		system("pause");
-		return;
-	}
+	studentScore* stusc = c->list_score;
 	if (!fin.eof())
 	{
-		cout << "Data is empty!\n";
-		system("pause");
+		cout << "Can't open the file.\n";
 		return;
 	}
-	studentScore* tmp = nullptr;
-	while (cur->pNext)
-	{
-		tmp = cur;
-		cur = cur->pNext;
-	}
-
 	while (!fin.eof())
 	{
-		import1studentscore(fin, cur);
-		cur = tmp;
-		tmp = c->list_score;
-		while (tmp->pNext != cur)
-			tmp = tmp->pNext;
+		import1studentscore(fin, stusc);
+		stusc = stusc->pNext;
 	}
 	fin.close();
 }
@@ -171,10 +143,10 @@ void viewstudentscore(studentScore* sco)
 		return;
 	viewstudentscore(sco->pNext);
 	cout << sco->no << "\t\t\t" << sco->id << "\t\t\t" << sco->name << "\t\t\t" << sco->stscore.total << "\t\t\t" << sco->stscore.final << "\t\t\t" << sco->stscore.mid << "\t\t\t" << sco->stscore.other << endl;
-	
 }
 void viewscoreboardcourse(course* c)
 {
+
 	//cout << "\033[2J\033[1;1H";
 	if (!c->list_score)
 	{
