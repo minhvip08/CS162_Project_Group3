@@ -1,6 +1,7 @@
 #include "header.h"
 #include "Support.h"
 #include "Data.h"
+#include "Scoreboard.h"
 void createlistofstu(Class*& head, const string str) //str is the id of the class
 {
 	int no = 0;
@@ -137,39 +138,43 @@ void importscoretoCourse(course* &c)
 	}
 	fin.close();
 }
-void viewscoreboard(course* c)
+void viewstudentscore(studentScore* sco)
 {
-	cout << "\033[2J\033[1;1H";
+	if (!sco)
+		return;
+	viewstudentscore(sco->pNext);
+	cout << sco->no << "\t\t\t" << sco->id << "\t\t\t" << sco->name << "\t\t\t" << sco->stscore.total << "\t\t\t" << sco->stscore.final << "\t\t\t" << sco->stscore.mid << "\t\t\t" << sco->stscore.other << endl;
+}
+void viewscoreboardcourse(course* c)
+{
+
+	//cout << "\033[2J\033[1;1H";
 	if (!c->list_score)
 	{
-		cout << "Empty!";
+		//cout << "\t\t\tThe end!";
 		system("pause");
 		return;
 	}
-	cout << "No\tID\tFull Name\tTotal\tTinal\tMid\tOther";
+	cout << c->course_name << endl;
+	cout << "No\t\t\tID\t\t\tFull Name\t\t\tTotal\t\t\tTinal\t\t\tMid\t\t\tOther";
 	studentScore* sco = c->list_score;
-	while (sco)
-	{
-		cout << sco->no << "\t" << sco->id << "\t" << sco->name << "\t" << sco->stscore.total << "\t" << sco->stscore.final << "\t" << sco->stscore.mid << "\t" << sco->stscore.other << endl;
-		sco = sco->pNext;
-	}
+	viewstudentscore(sco);
 }
-void updateastudentscore(course*& c)
+void updateastudentscore(course*& c, string id)
 {
 	//cout << "\033[2J\033[1;1H";
 	if (!c->list_score) {
-		cout << "The student list is empty!\n";
+		cout << "Data is empty!\n";
 		return;
 	}
-	string id;
-	studentScore* cur = c->list_score;
-	cout << "Enter the ID of the student you want to change score: ";
-	cin >> id;
+	studentScore* tmp = nullptr;
 	bool check = false;
-	while (cur && id <= cur->id)
+	studentScore* cur = c->list_score;
+	while (cur)
 	{
 		if (id == cur->id)
 		{
+			tmp = cur;
 			check = true;
 			break;
 		}
@@ -197,16 +202,18 @@ void updateastudentscore(course*& c)
 			cout << "2. Update final score." << endl;
 			cout << "3. Update mid score." << endl;
 			cout << "4. Update other score." << endl;
-			cout << "5. Exit." << endl << endl;
+			cout << "0. Exit." << endl << endl;
 			cout << "Your option: ";
-			int b; cin >> b; 
+			int b; cin >> b;
 			double a;
+			if (b == 0)
+				return;
 			switch (b)
 			{
 			case 1:
 				cout << "Enter new total score: ";
 				cin >> a;
-				cur->stscore.total = a;
+				tmp->stscore.total = a;
 				cout << "Successful!\n";
 				system("pause");
 				//cout << "\033[2J\033[1;1H";
@@ -214,7 +221,7 @@ void updateastudentscore(course*& c)
 			case 2:
 				cout << "Enter new final score: ";
 				cin >> a;
-				cur->stscore.final = a;
+				tmp->stscore.final = a;
 				cout << "Successful!\n";
 				system("pause");
 				//cout << "\033[2J\033[1;1H";
@@ -222,7 +229,7 @@ void updateastudentscore(course*& c)
 			case 3:
 				cout << "Enter new mid score: ";
 				cin >> a;
-				cur->stscore.mid = a;
+				tmp->stscore.mid = a;
 				cout << "Successful!\n";
 				system("pause");
 				//cout << "\033[2J\033[1;1H";
@@ -230,17 +237,13 @@ void updateastudentscore(course*& c)
 			case 4:
 				cout << "Enter new total score: ";
 				cin >> a;
-				cur->stscore.other = a;
+				tmp->stscore.other = a;
 				cout << "Successful!\n";
 				system("pause");
 				//cout << "\033[2J\033[1;1H";
-				break;
-			case 5:
-				c = false;
 				break;
 			}
 		}
 		return;
 	}
-
 }
