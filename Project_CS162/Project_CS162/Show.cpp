@@ -319,10 +319,27 @@ void menu_view()
 
 void menu_student(schoolyear*& sy, int semester, account* head) {
 	system("cls");
-	student* cur_stu = NULL;
-	changeacctostu(head, sy, cur_stu);
+	string cl_name; 
+	readListOfClass(sy->list_class, sy->time);
+	Class* tmp = sy->list_class;
+	bool stop = false; student* ret = nullptr; student* stu = new student;
+	while (tmp) {
+		readStudent1Class(tmp->class_name, tmp);
+		stu = tmp->student_list;
+		while (stu) {
+			if (stu->id == head->username) {
+				cl_name = tmp->class_name;
+				stop = true;
+				break;
+			}
+			else stu = stu->pNext;
+		}
+		if (stop == true) break;
+		else
+			tmp = tmp->nextClass;
+	}
 	while (true) {
-		string opt;
+		int opt; 
 		cout << "1. Enroll a course" << endl;
 		cout << "2. View a list of enrolled course" << endl;
 		cout << "3. Remove enrolled course" << endl;
@@ -330,35 +347,28 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		cout << "5. View his/her scoreboard" << endl;
 		cout << "0. Exit" << endl;
 		cout << "Choose: ";
-		cin >> opt;
-		int opt_ = stoi(opt);
-		switch (opt_) {
-		case 0: break;
+		cin >> opt; if (opt == 0) break;
+		switch (opt) {
 		case 1: {
 			int sem = currentSemester();
-			readListEnrolled(sy->time, cur_stu, sem);
-			system("pause");
-			enrollCourse(sy, sy->time, sem, cur_stu);
-			//current schoolyear current semester
+			enrollCourse(sy, sy->time, sem, stu);
 			break;
 		}
 		case 2: {
-			showListEnrolledCourse(cur_stu);
+			showListEnrolledCourse(stu);
 			break;
 		}
 		case 3: {
 			int sem = currentSemester();
-			readListEnrolled(sy->time, cur_stu, sem);
-			Delete_enrolled_course(sy->time, cur_stu, sem);
+			Delete_enrolled_course(sy, sy->time, stu, sem);
 			break;
 		}
 		case 4: {
 			int sem = currentSemester();
-			readListEnrolled(sy->time, cur_stu, sem);
-			enrolledCourse* tmp = cur_stu->list_enrolled;
-			if (tmp != nullptr) {
-				cout << "You haven't enrolled any courses yet!";
-				cout << "\n Press any key to back.... ";
+			readListEnrolled(sy->time, stu, sem);
+			enrolledCourse* tmp = stu->list_enrolled;
+			if (tmp == nullptr) {
+				cout << "Press any key to back.... \n";
 				char a = _getch();
 			}
 			else {
@@ -379,9 +389,10 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		case 5:
 			//viewHisHerScore(cur_stu, sy);
 			break;
-		default:
+		default: {
 			cout << "You input wrong number '\nPlease input again: ";
 			break;
+		}
 		}
 	}
 }

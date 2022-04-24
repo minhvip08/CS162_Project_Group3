@@ -12,5 +12,5 @@ void update1InforCourse(course*& pCourse, int opt);
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu);
 void addEnrolledCourseToStudent(course* c, student*& stu);
 void copyCourse(enrolledCourse*& pEC, course* pC);
-void Delete_enrolled_course(string time, student*& pS, int sem);
+void Delete_enrolled_course(schoolyear* & sy, string time, student*& pS, int sem);
 void Delete_course_staff(schoolyear*& sy, course*& c, string time, int semester);

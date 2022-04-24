@@ -144,39 +144,24 @@ void readSemester(semester*& s, string time)
 	fin.close(); 
 }
 
-void read_date(ifstream& fin, date& d, bool check)
-{
-	/*fin >> d.day; string a; getline(fin, a, '/');
-	fin >> d.month; getline(fin, a, '/');
-	if (check) {
-		fin >> d.year; getline(fin, a, ',');
-	}
-	else {
-		fin >> d.year; getline(fin, a, '\n');
-	}*/
-}
-
 void readListEnrolled(string time, student*& s, int semester)
 {
-	ifstream fin; fin.open(time+ '_' + s->id + "_sem" + (char)semester + "enrolled.txt");
-	if (!fin.is_open()) {
-		cout << "You haven't course" << endl;
-		return;
-	}
-	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
+	char k = semester + 48; string id = s->id; 
+	ifstream fin; fin.open(id + '_' + k + "sem.txt");
 	if (isEmpty(fin)) {
 		cout << "You haven't enrolled in any course" << endl;
-		cur = nullptr; 
-		return; 
+		//cur = nullptr; 
+		s->list_enrolled = nullptr;
+		return;
 	}
-	int n; fin >> n;
+	int n; fin >> n; fin.get(); 
 	s->countEnroll = n;
-
-	fin.get();
+	enrolledCourse* cur = new enrolledCourse; s->list_enrolled = cur;
 	for (int i = 0; i < n; i++) {
 		getline(fin, cur->id_course, '\n');
 		getline(fin, cur->course_name, '\n');
 		getline(fin, cur->name_teacher, '\n');
+		fin >> cur->credits; fin.get(); 
 		getline(fin, cur->ses1.date, '\t'); getline(fin, cur->ses1.time, '\n');
 		getline(fin, cur->ses2.date, '\t'); getline(fin, cur->ses2.time, '\n');
 		if (i == n - 1) {

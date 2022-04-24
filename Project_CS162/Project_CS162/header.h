@@ -63,6 +63,7 @@ struct score {
 	double mid;
 	double other;
 };
+
 struct studentScore { // course
 	int no;
 	string id;

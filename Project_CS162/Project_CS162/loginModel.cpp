@@ -111,3 +111,60 @@ void collectOneClassAccount(string class_name,account*&head) {
 	saveAccountFile(fout, head);
 	fout.close();
 }
+void saveStudent1Class(ofstream& fout, string name, account* head)
+{
+	if (!head) return;
+	int n = 0;
+	account* tmp = head;
+	while (tmp) {
+		++n;
+		tmp = tmp->pNext;
+	}
+	fout << n << endl;
+	account* cur = head;
+	for (int i = 0; i < n; i++) {
+		fout << cur->type << endl;
+		fout << cur->username << endl;
+		fout << cur->password << endl;
+		fout << cur->prf.lastname << endl;
+		fout << cur->prf.firstname << endl;
+		fout << cur->prf.DOB << endl;
+		fout << cur->prf.gender << endl;
+		fout << cur->prf.social_id << endl;
+		cur = cur->pNext;
+	}
+}
+
+void readStudent1Class(string name, Class*& cl) {
+	ifstream fin;
+	fin.open(name + ".txt");
+	if (isEmpty(fin)) {
+		cl = nullptr;
+		cout << "Invalid Class" << endl; return;
+	}
+	int n; fin >> n;
+	account* acc = new account;
+	student* tmp = new student; cl->student_list = tmp;
+	for (int i = 0; i < n; i++) {
+		fin >> acc->type; fin.get();
+		getline(fin, acc->username, '\n');
+		getline(fin, acc->password, '\n');
+		getline(fin, acc->prf.lastname, '\n');
+		getline(fin, acc->prf.firstname, '\n');
+		getline(fin, acc->prf.DOB, '\n');
+		getline(fin, acc->prf.gender, '\n');
+		getline(fin, acc->prf.social_id, '\n');
+		tmp->id = acc->username;
+		tmp->prf = acc->prf;
+		if (i == n - 1) {
+			acc->pNext = nullptr;
+			tmp->pNext = nullptr;
+		}
+		else {
+			acc->pNext = new account;
+			tmp->pNext = new student;
+			acc = acc->pNext;
+			tmp = tmp->pNext;
+		}
+	}
+}

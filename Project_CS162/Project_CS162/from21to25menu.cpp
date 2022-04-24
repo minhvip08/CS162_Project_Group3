@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Menu.h"
 #include "Scoreboard.h"
+#include "Deallocate_graphic.h"
 bool checkdata(schoolyear* scy)
 {
 	if (!scy || !scy->sem || !scy->list_class)

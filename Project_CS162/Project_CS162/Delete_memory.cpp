@@ -90,18 +90,20 @@ void Delete_finalGPA(finalGPA*& head)
 	}
 }
 
-void Delete_enrolled_course(string time, student*& pS, int sem) {
+void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem) {
 	
-	enrolledCourse* pECCrs = pS->list_enrolled, *pECCrsTemp = nullptr;
+	readListEnrolled(time, pS, sem); 
+	enrolledCourse* pECCrs = pS->list_enrolled;
 
 	//system("cls");
 	if (pECCrs != nullptr) {
-		cout << "You haven't enrolled any courses yet!";
 		cout << "\n Press any key to back.... ";
 		char a = _getch();
 		return;
 	}
 
+	course* c = new course; 
+	readListOfCourse(time, c, sem); 
 	cout << "Please choose one of the course you want to delete\n";
 	int i = 0; enrolledCourse* tmp = pS->list_enrolled;
 	while (tmp) {
@@ -131,26 +133,34 @@ void Delete_enrolled_course(string time, student*& pS, int sem) {
 	}
 
 	cout << "Are you sure you want to delete: \n"; int n;
-	cout << "1. Yes" << endl << "2. No" << endl;
+	cout << "1. Yes" << '\t' << "2. No" << endl;
 	cin >> n;
 	if (n == 2) return;
 	else if (n == 1) {
-		if (cur == pECCrs) {
-			enrolledCourse* after = cur->next;
-			pECCrs = after;
+		enrolledCourse* head = pS->list_enrolled;
+		course* tmp = c;
+		while (tmp->ID_course != cur->id_course) {
+			tmp = tmp->next;
+		}
+		--tmp->cur_student;
+		if (cur == head) {
+			enrolledCourse* after = head->next;
+			head = after;
+			pS->list_enrolled = head;
 			delete cur;
 		}
 		else {
-			enrolledCourse* before = pECCrs;
+			enrolledCourse* before = head;
 			while (before->next != cur)
 				before = before->next;
-			enrolledCourse* after = cur->next;
+			enrolledCourse* after = before->next;
 			before->next = after;
 			delete cur;
 		}
 	}
 	--pS->countEnroll;
 	save_enrollcourse_stu(time, pS, sem);
+	saveListOfCourse(sy, c, time, sem);
 }
 
 void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {

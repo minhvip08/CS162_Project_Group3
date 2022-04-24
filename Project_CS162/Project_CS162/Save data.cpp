@@ -92,8 +92,12 @@ void saveListOfCourse(schoolyear* sy,course* c, string time, int semester)
 
 void save_enrollcourse_stu(string time, student* s, int semester)
 {
-	if (!s->list_enrolled) return;
-	ofstream fout; fout.open(time + '_' + s->id + "_sem" + (char)semester + "enrolled.txt");
+	if (!s->list_enrolled) {
+		cout << "Can't save" << endl;
+		return;
+	}
+	string id = s->id; char k = semester + 48;
+	ofstream fout; fout.open(id + '_' + k + "sem.txt");
 	enrolledCourse* c = s->list_enrolled; int cnt = 0;
 	while (c) {
 		++cnt;

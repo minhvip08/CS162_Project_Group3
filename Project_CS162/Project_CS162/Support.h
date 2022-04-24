@@ -15,3 +15,4 @@ void changeacctostu(account* acc, schoolyear* scy, student*& stu);
 bool alreadyEnrolled(string id, enrolledCourse* c);
 int currentSemester();
 bool checkEnrollTime(semester* s);
+bool conflictSessionEnroll(enrolledCourse* ec, course* c);

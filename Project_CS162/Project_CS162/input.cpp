@@ -124,7 +124,7 @@ void create_course(schoolyear* &head) // OK
 	cur->cur_student = 0;
 	cout << "Session 1: "; input_session(cur->ses1);
 	cout << "Session 2: "; input_session(cur->ses2);
-	while (!checkConflictSession(cur->ses1, cur->ses2)) {
+	while (checkConflictSession(cur->ses1, cur->ses2)) {
 		cout << "Two sessions have to be different in date and time" << endl;
 		cout << "Please input again" << endl;
 		cout << "Session 1: "; input_session(cur->ses1);
@@ -351,6 +351,7 @@ void update1InforCourse(course* &pCourse, int opt) {
 
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	// kiem tra ngay thang cho phep enroll
+	readListEnrolled(time, stu, sem);
 	semester* check = sy->sem; 
 	while (check->mark != sem) {
 		check = check->next; 
@@ -359,24 +360,28 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 		cout << "Out of time for registration" << endl;
 		return;
 	}
-	readListEnrolled(time,stu, sem);
 	if (stu->countEnroll >= 5) {
 		cout << "You cannot enroll over 5 course in this semester.";
 		cout << "\nPress any key to continue....";
 		char a = _getch();
 		return;
 	}
-	semester* stmp = sy->sem; course* c = new course;
-	while (sem != stmp->mark) {
-		stmp = stmp->next;
+	course* c = new course; 
+	readListOfCourse(time, c, sem); 
+	if (!c) {
+		cout << "List of course in this semester is empty" << endl;
+		return;
 	}
-	c = stmp->course_list;
-	if (!c) return;
 	course* tmpc = c; int i = 0;
 	while (tmpc) {
 		++i;
-		cout << i << ".ID Course: " << tmpc->ID_course << '\t' << "Course Name: " << tmpc->course_name << endl;
+		cout << "******COURSE NUMBER: " << i << " *******" << endl;
+		cout << ".ID Course: " << tmpc->ID_course << '\t' << "Course Name: " << tmpc->course_name << endl;
+		cout << "Lecturer: " << tmpc->teacher_name << endl;
+		cout << "Session 1: " << tmpc->ses1.date << '\t' << tmpc->ses1.time << endl;
+		cout << "Session 2: " << tmpc->ses2.date << '\t' << tmpc->ses2.time << endl;
 		tmpc = tmpc->next;
+		if (!tmpc) cout << "**************************\n";
 	} cout << "0. Exit" << endl;
 	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
 	while (x > i) {
@@ -393,41 +398,47 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 		cout << "You're already enrolled in this course" << endl;
 		return;
 	}
-	if (cur->cur_student == cur->max_student) {
+	else if (cur->cur_student == cur->max_student) {
 		cout << "The course is full of slots" << endl << "You can't enroll in this course" << endl;
 		cout << "\nPress any key to continue....";
 		char a = _getch();
 		return;
 	}
-	++cur->cur_student;
-	addEnrolledCourseToStudent(cur, stu);
-	save_enrollcourse_stu(time, stu, sem);
-}
-
-void addEnrolledCourseToStudent(course* c, student*& stu) {
-
-	cout << "------COURSE INFORMATION------" << endl;
-	cout << "ID: " << c->ID_course << endl;
-	cout << "Name: " << c->course_name << endl;
-	cout << "Teacher: " << c->teacher_name << endl;
-	cout << "Credits: " << c->credits << endl;
-	cout << "Current students: " << c->cur_student << endl;
-	cout << "Session 1: " << c->ses1.date << '\t' << c->ses1.time << endl;
-	cout << "Session 2: " << c->ses2.date << '\t' << c->ses2.time << endl;
-	
-	enrolledCourse* pnew = new enrolledCourse;
-	copyCourse(pnew, c);
-	enrolledCourse* tmp = stu->list_enrolled;
-	++stu->countEnroll; 
-	if (!tmp) {
-		tmp = pnew;
-		tmp->next = nullptr;
+	else if (conflictSessionEnroll(stu->list_enrolled, cur)) {
+		cout << "Conflict session!!!" << endl;
+		return;
+	}
+	enrolledCourse* head = stu->list_enrolled;
+	if (!head) {
+		enrolledCourse* ec = new enrolledCourse;
+		ec->id_course = cur->ID_course;
+		ec->course_name = cur->course_name;
+		ec->name_teacher = cur->teacher_name;
+		ec->credits = cur->credits;
+		ec->ses1.date = cur->ses1.date;
+		ec->ses1.time = cur->ses1.time;
+		ec->ses2.date = cur->ses2.date;
+		ec->ses2.time = cur->ses2.time;
+		stu->list_enrolled = ec;
+		ec->next = nullptr;
 	}
 	else {
-		pnew->next = tmp;
-		tmp = pnew;
+		enrolledCourse* add = new enrolledCourse;
+		add->id_course = cur->ID_course;
+		add->course_name = cur->course_name;
+		add->name_teacher = cur->teacher_name;
+		add->credits = cur->credits;
+		add->ses1.date = cur->ses1.date;
+		add->ses1.time = cur->ses1.time;
+		add->ses2.date = cur->ses2.date;
+		add->ses2.time = cur->ses2.time;
+		add->next = stu->list_enrolled;
+		stu->list_enrolled = add;
 	}
-	cout << "Enroll successfully!\n";
+	cout << "Enroll succesfull" << endl;
+	++cur->cur_student;
+	save_enrollcourse_stu(time, stu, sem);
+	saveListOfCourse(sy, c, time, sem);
 }
 
 void copyCourse(enrolledCourse*& pEC, course* pC) {
@@ -437,6 +448,5 @@ void copyCourse(enrolledCourse*& pEC, course* pC) {
 	pEC->credits = pC->credits;
 	pEC->ses1 = pC->ses1;
 	pEC->ses2 = pC->ses2;
-	pEC->next = nullptr;
-	return;
+	//pEC->next = nullptr;
 }

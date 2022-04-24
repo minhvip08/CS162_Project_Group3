@@ -117,8 +117,8 @@ bool checkAvailClass(string s, string year)
 
 bool checkConflictSession(session ses1, session ses2)
 {
-	if (ses1.date == ses2.date && ses1.time == ses2.time) return false;
-	else return true;
+	if (ses1.date == ses2.date && ses1.time == ses2.time) return true;
+	else return false;
 }
 void changeacctostu(account* acc, schoolyear* scy, student*& stu)
 {
@@ -169,4 +169,13 @@ bool checkEnrollTime(semester* s) {
 bool isEmpty(ifstream& pFile)
 {
 	return pFile.peek() == ifstream::traits_type::eof();
+}
+
+bool conflictSessionEnroll(enrolledCourse* ec, course* c) {
+	while (ec) {
+		if (checkConflictSession(ec->ses1, c->ses1) || checkConflictSession(ec->ses2, c->ses2) || checkConflictSession(ec->ses1, c->ses2) || checkConflictSession(ec->ses2, c->ses1))
+			return true;
+		ec = ec->next;
+	}
+	return false;
 }

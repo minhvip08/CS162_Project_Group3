@@ -7,13 +7,13 @@ void createlistofstu(Class*& head, const string str) //str is the id of the clas
 	int no = 0;
 	ifstream fin;
 	fin.open(str + ".csv");
-	if (isEmpty(fin)) {
-		cout << "No data\n"; return;
-	}
 	if (!fin.eof())
 	{
 		cout << "Can't open the file!\n";
 		return;
+	}
+	if (isEmpty(fin)) {
+		cout << "No data\n"; return;
 	}
 	student* cur = head->student_list;
 	while (!fin.eof())
