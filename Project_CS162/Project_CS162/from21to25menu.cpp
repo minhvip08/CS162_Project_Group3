@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "Scoreboard.h"
 #include "Deallocate_graphic.h"
+#include "Login.h"
 bool checkdata(schoolyear* scy)
 {
 	if (!scy || !scy->sem || !scy->list_class)
@@ -140,8 +141,8 @@ void viewscoboardofcourse(schoolyear* scy)
 	else {
 		while (c)
 		{
-			if (c->ID_course == str)
-				viewscoreboardcourse(c);
+			if (c->ID_course == str) cout << 'y' << endl;
+				//viewscoreboardcourse(c);
 			c = c->next;
 		}
 		if (!c)
@@ -190,8 +191,55 @@ void importscoreboard_menu(schoolyear* scy)
 			cur = cur->next; ++h;
 		}
 	}
-	importscoretoCourse(cur);
+	importscoretoCourse(scy->time, cur, sem);
 	cout << "Import successfully" << endl;
+}
+void importscoretoCourse(string time, course*& c, int sem)
+{
+	ifstream fin;
+	fin.open(c->ID_course + ".csv");
+
+	if (!fin.eof())
+	{
+		cout << "Can't open the file.\n";
+		return;
+	}
+	string a; getline(fin, a, '\n');
+	studentScore* stu = c->list_score;
+	while (!fin.eof())
+	{
+		fin >> stu->no; string b; getline(fin, b, ','); fin.get();
+		getline(fin, stu->id, ',');
+		getline(fin, stu->name, ',');
+		fin.get();
+		fin >> stu->stscore.other;
+		getline(fin, b, ',');
+		fin >> stu->stscore.mid;
+		getline(fin, b, ',');
+		fin >> stu->stscore.final;
+		getline(fin, b, ',');
+		fin >> stu->stscore.total;
+		student* s = new student; 
+		readListEnrolled(time, s, sem);
+		enrolledCourse* tmpec = s->list_enrolled; 
+		while (tmpec) {
+			if (tmpec->id_course == c->ID_course) break; 
+			tmpec = tmpec->next; 
+		}
+		tmpec->ecscore.other = stu->stscore.other; 
+		tmpec->ecscore.mid = stu->stscore.mid; 
+		tmpec->ecscore.final = stu->stscore.final; 
+		tmpec->ecscore.total = stu->stscore.total;
+		if (fin.eof()) {
+			stu->pNext = nullptr;
+			break;
+		}
+		else {
+			stu->pNext = new studentScore;
+			stu = stu->pNext;
+		}
+	}
+	fin.close();
 }
 void updatestures_menu(schoolyear* sy)
 {
@@ -227,11 +275,11 @@ void updatestures_menu(schoolyear* sy)
 			cur = cur->next; ++h;
 		}
 	}
-	viewscoreboardcourse(cur); 
-	cout << "Enter student's number you want to update his/her score: "; int x; cin >> x;
+	//viewscoreboardcourse(cur); 
+	cout << "Enter student's number you want to update his/her score: "; int k; cin >> k;
 	studentScore* stu = cur->list_score; 
 	while (stu) {
-		if (stu->no == x) break;
+		if (stu->no == k) break;
 		else
 			stu = stu->pNext; 
 	}
@@ -328,5 +376,55 @@ void viewscoboardofc_menu(schoolyear* sy)
 			cur = cur->next; ++h;
 		}
 	}
-	viewscoreboardcourse(cur);
+	//viewscoreboardcourse(cur);
+}
+
+void viewScoreOfClass(schoolyear* sy) {
+	readSchoolyear(sy);
+	while (sy) {
+		if (checkCurrentSchoolyear(sy)) break;
+		sy = sy->next_schyear;
+	}
+	if (!sy) return;
+	readListOfClass(sy->list_class, sy->time); 
+	int i = 0; 
+	Class* cl = sy->list_class; 
+	while (cl) {
+		++i; 
+		cout << i << ".Class name: " << cl->class_name << endl; 
+		cl = cl->nextClass; 
+	}
+	cout << "Choose the class you want to view score: "; int x; cin >> x; 
+	while (x > i) {
+		cout << "You inout wrong number, please input again: "; cin >> x; 
+	}
+	Class* tmp = sy->list_class; int h = 0; 
+	while (tmp) {
+		++h; 
+		tmp = tmp->nextClass;
+		if (h == x) break;
+	}
+	readStudent1Class(tmp->class_name, tmp);
+	student* stu = tmp->student_list; int sem = currentSemester(); 
+	while (stu) {
+		readListEnrolled(sy->time, stu, sem); 
+		enrolledCourse* ec = stu->list_enrolled; 
+		float gpa = 0; int cred = 0; 
+		while (ec) {
+			cout << "Course name: " << ec->course_name << endl; 
+			cout << "Final mark: " << ec->ecscore.final << endl;
+			gpa += ec->ecscore.total; cred += ec->credits; 
+			ec = ec->next; 
+		}
+		cout << "GPA in this semester: " << conditionGPA(gpa / cred) << endl; 
+		//cout << "Total GPA: " (kt lai)
+		stu = stu->pNext; 
+	}
+}
+
+int conditionGPA(float a) {
+	if (8.5 <= a && a <= 10) return 4;
+	else if (7 <= a && a <= 8.4) return 3;
+	else if (5.5 <= a && a <= 6.9) return 2;
+	else return 1; 
 }
