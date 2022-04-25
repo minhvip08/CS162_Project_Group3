@@ -63,7 +63,7 @@ void menu_staff2()
 	}
 	system("cls");
 	menu_view();
-	Delete_schoolyear(sy);
+	//Delete_schoolyear(sy);
 }
 void printlistclass(Class* c, int x)
 {
@@ -72,46 +72,42 @@ void printlistclass(Class* c, int x)
 	printlistclass(c->nextClass, x + 1);
 	cout << "\n" << x << ". " << c->class_name;
 }
-void exportstulist_menu(schoolyear* scy)
+void exportstulist_menu(schoolyear* scy) // chay lai
 {
-	if (!checkdata(scy))
-	{
-		cout << "Data is empty!";
-		system("pause");
-		menu_staff2();
+	readSchoolyear(scy); 
+	while (scy) {
+		if (checkCurrentSchoolyear(scy)) break; 
+		scy = scy->next_schyear; 
 	}
-
-	int i = 0;
-	cout << "List of course:" << endl;
-	string str;
-	printcourse(scy->sem->course_list, 1);
-	cout << "\n0. Exit" << endl;
-	cout << "Enter name of course you want to export list of students: ";
-	course* c = scy->sem->course_list;
-	cin >> str;
-	if (stoi(str) == 0)
-		return;
-	while (c)
-	{
-		if (str == c->ID_course)
-		{
-			exportlistofstudent(c);
-			//system("pause");
-			menu_staff2();
-			continue;
+	if (!scy) return;
+	readSemester(scy->sem, scy->time); 
+	int sem = currentSemester();
+	semester* s = scy->sem; 
+	while (s) {
+		if (s->mark == sem) break; 
+		s = s->next; 
+	}
+	cout << "List of course:" << endl; readListOfCourse(scy->time, s->course_list, sem);
+	int i = 0;  
+	course* tmp = s->course_list; 
+	while (tmp) {
+		++i; 
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl; 
+		tmp = tmp->next; 
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+		while (x > i) {
+			cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+		}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
 		}
 	}
-	cout << "Invalid input" << endl;
-	cout << "Enter 1 to try again. Else to exit: ";
-	string input;
-	cin >> input;
-	if (stoi(input) == 1)
-	{
-		//system("cls")
-		exportstulist_menu(scy);
-	}
-	else
-		menu_staff2();
+	exportlistofstudent(cur);
+	cout << "Export successfully" << endl;
 }
 void printcourse(course* c, int x)
 {
@@ -162,110 +158,175 @@ void viewscoboardofcourse(schoolyear* scy)
 }
 void importscoreboard_menu(schoolyear* scy)
 {
-	//system("cls");
-	if (!checkdata(scy))
-	{
-		cout << "Data is empty!";
-		system("pause");
-		return;
+	readSchoolyear(scy);
+	while (scy) {
+		if (checkCurrentSchoolyear(scy)) break;
+		scy = scy->next_schyear;
 	}
-	course* c = scy->sem->course_list;
-	cout << "List of courses:" << endl;
-	printcourse(scy->sem->course_list, 1);
-	cout << "\n0. Exit " << endl;
-	cout << "Enter ID of course: ";
-	string str;
-	cin >> str;
-	if (stoi(str) == 0)
-	{
-		menu_staff2();
+	if (!scy) return;
+	readSemester(scy->sem, scy->time);
+	int sem = currentSemester();
+	semester* s = scy->sem;
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next;
 	}
-	else {
-		while (c)
-		{
-			if (c->ID_course == str)
-				importscoretoCourse(c);
-			c = c->next;
-		}
-		if (!c)
-		{
-			cout << "Invalid input!" << endl;
-			cout << "Press 1 to try again. 0 to exit";
-			string s;
-			if (stoi(s) == 1)
-				importscoreboard_menu(scy);
-			else
-				menu_staff2();
+	cout << "List of course:" << endl; readListOfCourse(scy->time, s->course_list, sem);
+	int i = 0;
+	course* tmp = s->course_list;
+	while (tmp) {
+		++i;
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
 		}
 	}
+	importscoretoCourse(cur);
+	cout << "Import successfully" << endl;
 }
 void updatestures_menu(schoolyear* sy)
 {
-	if (!checkdata(sy))
-	{
-		cout << "Data is empty!";
-		system("pause");
-		menu_staff2();
+	readSchoolyear(sy);
+	while (sy) {
+		if (checkCurrentSchoolyear(sy)) break;
+		sy = sy->next_schyear;
 	}
-	printcourse(sy->sem->course_list, 1);
-	cout << "Enter ID of the course you want to update student result: ";
-	string courseid;
-	cin >> courseid;
-	course* c = sy->sem->course_list;
-	while (c)
-	{
-		if (c->ID_course == courseid)
+	if (!sy) return;
+	readSemester(sy->sem, sy->time);
+	int sem = currentSemester();
+	semester* s = sy->sem;
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next;
+	}
+	cout << "List of course:" << endl; readListOfCourse(sy->time, s->course_list, sem);
+	int i = 0;
+	course* tmp = s->course_list;
+	while (tmp) {
+		++i;
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+	viewscoreboardcourse(cur); 
+	cout << "Enter student's number you want to update his/her score: "; int x; cin >> x;
+	studentScore* stu = cur->list_score; 
+	while (stu) {
+		if (stu->no == x) break;
+		else
+			stu = stu->pNext; 
+	}
+	if (!stu) {
+		cout << "Can't find student!!!" << endl;
+		return; 
+	}
+	while (1) {
+		cout << "Which score you want to update: " << endl;
+		cout << "1. Update other score." << endl;
+		cout << "2. Update midterm score." << endl;
+		cout << "3. Update final score." << endl;
+		cout << "0. Exit." << endl;
+		int choice; cout << "Your option: "; cin >> choice;
+		if (choice == 0) return;
+		else if (choice > 3) {
+			cout << "You input wrong number!!!\nPLease input again: "; cin >> choice; 
+		}
+		switch (choice) {
+		case 1: {
+			float other; cout << "New other score: "; cin >> other;
+			stu->stscore.other = other; 
+			break; 
+		}
+		case 2: {
+			float mid; cout << "New midterm score: "; cin >> mid; 
+			stu->stscore.mid = mid; 
 			break;
-		c = c->next;
+		}
+		case 3: {
+			float final; cout << "New final score: "; cin >> final; 
+			stu->stscore.final = final; 
+			break;
+		}
+		}
+		float total = stu->stscore.other * 0.3 + stu->stscore.mid * 0.3 + stu->stscore.final * 0.4; 
+		cout << "New total score: " << total << endl;
+		stu->stscore.total = total; 
 	}
-	cout << "Enter the ID of the student you want to update result: ";
-	string id;
-	cin >> id;
-	updateastudentscore(c, id);
-
+	saveScoreboardCSV(cur);
 }
+
+void saveScoreboardCSV(course* c) {
+	if (!c || !c->list_score) {
+		cout << "Empty data\n"; return; 
+	}
+	studentScore* stu = c->list_score;
+	ofstream fout; fout.open(c->ID_course + ".csv"); 
+	fout << "No,ID,Name,Other,Mid,Final,Total\n"; 
+	while (stu) {
+		fout << stu->no << ',';
+		fout << stu->id << ',';
+		fout << stu->name << ','; 
+		fout << stu->stscore.other << ','; 
+		fout << stu->stscore.mid << ',';
+		fout << stu->stscore.final << ',';
+		fout << stu->stscore.total << '\n';
+		stu = stu->pNext; 
+	}
+	fout.close(); 
+}
+
 void viewscoboardofc_menu(schoolyear* sy)
 {
-	printcourse(sy->sem->course_list, 1);
-	cout << "Enter ID of course you want to view score board: ";
-	string id;
-	cin >> id;
-	course* cur = sy->sem->course_list;
-	while (cur)
-	{
-		if (id == cur->ID_course)
-		{
-			viewscoreboardcourse(cur);
-			system("pause");
-			menu_staff2();
-			continue;
+	readSchoolyear(sy);
+	while (sy) {
+		if (checkCurrentSchoolyear(sy)) break;
+		sy = sy->next_schyear;
+	}
+	if (!sy) return;
+	readSemester(sy->sem, sy->time);
+	int sem = currentSemester();
+	semester* s = sy->sem;
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next;
+	}
+	cout << "List of course:" << endl; readListOfCourse(sy->time, s->course_list, sem);
+	int i = 0;
+	course* tmp = s->course_list;
+	while (tmp) {
+		++i;
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
 		}
-		cur = cur->next;
 	}
-	cout << "Invalid input!" << endl;
-	cout << "Enter 1 to try again, else to exit: ";
-	string choose;
-	cin >> choose;
-	if (stoi(choose) == 1)
-	{
-		viewscoboardofc_menu(sy);
-	}
-	else
-		menu_staff2();
-
+	viewscoreboardcourse(cur);
 }
-//void viewscoallcour_menu(schoolyear* sy)
-//{
-//	if (!checkdata(sy))
-//	{
-//		cout << "Data is empty!";
-//		system("pause");
-//		return;
-//	}
-//	course* c = sy->sem->course_list;
-//	while (c)
-//	{
-//		viewscoreboardcourse(c);
-//		c = c->next;
-//	}
-//}

@@ -471,8 +471,13 @@ void Menu2(account*cur, account*&head, int type) {
 		else if (type == 1) {
 			schoolyear* sy = NULL;
 			readSchoolyear(sy);
+			schoolyear* scy = sy; 
+			while (scy) {
+				if (checkCurrentSchoolyear(scy)) break; 
+				scy = scy->next_schyear; 
+			}
 			int sem = currentSemester();
-			menu_student(sy,sem,head);
+			menu_student(scy,sem,head);
 		}
 		break;
 	case 4:

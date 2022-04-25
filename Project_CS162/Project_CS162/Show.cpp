@@ -342,7 +342,7 @@ void menu_student(schoolyear*& sy, int semester, account* head) {
 		int opt; 
 		cout << "1. Enroll a course" << endl;
 		cout << "2. View a list of enrolled course" << endl;
-		cout << "3. Remove enrolled course" << endl;
+		cout << "3. Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
 		cout << "4. View a list of his/her courses in this semester" << endl;
 		cout << "5. View his/her scoreboard" << endl;
 		cout << "0. Exit" << endl;
