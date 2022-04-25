@@ -81,6 +81,8 @@ struct enrolledCourse { // student (class)
 	session ses2; 
 	studentScore* list_score;
 	score ecscore;
+	//studentScore* list_score;
+	score ecscore; 
 	enrolledCourse* next;
 	/*int semester;
 	int year;*/

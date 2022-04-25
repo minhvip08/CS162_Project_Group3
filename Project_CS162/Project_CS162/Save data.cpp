@@ -111,6 +111,10 @@ void save_enrollcourse_stu(string time, student* s, int semester)
 		fout << tmp->name_teacher << endl;
 		fout << tmp->ses1.date << '\t' << tmp->ses1.time << endl;
 		fout << tmp->ses2.date << '\t' << tmp->ses2.time << endl;
+		fout << tmp->ecscore.other << endl;
+		fout << tmp->ecscore.mid << endl; 
+		fout << tmp->ecscore.final << endl; 
+		fout << tmp->ecscore.total << endl;
 		tmp = tmp->next;
 	}
 	fout.close();

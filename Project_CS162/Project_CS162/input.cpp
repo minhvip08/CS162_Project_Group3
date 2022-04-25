@@ -448,6 +448,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 		ec->ses1.time = cur->ses1.time;
 		ec->ses2.date = cur->ses2.date;
 		ec->ses2.time = cur->ses2.time;
+		ec->ecscore.final = ec->ecscore.mid = ec->ecscore.other = ec->ecscore.total = 0; 
 		stu->list_enrolled = ec;
 		ec->next = nullptr;
 	}
@@ -461,6 +462,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 		add->ses1.time = cur->ses1.time;
 		add->ses2.date = cur->ses2.date;
 		add->ses2.time = cur->ses2.time;
+		add->ecscore.final = add->ecscore.mid = add->ecscore.other = add->ecscore.total = 0; 
 		add->next = stu->list_enrolled;
 		stu->list_enrolled = add;
 	}

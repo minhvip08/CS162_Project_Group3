@@ -60,7 +60,7 @@ void Delete_student(student*& head)
 	if (!head) return;
 	while (head) {
 		// del enrolledCourse
-		Delete_enrollCourse(head->list_enrolled);
+		//Delete_enrollCourse(head->list_enrolled);
 		// del final GPA
 		Delete_finalGPA(head->list_gpa);
 		student* tmp = head->pNext;
@@ -69,16 +69,16 @@ void Delete_student(student*& head)
 	}
 }
 
-void Delete_enrollCourse(enrolledCourse*& head)
-{
-	if (!head) return;
-	while (head) {
-		Delete_stdScore(head->list_score);
-		enrolledCourse* tmp = head->next;
-		delete head;
-		head = tmp;
-	}
-}
+//void Delete_enrollCourse(enrolledCourse*& head)
+//{
+//	if (!head) return;
+//	while (head) {
+//		Delete_stdScore(head->list_score);
+//		enrolledCourse* tmp = head->next;
+//		delete head;
+//		head = tmp;
+//	}
+//}
 
 void Delete_finalGPA(finalGPA*& head)
 {

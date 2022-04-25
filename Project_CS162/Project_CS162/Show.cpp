@@ -6,6 +6,7 @@
 #include "Deallocate_graphic.h"
 #include "Menu.h"
 #include"Login.h"
+#include "Login.h"
 void show_semester(schoolyear* &head, semester* &s)
 {
 	readSemester(s, head->time);
@@ -176,10 +177,40 @@ void menu_staff()
 		case 4: create_class(sy); break;
 		case 5: menu_view(); break;
 		case 6: return;
+			while (1) {
+				if (n == 0) break;
+				else {
+					switch (n) {
+					case 1: create_schoolyear(sy); break;
+					case 2: create_semester(sy); break;
+					case 3: create_course(sy); break;
+					case 4: create_class(sy); break;
+					case 5: {
+						exportstulist_menu(sy);
+						break;
+					}
+					case 6: {
+						importscoreboard_menu(sy);
+						break;
+					}
+
+					case 7: {
+						viewscoboardofc_menu(sy);
+						break;
+					}
+
+					case 8: {
+						updatestures_menu(sy);
+						break;
+					}
+					}
+				}
+				Delete_schoolyear(sy);
+			}
 		}
-		Delete_schoolyear(sy);
 	}
 }
+
 
 void showListEnrolledCourse(student* pS) {
 	// choose schoolyear

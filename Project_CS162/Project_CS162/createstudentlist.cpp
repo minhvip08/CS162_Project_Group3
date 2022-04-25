@@ -50,7 +50,86 @@ void exportlistofstudent(course *cour)
 		system("pause");
 		return;
 	}
-	fout << "No,ID,Fullname,Other,Mid,Final,Total" << endl;
+	void updatestures_menu(schoolyear * sy)
+	{
+		readSchoolyear(sy);
+		while (sy) {
+			if (checkCurrentSchoolyear(sy)) break;
+			sy = sy->next_schyear;
+		}
+		if (!sy) return;
+		readSemester(sy->sem, sy->time);
+		int sem = currentSemester();
+		semester* s = sy->sem;
+		while (s) {
+			if (s->mark == sem) break;
+			s = s->next;
+		}
+		cout << "List of course:" << endl; readListOfCourse(sy->time, s->course_list, sem);
+		int i = 0;
+		course* tmp = s->course_list;
+		while (tmp) {
+			++i;
+			cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+			tmp = tmp->next;
+		}	cout << "0. Exit" << endl;
+		cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+		while (x > i) {
+			cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+		}
+		if (x == 0) return;
+		course* cur = s->course_list;
+		if (x > 1) {
+			int h = 1; while (h < x) {
+				cur = cur->next; ++h;
+			}
+		}
+		//viewscoreboardcourse(cur); 
+		cout << "Enter student's number you want to update his/her score: "; int k; cin >> k;
+		studentScore* stu = cur->list_score;
+		while (stu) {
+			if (stu->no == k) break;
+			else
+				stu = stu->pNext;
+		}
+		if (!stu) {
+			cout << "Can't find student!!!" << endl;
+			return;
+		}
+		while (1) {
+			cout << "Which score you want to update: " << endl;
+			cout << "1. Update other score." << endl;
+			cout << "2. Update midterm score." << endl;
+			cout << "3. Update final score." << endl;
+			cout << "0. Exit." << endl;
+			int choice; cout << "Your option: "; cin >> choice;
+			if (choice == 0) return;
+			else if (choice > 3) {
+				cout << "You input wrong number!!!\nPLease input again: "; cin >> choice;
+			}
+			switch (choice) {
+			case 1: {
+				float other; cout << "New other score: "; cin >> other;
+				stu->stscore.other = other;
+				break;
+			}
+			case 2: {
+				float mid; cout << "New midterm score: "; cin >> mid;
+				stu->stscore.mid = mid;
+				break;
+			}
+			case 3: {
+				float final; cout << "New final score: "; cin >> final;
+				stu->stscore.final = final;
+				break;
+			}
+			}
+			float total = stu->stscore.other * 0.3 + stu->stscore.mid * 0.3 + stu->stscore.final * 0.4;
+			cout << "New total score: " << total << endl;
+			stu->stscore.total = total;
+		}
+		saveScoreboardCSV(cur);
+	}
 	studentScore* cur = cour->list_score;
 	int i = 0; 
 	while (cur)
@@ -68,42 +147,7 @@ void exportlistofstudent(course *cour)
 	}
 	fout.close();
 }
-void importscoretoCourse(course* &c)
-{
-	ifstream fin;
-	fin.open(c->ID_course + ".csv");
-	
-	if (!fin.eof())
-	{
-		cout << "Can't open the file.\n";
-		return;
-	}
-	string a; getline(fin, a, '\n'); 
-	studentScore* stu = c->list_score;
-	while (!fin.eof())
-	{
-		fin >> stu->no; string b; getline(fin, b, ','); fin.get(); 
-		getline(fin, stu->id, ','); 
-		getline(fin, stu->name, ','); 
-		fin.get(); 
-		fin >> stu->stscore.other; 
-		getline(fin, b, ',');
-		fin >> stu->stscore.mid; 
-		getline(fin, b, ',');
-		fin >> stu->stscore.final; 
-		getline(fin, b, ',');
-		fin >> stu->stscore.total;
-		if (fin.eof()) {
-			stu->pNext = nullptr;  
-			break;
-		}
-		else {
-			stu->pNext = new studentScore; 
-			stu = stu->pNext; 
-		}
-	}
-	fin.close();
-}
+
 void viewstudentscore(studentScore* sco)
 {
 	while (sco) {
@@ -111,109 +155,21 @@ void viewstudentscore(studentScore* sco)
 		sco = sco->pNext; 
 	}
 }
-void viewscoreboardcourse(course* c)
-{
-	importscoretoCourse(c); 
-	/*if (!c->list_score)
-	{
-		cout << "Empty list of student" << endl;
-		cout << "...Press any key to continue\n"; 
-		system("pause");
-		return;
-	}*/
-	cout << "COURSE NAME:" << c->ID_course << endl;
-	cout << "No\t\t\tID\t\t\tFull Name\t\t\tOther\t\t\tMid\t\t\tFinal\t\t\Total\n";
-	studentScore* sco = c->list_score;
-	while (sco) {
-		cout << sco->no << "\t\t\t" << sco->id << "\t\t\t" << sco->name << "\t\t\t" << sco->stscore.other << "\t\t\t" << sco->stscore.mid << "\t\t\t" << sco->stscore.final << "\t\t\t" << sco->stscore.total << endl;
-		sco = sco->pNext;
-	}
-}
-
-//void updateastudentscore(course*& c, string id)
+//void viewscoreboardcourse(course* c)
 //{
-//
-//	if (!c->list_score) {
-//		cout << "Data is empty!\n";
+//	importscoretoCourse(c); 
+//	/*if (!c->list_score)
+//	{
+//		cout << "Empty list of student" << endl;
+//		cout << "...Press any key to continue\n"; 
+//		system("pause");
 //		return;
-//	}
-//	studentScore* tmp = nullptr;
-//	bool check = false;
-//	studentScore* cur = c->list_score;
-//	while (cur)
-//	{
-//		if (id == cur->id)
-//		{
-//			tmp = cur;
-//			check = true;
-//			break;
-//		}
-//		cur = cur->pNext;
-//	}
-//	if (!check)
-//	{
-//		string n;
-//		cout << "Not found!\n";
-//		cout << "Enter 1 to try again: ";
-//		if (stoi(n) == 1)
-//		{
-//			updateastudentscore(c);
-//		}
-//		else
-//			return;
-//	}
-//	else
-//	{
-//		bool c = true;
-//		while (c)
-//		{
-//			cout << "Enter:" << endl;
-//			cout << "1. Update total score." << endl;
-//			cout << "2. Update final score." << endl;
-//			cout << "3. Update mid score." << endl;
-//			cout << "4. Update other score." << endl;
-//			cout << "0. Exit." << endl << endl;
-//			cout << "Your option: ";
-//			int b; cin >> b;
-//			double a;
-//			if (b == 0)
-//				return;
-//			switch (b)
-//			{
-//			case 1:
-//				cout << "Enter new total score: ";
-//				cin >> a;
-//				tmp->stscore.total = a;
-//				cout << "Successful!\n";
-//				system("pause");
-//				//cout << "\033[2J\033[1;1H";
-//				break;
-//			case 2:
-//				cout << "Enter new final score: ";
-//				cin >> a;
-//				tmp->stscore.final = a;
-//				cout << "Successful!\n";
-//				system("pause");
-//				//cout << "\033[2J\033[1;1H";
-//				break;
-//			case 3:
-//				cout << "Enter new mid score: ";
-//				cin >> a;
-//				tmp->stscore.mid = a;
-//				cout << "Successful!\n";
-//				system("pause");
-//				//cout << "\033[2J\033[1;1H";
-//				break;
-//			case 4:
-//				cout << "Enter new total score: ";
-//				cin >> a;
-//				tmp->stscore.other = a;
-//				cout << "Successful!\n";
-//				system("pause");
-//				//cout << "\033[2J\033[1;1H";
-//				break;
-//			}
-//		}
-//		return;
+//	}*/
+//	cout << "COURSE NAME:" << c->ID_course << endl;
+//	cout << "No\t\t\tID\t\t\tFull Name\t\t\tOther\t\t\tMid\t\t\tFinal\t\t\Total\n";
+//	studentScore* sco = c->list_score;
+//	while (sco) {
+//		cout << sco->no << "\t\t\t" << sco->id << "\t\t\t" << sco->name << "\t\t\t" << sco->stscore.other << "\t\t\t" << sco->stscore.mid << "\t\t\t" << sco->stscore.final << "\t\t\t" << sco->stscore.total << endl;
+//		sco = sco->pNext;
 //	}
 //}
