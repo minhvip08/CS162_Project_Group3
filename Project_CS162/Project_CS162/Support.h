@@ -16,3 +16,4 @@ bool alreadyEnrolled(string id, enrolledCourse* c);
 int currentSemester();
 bool checkEnrollTime(semester* s);
 bool conflictSessionEnroll(enrolledCourse* ec, course* c);
+bool checkSem(date d, int sem);

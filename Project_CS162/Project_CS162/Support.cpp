@@ -179,3 +179,17 @@ bool conflictSessionEnroll(enrolledCourse* ec, course* c) {
 	}
 	return false;
 }
+bool checkSem(date d, int sem) {
+	if (sem == 1 && 9 <= d.month && d.month <= 12) {
+		return true;
+	}
+	else if (sem == 2 && 1 <= d.month && d.month <= 4) {
+		return true;
+	}
+	else if (sem == 3 && 5 <= d.month && d.month <= 8) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

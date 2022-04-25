@@ -2,42 +2,6 @@
 #include "Support.h"
 #include "Data.h"
 #include "Scoreboard.h"
-void createlistofstu(Class*& head, const string str) //str is the id of the class
-{
-	int no = 0;
-	ifstream fin;
-	fin.open(str + ".csv");
-	if (!fin.eof())
-	{
-		cout << "Can't open the file!\n";
-		return;
-	}
-	if (isEmpty(fin)) {
-		cout << "No data\n"; return;
-	}
-	student* cur = head->student_list;
-	while (!fin.eof())
-	{
-		++no;
-		fin >> cur->No; 
-		fin.get(); 
-		getline(fin, cur->id, ',');
-		getline(fin, cur->prf.firstname, ',');
-		getline(fin, cur->prf.lastname, ',');
-		getline(fin, cur->prf.gender, ',');
-		getline(fin, cur->prf.DOB, ',');
-		getline(fin, cur->prf.social_id, '\n');
-		if (fin.eof()) {
-			cur->pNext = nullptr;
-			break;
-		}
-		else {
-			cur->pNext = new student;
-			cur = cur->pNext;
-		}
-	}
-	fin.close();
-}
 void copystudentinfor(student* &stu1, student* &stu2)
 {
 	if (stu1 == nullptr)

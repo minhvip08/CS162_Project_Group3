@@ -311,16 +311,16 @@ void enterProfile(account*& acc, int type)
 }
 void viewProfile(account*acc, account*& head)
 {
-	system("cls");
 	account* cur = head;
 
 	while (acc->username != cur->username) {
 		cur = cur->pNext;
 	}
 	int choose = 100;
-	SetColor(3);
-	gotoxy(0,7);
-	while (choose != 1 && choose != 0) {
+	while ((choose != 1||cur->type==1) && choose != 0) {
+		system("cls");
+		SetColor(rand()%3+1);
+		gotoxy(0, 7);
 		cout << "-----Profile-----" << endl;
 		cout << "Last name : " << cur->prf.lastname << endl;
 		cout << "First name: " << cur->prf.firstname << endl;
@@ -328,23 +328,19 @@ void viewProfile(account*acc, account*& head)
 		cout << "Gender: " << cur->prf.gender << endl;
 		cout << "SocialID: " << cur->prf.social_id << endl;
 		cout << "----------------" << endl;
-		cout << "1. Change Profile." << endl;
+		if (cur->type == 0) {
+			cout << "1. Change Profile." << endl;
+		}
 		cout << "0. Back to menu" << endl;
-
 		cin >> choose;
 	}
-	if (choose == 1)
+	if (choose == 1&&cur->type==0)
 	{
 		enterProfile(cur,cur->type);
 		cout << "Change Profile successfull !" << endl;
 		system("pause");
 		ofstream fout;
-		if (cur->type == 1) {
-			fout.open("Student_acc.txt");
-		}
-		else if(cur->type == 0) {
-			fout.open("Staff_acc.txt");
-		}
+		fout.open("Staff_acc.txt");
 		saveAccountFile(fout, head);
 		fout.close();
 		viewProfile(acc,cur);
@@ -356,7 +352,7 @@ void viewProfile(account*acc, account*& head)
 void changePassword(account* acc, account*& head)
 {
 	system("cls");
-	SetColor(4);
+	SetColor(12);
 	gotoxy(0,7);
 	string pwd;
 	cout << "Enter old password : ";
@@ -432,137 +428,56 @@ void moveChoice(int row, int y, int&opt) {
 	} while (keyBoard != '\r');
 }
 void Menu2(account*cur, account*&head, int type) {
-	system("cls");
-	int opt = 1;
-	int row = 4;//rows of menu lines
-	int y = 7;
-	ShowConsoleCursor(true);
-	SetColor(1);
-	gotoxy(7, y+1);
-	cout << "View Profile" << endl;
-	SetColor(2);
-	gotoxy(7, y+2);
-	cout << "Change Password" << endl;
-	SetColor(3);
-	gotoxy(7, y+3);
-	if (type == 0) {
-		cout << "MENU_STAFF" << endl;
-	}
-	else if(type==1) {
-		cout << "MENU_STUDENT" << endl;
-	}
-	SetColor(4);
-	gotoxy(7, y+4);
-	cout << "Log Out" << endl;
-	gotoxy(7, y + 1);
-	moveChoice(row, y, opt);
-
-	switch (opt) {
-	case 1:
-		viewProfile(cur,head);
-		break;
-	case 2:
-		changePassword(cur,head);
-		break;
-	case 3:
+	string art = headline();
+	while (true) {
+		system("cls");
+		cout << art << endl;
+		int opt = 1;
+		int row = 4;//rows of menu lines
+		int y = 7;
+		ShowConsoleCursor(true);
+		SetColor(3);
+		gotoxy(8, y + 1);
+		cout << "View Profile" << endl;
+		gotoxy(8, y + 2);
+		cout << "Change Password" << endl;
+		gotoxy(8, y + 3);
 		if (type == 0) {
-			menu_staff();
+			cout << "MENU_STAFF" << endl;
 		}
 		else if (type == 1) {
-			schoolyear* sy = NULL;
-			readSchoolyear(sy);
-			schoolyear* scy = sy; 
-			while (scy) {
-				if (checkCurrentSchoolyear(scy)) break; 
-				scy = scy->next_schyear; 
-			}
-			int sem = currentSemester();
-			menu_student(scy,sem,head);
+			cout << "MENU_STUDENT" << endl;
 		}
-		break;
-	case 4:
-		break;
+		gotoxy(8, y + 4);
+		cout << "Log Out" << endl;
+		gotoxy(8, y + 1);
+		moveChoice(row, y, opt);
+
+		switch (opt) {
+		case 1:
+			viewProfile(cur, head);
+			break;
+		case 2:
+			changePassword(cur, head);
+			break;
+		case 3:
+			if (type == 0) {
+				menu_staff();
+			}
+			else if (type == 1) {
+				schoolyear* sy = NULL;
+				readSchoolyear(sy);
+				schoolyear* scy = sy;
+				while (scy) {
+					if (checkCurrentSchoolyear(scy)) break;
+					scy = scy->next_schyear;
+				}
+				int sem = currentSemester();
+				menu_student(scy, sem, head);
+			}
+			break;
+		case 4:
+			return;
+		}
 	}
 }
-
-//void Menu() {
-//	int type = 100;
-//	account* head =NULL;
-//	while (true) {
-//		while (type != 1 && type != 2 && type != 0) {
-//			cout << "Staff or Student?" << endl;
-//			cout << "1.Staff" << endl;
-//			cout << "2.Student" << endl;
-//			cout << "0. Exit" << endl;
-//			cin >> type;
-//		}
-//		if (type == 1) {
-//			ifstream fin; fin.open("Staff_acc.txt");
-//			bool flag = isEmpty(fin);
-//			if (!flag) {
-//				loadAccountFile(fin, head);
-//			}
-//			fin.close();
-//			while (true) {
-//				system("cls");
-//				int n; bool login = true;
-//				cout << "-------STAFF-------" << endl;
-//				cout << "1. Login" << endl;
-//				cout << "2. Register" << endl;
-//				cout << "0. Go back to main menu" << endl;
-//
-//				cin >> n;
-//				if (n == 0) {
-//					head = NULL;
-//					type = -1;
-//					break;
-//				}
-//				switch (n) {
-//				case 1:
-//					if (flag)
-//						cout << "There is no available account. PLease create a new account" << endl;
-//					else
-//						loginView(head, 0);
-//					break;
-//				case 2:
-//					registerView(head, fin);
-//					system("pause");
-//					login = false;
-//					break;
-//				}
-//				if (!login) break;
-//			}
-//		}
-//		else if (type == 2) {
-//			ifstream fin; fin.open("Student_acc.txt");
-//			bool flag = isEmpty(fin);
-//			if (!flag) {
-//				loadAccountFile(fin, head);
-//			}
-//			fin.close();
-//			while (true) {
-//				system("cls");
-//				int n;
-//				cout << "-------STUDENT-------" << endl;
-//				cout << "1. Login" << endl;
-//				cout << "0. Go back to main menu" << endl;
-//				cin >> n;
-//				if (n == 0) {
-//					head = NULL;
-//					type = -1;
-//					break;
-//				}
-//				switch (n) {
-//				case 1:
-//					if (flag)
-//						cout << "There is no available account. PLease wait for staff to create" << endl;
-//					else
-//						loginView(head, 1);
-//					break;
-//				}
-//			}
-//		}
-//		else if (type == -1) continue;
-//		else if (type == 0) break;
-//	}
-//}

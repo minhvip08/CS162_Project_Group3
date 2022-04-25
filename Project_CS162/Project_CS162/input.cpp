@@ -63,10 +63,26 @@ void create_semester(schoolyear* &head)
 	readSemester(check->sem, check->time);
 	++check->num_sem;
 	semester* cur = new semester; cur->course_list = NULL;
-	cur->mark = check->num_sem; 
-	cout << "Semester number: " << cur->mark << endl;
-	cout << "Start date: "; input_date(cur->start_date);
-	cout << "End day: "; input_date(cur->end_date);
+	cur->mark = check->num_sem;
+	bool flag = false;
+	while (!flag) {
+		cout << "Semester number: " << cur->mark << endl;
+		cout << "Start date: "; input_date(cur->start_date);
+		flag = checkSem(cur->start_date, cur->mark);
+		if (!flag) {
+			cout << "Start month does not match with smester"<<endl;
+		}
+		else {
+			cout << "End day: "; input_date(cur->end_date);
+			flag = checkSem(cur->end_date, cur->mark);
+			if (!flag) {
+				cout << "End month does not match with smester"<<endl;
+			}
+			else {
+				flag = true;
+			}
+		}
+	}
 	createCourseEnrolledTime(cur);
 	cur->course_list = NULL;
 	if (!check->sem) {
@@ -216,12 +232,25 @@ void create_class(schoolyear* &head) //OK
 
 void createCourseEnrolledTime(semester*& s) 
 {
-	cout << "Create a course registration time! " << endl;
-	cout << endl << "Please enter the start of the semester";
-	input_date(s->start_regist);
-
-	cout << endl << "Please enter the end of the semester";
-	input_date(s->end_regist);
+	bool flag = false;
+	while (!flag) {
+		cout << "Create a course registration time! " << endl;
+		cout << "Please enter the start of the semester"; input_date(s->start_regist);
+		flag = checkSem(s->start_regist, s->mark);
+		if (!flag) {
+			cout << "Start month does not match with semester registration time!" << endl;
+		}
+		else {
+			cout << "Please enter the end of the semester"; input_date(s->end_regist);
+			flag = checkSem(s->end_regist, s->mark);
+			if (!flag) {
+				cout << "End month does not match with smester registration time!" << endl;
+			}
+			else {
+				flag = true;
+			}
+		}
+	}
 }
 
 void input_date(date &p) // OK
