@@ -264,19 +264,6 @@ void showListEnrolledCourse(student* pS) {
 	}
 }
 
-void showStudentsInClass(Class*pC) {
-	student* pStudentHead = pC->student_list;
-	if (!pStudentHead) {
-		cout << "No Data" << endl; return;
-	}
-	cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\tSocial ID\n";
-	while (pStudentHead != NULL) {
-		string fullname = pStudentHead->prf.lastname + ' ' +pStudentHead->prf.firstname;
-		cout << pStudentHead->No << '\t'<<pStudentHead->id << '\t'<<fullname<<'\t'<< ((fullname.length()<16) ? '\t' : ' ') << '\t' << pStudentHead->prf.DOB << "\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
-		pStudentHead = pStudentHead->pNext;
-	}
-}
-
 //Vi la show student trong bien student score khong phai bien student nen bat buoc phai cap nhat 
 //thong tin student score ngay tu dau chu khong duoc de thi xong nhap diem moi cap nhat
 void showStudentsInCourse(course* pC) {
@@ -290,9 +277,22 @@ void showStudentsInCourse(course* pC) {
 		pStuCrs = pStuCrs->pNext;
 	}
 }
-void showEveryClasses(schoolyear*&sy) {
+void showStuInOneClass(Class* cl) {
+	student* head = cl->student_list;
+	if (!head) {
+		cout << "No Data, please choose another class" << endl; return;
+	}
+	cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\tSocial ID\n";
+	while (head) {
+		string fullname = head->prf.lastname + ' ' + head->prf.firstname;
+		cout << head->No << '\t' << head->id << '\t' << fullname << '\t' << ((fullname.length() < 16) ? '\t' : ' ') << '\t' << head->prf.DOB << "\t" << head->prf.gender << "\t" << head->prf.social_id << "\n";
+		head = head->pNext;
+	}
+}
+void showStuInClasses(schoolyear*& sy) {
 	readSchoolyear(sy);
-	int i = 0;
+	Class* cur_class = NULL;
+	Class* head = NULL;
 	while (sy != NULL) {
 		readListOfClass(sy->list_class, sy->time);
 		if (!sy->list_class) {
@@ -300,21 +300,65 @@ void showEveryClasses(schoolyear*&sy) {
 		}
 		else {
 			while (sy->list_class) {
-				i++;
 				readListOfStu(sy->list_class->student_list, sy->list_class->class_name);
 				if (!sy->list_class->student_list) {
 					sy->list_class = sy->list_class->nextClass;
 				}
 				else {
-					cout << i << "." << sy->list_class->class_name << endl;
-					showStudentsInClass(sy->list_class);
+					if (!cur_class) {
+						cur_class = new Class;
+						cur_class = sy->list_class;
+						head = cur_class;
+					}
+					else {
+						cur_class->nextClass = new Class;
+						cur_class->nextClass = sy->list_class;
+						cur_class = cur_class->nextClass;
+					}
 					sy->list_class = sy->list_class->nextClass;
+					if (sy->list_class == NULL) {
+						cur_class = sy->list_class;
+					}
 				}
 			}
 			sy = sy->next_schyear;
 		}
 	}
-	
+	if (!cur_class) {
+		cout << "No file has been imported yet!" << endl;
+		system("cls");
+		return;
+	}
+	while (true) {
+		Class* name = head; cout << "List of classes: " << endl; int i = 1;
+		while (name) {
+			cout << i << ". " << name->class_name << endl; ++i;
+			name = name->nextClass;
+		} cout << endl;
+
+		cout << "Press 0 to go out" << endl;
+		cout << "Which class you want to view? ";
+		int x; cin >> x;
+		Class* tmp = head;
+		if (x > 1) {
+			int j = 1;
+			while (j < x) {
+				tmp = tmp->nextClass; ++j;
+			}
+			if (tmp) {
+				showStuInOneClass(tmp);
+			}
+			else {
+				cout << "Choose again" << endl;
+			}
+		}
+		else if (x == 1) {
+			showStuInOneClass(tmp);
+		}
+		else if (x == 0) {
+			return;
+		}
+	}
 }
 void menu_view()
 {
@@ -333,8 +377,7 @@ void menu_view()
 			//readSchoolyear(sy);
 			show_schoolyear(sy); break;
 		case 2:
-			showEveryClasses(sy);
-			system("pause");
+			showListOfStuInClasses(sy);
 			break;
 		case 3:
 			break;

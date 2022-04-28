@@ -9,6 +9,6 @@ void show_class(Class* head, int i);
 void show_date(date s);
 void show_schoolyear(schoolyear* head);
 void showListEnrolledCourse(student* pS); // chua viet
-void showStudentsInClass(Class* pC);
+void showStuInOneClass(Class* pC);
 void showStudentsInCourse(course* pC);
-void showEveryClasses(schoolyear*& sy);
+void showStuInClasses(schoolyear*& sy);
