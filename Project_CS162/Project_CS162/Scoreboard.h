@@ -1,10 +1,12 @@
 #pragma once
 #include "header.h"
-bool findstuID(student* stu, studentScore*& ss, course* c);
-double GPAofCourse(studentScore*& stu);
-void scoreboardofclass(student* cur_stu, semester* cur_semester, course* c);
-void CaloverallGPA(student*& s);
-void viewstudentscore(studentScore* sco);
-//void updateastudentscore(course*& c, string id);
-//void viewscoreboardcourse(course* c);
-void viewstudentscore(studentScore* sco);
+void exportstulist_menu(schoolyear* scy);
+void importscoreboard_menu(schoolyear* scy);
+void viewscoboardofc_menu(schoolyear* sy);
+void updatestures_menu(schoolyear* sy);
+void saveScoreboardCSV(course* c);
+void importscoreboardcourse(course*& c);
+void print(course* c);
+int conditionGPA(float m);
+void gpaOfClass(schoolyear* head);
+void view_scoreboard_sem(student* stu);

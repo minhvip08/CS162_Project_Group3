@@ -20,44 +20,60 @@ void saveSchoolyear(schoolyear* sy)
 
 void saveListOfClass(schoolyear* sy) // save the name of classes of each schoolyear
 {
-	//if (!sy || !sy->list_class) return;
-	Class* cur = sy->list_class; int cnt = 0;
-	while (cur) {
-		++cnt;
-		cur = cur->nextClass;
+	schoolyear* scy = sy; ofstream fout;
+	while (scy) {
+		Class* cur = scy->list_class; int cnt = 0;
+		if (!cur) {
+			scy = scy->next_schyear;
+			continue;
+		}
+		while (cur) {
+			++cnt;
+			cur = cur->nextClass;
+		}
+		fout.open(scy->time + "_class.txt");
+		fout << cnt << endl;
+		Class* tmp = scy->list_class;
+		while (tmp) {
+			fout << tmp->class_name << endl;
+			fout << tmp->total_student << endl;
+			tmp = tmp->nextClass;
+		}
+		scy = scy->next_schyear;
 	}
-	ofstream fout; fout.open(sy->time + "_class.txt");
-	fout << cnt << endl; 
-	Class* tmp = sy->list_class;
-	while (tmp) {
-		fout << tmp->class_name << endl;
-		fout << tmp->total_student << endl;
-		tmp = tmp->nextClass;
-	}
+
 	fout.close();
 	saveSchoolyear(sy);// update num_class
 }
 
 void saveListOfSemester(schoolyear* sy)
 {
-	//if (!sy || !sy->sem) return;
-	semester* cur = sy->sem; int cnt = 0; 
-	while (cur) {
-		++cnt; 
-		cur = cur->next;
-	}
-	ofstream fout; string s = sy->time;
-	fout.open(s + "_semester.txt");
-	semester* tmp = sy->sem; fout << cnt << endl; 
-	//fout << "No,Num Courses,Start day,End day,Start of registration,End of registration";
-	while (tmp) {
-		fout << tmp->mark << endl;
-		fout << tmp->num_course << endl;
-		fout << tmp->start_date.day << '\t' << tmp->start_date.month << '\t' << tmp->start_date.year << endl;
-		fout << tmp->end_date.day << '\t' << tmp->end_date.month << '\t' << tmp->end_date.year << endl;
-		fout << tmp->start_regist.day << '\t' << tmp->start_regist.month << '\t' << tmp->start_regist.year << endl;
-		fout << tmp->end_regist.day << '\t' << tmp->end_regist.month << '\t' << tmp->end_regist.year << endl;
-		tmp = tmp->next;
+	ofstream fout; schoolyear* scy = sy;
+	while (scy) {
+		semester* cur = scy->sem; int cnt = 0;
+		if (!cur) {
+			scy = scy->next_schyear;
+			continue;
+		}
+		else {
+			while (cur) {
+				++cnt;
+				cur = cur->next;
+			}
+			string s = scy->time;
+			fout.open(s + "_semester.txt");
+			semester* tmp = scy->sem; fout << cnt << endl;
+			while (tmp) {
+				fout << tmp->mark << endl;
+				fout << tmp->num_course << endl;
+				fout << tmp->start_date.day << '\t' << tmp->start_date.month << '\t' << tmp->start_date.year << endl;
+				fout << tmp->end_date.day << '\t' << tmp->end_date.month << '\t' << tmp->end_date.year << endl;
+				fout << tmp->start_regist.day << '\t' << tmp->start_regist.month << '\t' << tmp->start_regist.year << endl;
+				fout << tmp->end_regist.day << '\t' << tmp->end_regist.month << '\t' << tmp->end_regist.year << endl;
+				tmp = tmp->next;
+			}
+		}
+		scy = scy->next_schyear;
 	}
 	fout.close();
 	saveSchoolyear(sy); // update num_sem
@@ -74,7 +90,6 @@ void saveListOfCourse(schoolyear* sy,course* c, string time, int semester)
 	ofstream fout; fout.open(time + "_sem" + k + "_course.txt");
 	course* tmp = c;
 	fout << cnt << endl; 
-	//fout << "Course ID,Course Name,Lecturer,Credits,Students,Session 1,Session 2";
 	while (tmp) {
 		fout << tmp->ID_course << endl;
 		fout << tmp->course_name << endl;
@@ -116,6 +131,32 @@ void save_enrollcourse_stu(string time, student* s, int semester)
 		fout << tmp->ecscore.final << endl; 
 		fout << tmp->ecscore.total << endl;
 		tmp = tmp->next;
+	}
+	fout.close();
+}
+void saveStudentOfCourse(course* c)
+{
+	ofstream fout; fout.open(c->ID_course + ".txt", ios::trunc);
+	if (!c->list_score) {
+		cout << "List of student is empty" << endl;
+		fout << '0' << endl;
+		c->list_score = nullptr;
+		return;
+	}
+	studentScore* tmp = c->list_score; int cnt = 0;
+	while (tmp) {
+		++cnt;
+		tmp = tmp->pNext;
+	}
+	fout << cnt << endl;
+	studentScore* ss = c->list_score;
+	while (ss) {
+		fout << ss->id << '\n' << ss->name << '\n';
+		fout << ss->stscore.other << '\n';
+		fout << ss->stscore.mid << '\n';
+		fout << ss->stscore.final << '\n';
+		fout << ss->stscore.total << '\n';
+		ss = ss->pNext;
 	}
 	fout.close();
 }

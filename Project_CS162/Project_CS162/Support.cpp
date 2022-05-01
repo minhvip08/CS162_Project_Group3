@@ -1,5 +1,6 @@
 #include "header.h"
 #include "Support.h"
+#include "Data.h"
 date getCurrentDate()
 {
 	date d; 
@@ -192,4 +193,21 @@ bool checkSem(date d, int sem) {
 	else {
 		return false;
 	}
+}
+int findYear(string id)
+{
+	schoolyear* head = nullptr;
+	readSchoolyear(head);
+	string time;
+	while (head) {
+		if (checkCurrentSchoolyear(head)) {
+			time = head->time;
+			break;
+		}
+		else
+			head = head->next_schyear;
+	}
+	int year = time[3] + time[2] * 10;
+	int ID = id[1] + id[0] * 10;
+	return (year - ID);
 }

@@ -52,39 +52,6 @@ void readListOfClass(Class*& cl, string time)
 	fin.close();
 }
 
-void readListOfStu(student*& stu, string class_name)
-{
-	//int no = 0;
-	ifstream fin;
-	fin.open(class_name + ".csv");
-	if (isEmpty(fin)) {
-		cout << class_name << " file has not been imported" << endl;
-		return;
-	}
-	student* cur = new student; 
-	stu = cur;
-	string a; getline(fin, a, '\n');
-	while (!fin.eof()) {
-		fin >> cur->No;
-		string a; getline(fin, a, ',');
-		getline(fin, cur->id, ',');
-		getline(fin, cur->prf.lastname, ',');
-		getline(fin, cur->prf.firstname, ',');
-		getline(fin, cur->prf.DOB, ',');
-		getline(fin, cur->prf.gender, ',');
-		getline(fin, cur->prf.social_id, '\n');
-
-		if (fin.eof()) {
-			cur->pNext = NULL;
-			break;
-		}
-		else {
-			cur->pNext = new student;
-			cur = cur->pNext;
-		}
-	}
-	fin.close();
-}
 void readListOfCourse(string time, course*& c, int semester)
 {
 	char k = semester + 48;
@@ -172,4 +139,66 @@ void readListEnrolled(string time, student*& s, int semester)
 			cur = cur->next;
 		}
 	}
+}
+
+void readStudentOfCourse(course*& c) {
+	ifstream fin; fin.open(c->ID_course + ".txt");
+	if (isEmpty(fin)) {
+		//cout << "List of student in this course is empty" << endl;
+		c->list_score = nullptr;
+		return;
+	}
+
+	int n; fin >> n; fin.get();
+	studentScore* cur = new studentScore; c->list_score = cur;
+	for (int i = 0; i < n; i++) {
+		getline(fin, cur->id, '\n');
+		getline(fin, cur->name, '\n');
+		fin >> cur->stscore.other;
+		fin >> cur->stscore.mid;
+		fin >> cur->stscore.final;
+		fin >> cur->stscore.total;
+		fin.get();
+		if (i == n - 1) {
+			cur->pNext = nullptr;
+		}
+		else {
+			cur->pNext = new studentScore;
+			cur = cur->pNext;
+		}
+	}
+	fin.close();
+}
+void readListOfStu(student*& stu, string class_name)
+{
+	//int no = 0;
+	ifstream fin;
+	fin.open(class_name + ".csv");
+	if (isEmpty(fin)) {
+		cout << class_name << " file has not been imported" << endl;
+		return;
+	}
+	student* cur = new student;
+	stu = cur;
+	string a; getline(fin, a, '\n');
+	while (!fin.eof()) {
+		fin >> cur->No;
+		string a; getline(fin, a, ',');
+		getline(fin, cur->id, ',');
+		getline(fin, cur->prf.lastname, ',');
+		getline(fin, cur->prf.firstname, ',');
+		getline(fin, cur->prf.DOB, ',');
+		getline(fin, cur->prf.gender, ',');
+		getline(fin, cur->prf.social_id, '\n');
+
+		if (fin.eof()) {
+			cur->pNext = NULL;
+			break;
+		}
+		else {
+			cur->pNext = new student;
+			cur = cur->pNext;
+		}
+	}
+	fin.close();
 }
