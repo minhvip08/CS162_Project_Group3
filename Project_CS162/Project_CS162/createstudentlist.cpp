@@ -50,7 +50,7 @@ void exportlistofstudent(course *cour)
 		system("pause");
 		return;
 	}
-	void updatestures_menu(schoolyear * sy)
+void updatestures_menu(schoolyear * sy)
 	{
 		readSchoolyear(sy);
 		while (sy) {

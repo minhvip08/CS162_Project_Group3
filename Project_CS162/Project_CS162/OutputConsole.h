@@ -1,14 +1,13 @@
 #pragma once
 #include "header.h"
-void show_semester(schoolyear*& head, semester*& s);
-void show_course(course* c, int i);
-void show_ID_course(course* c);
-void show_enrolled_course(enrolledCourse* c);
+void show_course(schoolyear* head);
 void show_session(session s);
-void show_class(Class* head, int i);
+void show_class(schoolyear* head);
 void show_date(date s);
-void show_schoolyear(schoolyear* head);
-void showListEnrolledCourse(student* pS); // chua viet
-void showStuInOneClass(Class* pC);
-void showStudentsInCourse(course* pC);
-void showStuInClasses(schoolyear*& sy);
+void showListEnrolledCourse(student* pS);
+void showStudentsInClass(schoolyear* head);
+void showStudentsInCourse(schoolyear* head);
+void view_scoreboard_stu(student* stu);
+void manage_Schoolyear();
+void manage_semester();
+void manage_course();

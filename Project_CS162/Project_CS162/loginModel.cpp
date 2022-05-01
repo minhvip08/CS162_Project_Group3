@@ -74,16 +74,17 @@ bool checkAccountModel(account* acc, account* head, int type, bool isReg)
 	}
 }
 
-void collectOneClassAccount(string class_name,account*&head) {
-	ifstream fin; account* cur_acc = new account; head = cur_acc; 
+void collectOneClassAccount(int& n, string class_name,account*&head) {
+	ifstream fin; account* cur_acc = new account; head = cur_acc;
+	account* keep = new account; int i = -2;
 	fin.open(class_name + ".csv");
 	if (!fin.is_open()) {
 		cout << class_name << " file has not been imported" << endl;
 		return;
 	}
 	else {
-		string a; getline(fin, a, '\n');
 		while (!fin.eof()) {
+			++i;
 			cur_acc->type = 1;
 			string a; getline(fin, a, ',');
 			getline(fin, cur_acc->username, ',');
@@ -94,6 +95,7 @@ void collectOneClassAccount(string class_name,account*&head) {
 			getline(fin, cur_acc->prf.gender, ',');
 			getline(fin, cur_acc->prf.social_id, '\n');
 			fin.ignore();
+			if (i == 0) keep = cur_acc;
 			if (fin.eof()) {
 				cur_acc->pNext = NULL;
 				break;
@@ -103,12 +105,16 @@ void collectOneClassAccount(string class_name,account*&head) {
 				cur_acc = cur_acc->pNext;
 			}
 		}
-	}
-	fin.close();
 
+	}
+	n = i + 1;
+	fin.close();
 	ofstream fout;
 	fout.open("Student_acc.txt", ios::app);
 	saveAccountFile(fout, head);
+	ofstream fout1;
+	fout1.open(class_name + ".txt");
+	saveStudent1Class(fout1, class_name, keep);
 	fout.close();
 }
 void saveStudent1Class(ofstream& fout, string name, account* head)

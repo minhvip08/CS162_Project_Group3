@@ -1,25 +1,31 @@
 3
-MTH212
-Calculus 2
-Nguyen Thi Thu Van
-4
-50
-4
-FRI	S3(13:30)
-FRI	S4(15:30)
 PHY2
 General Physics 2
 Nguyen Huu Nha
 4
-50
-4
 WED	S4(15:30)
 THU	S4(15:30)
+10
+8
+9
+9
 CS162
 Introduction to CS2
 Dinh Ba Tien
 4
-50
-4
 MON	S1(7:30)
 SAT	S3(13:30)
+10
+8
+8.5
+8.8
+MTH212
+Calculus 2
+Nguyen Thi Thu Van
+4
+FRI	S3(13:30)
+FRI	S4(15:30)
+10
+8
+8.5
+8.8

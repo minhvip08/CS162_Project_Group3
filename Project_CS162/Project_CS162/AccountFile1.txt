@@ -1,2 +1,0 @@
-Type,Username,Password,Last name,First name,DOB,Gender,Social ID
-0,shiba,shiba,Trinh,Tran Tran,06/03/2003,Female,0923

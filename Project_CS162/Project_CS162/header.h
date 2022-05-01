@@ -79,18 +79,9 @@ struct enrolledCourse { // student (class)
 	int credits; // them so luong tin chi
 	session ses1; 
 	session ses2; 
-	studentScore* list_score;
 	score ecscore;
-	//studentScore* list_score;
-	score ecscore; 
+	studentScore* list_score;
 	enrolledCourse* next;
-	/*int semester;
-	int year;*/
-};
-
-struct finalGPA { // class
-	float gpa;
-	finalGPA* next;
 };
 
 struct student  // Class
@@ -100,10 +91,8 @@ struct student  // Class
 	profile prf;
 	double gpa;
 	account acc;
-	//	course* listCourse;
 	int countEnroll = 0; 
 	enrolledCourse* list_enrolled;
-	finalGPA* list_gpa;
 	student* pNext;
 };
 
@@ -137,7 +126,6 @@ struct semester {
 	date end_regist; 
 	int num_course = 0;
 	course* course_list;
-	//	Class* list_class; 
 	semester* next;
 };
 

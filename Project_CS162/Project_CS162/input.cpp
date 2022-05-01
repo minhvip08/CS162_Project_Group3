@@ -93,7 +93,8 @@ void create_semester(schoolyear* &head)
 		cur->next = check->sem;
 		check->sem = cur;
 	}
-	saveListOfSemester(check); 
+	saveListOfSemester(head); 
+	cout << "Semester created successfully!!!\n";
 }
 
 void create_course(schoolyear* &head) // OK 
@@ -156,7 +157,8 @@ void create_course(schoolyear* &head) // OK
 		cur->next = s_check->course_list;
 		s_check->course_list = cur;
 	}
-	saveListOfCourse(check,s_check->course_list, check->time, s_check->mark);
+	saveListOfCourse(head,s_check->course_list, check->time, s_check->mark);
+	cout << "Course created succesfully\n";
 }
 
 void input_session(session &s) // OK
@@ -212,11 +214,9 @@ void create_class(schoolyear* &head) //OK
 		cout << "Please input again" << endl;
 		cout << "Class name: "; getline(cin, a, '\n');
 	}
-	cur->class_name = a; account* cur_acc = NULL; collectOneClassAccount(cur->class_name,cur_acc);
-	cout << "Total student (press 1 for default 50): "; int n; cin >> n;
-	if (n == 1) cur->total_student = 50;
-	else cur->total_student = n;
-	
+	int n = 0; 
+	cur->class_name = a; account* cur_acc = NULL; collectOneClassAccount(n, cur->class_name,cur_acc);
+	cur->total_student = n;
 	cur->student_list = NULL;
 
 	if (!check->list_class) {
@@ -227,7 +227,8 @@ void create_class(schoolyear* &head) //OK
 		cur->nextClass = check->list_class;
 		check->list_class = cur;
 	}
-	saveListOfClass(check);
+	cout << "Class created successfully!!!" << endl;
+	saveListOfClass(head);
 }
 
 void createCourseEnrolledTime(semester*& s) 
@@ -260,34 +261,58 @@ void input_date(date &p) // OK
 	cout << "Year: "; cin >> p.year; 
 }
 
-void uppdateCourseInfor(schoolyear*& sy, semester*& sem) {
-	if (sem == nullptr) {
-		cout << endl << "Sorry, This school year is empty, please create a course before updating information.";
-		char a = _getch();
+void uppdateCourseInfor(schoolyear*& head) {
+	readSchoolyear(head);
+	if (!head) {
+		cout << "You haven't input a schoolyear" << endl;
 		return;
 	}
 
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+	readSemester(check->sem, check->time);
+	if (!check->sem) {
+		cout << "You haven't add a semester for this schoolyear" << endl;
+		return;
+	}
+
+	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
+	cout << "Which semester you want to add course? "; int k; cin >> k;
+	semester* s_check = check->sem;
+	if (k != check->num_sem) {
+		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
+	}
+	readListOfCourse(check->time, s_check->course_list, k);
+
 	//system("cls");
 	cout << "These are all courses in this semester, please enter one ID Course!" << endl;
-	int i = 0; course* tmp = sem->course_list;
-	while (tmp) {
+	i = 0; course* ctmp = s_check->course_list;
+	while (ctmp) {
 		++i;
-		cout << i << '.' << "Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
-		tmp = tmp->next;
+		cout << i << '.' << "Course ID: " << ctmp->ID_course << '\t' << "Course name: " << ctmp->course_name << endl;
+		ctmp = ctmp->next;
 	}
 	cout << "0. Exit" << endl;
-	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
+	cout << "Please choose the number represented the course (1,2,3, ... ): "; cin >> x;
 	while (x > i) {
 		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
 	}
 	if (x == 0) return;
-	course* cur = sem->course_list;
+	course* cur = s_check->course_list;
 	if (x > 1) {
 		int h = 1; while (h < x) {
 			cur = cur->next; ++h; 
 		}
 	}
-	course* c = sem->course_list;
+	course* c = s_check->course_list;
 	int opt = 100;
 	while (opt != 0) {
 		//system("cls");
@@ -304,7 +329,7 @@ void uppdateCourseInfor(schoolyear*& sy, semester*& sem) {
 		cout << endl << "Your option is: ";
 		cin >> opt;
 		update1InforCourse(cur, opt);
-		saveListOfCourse(sy, c, sy->time, sem->mark);
+		saveListOfCourse(head, c, check->time, k);
 	}
 	return;
 }
@@ -381,14 +406,7 @@ void update1InforCourse(course* &pCourse, int opt) {
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	// kiem tra ngay thang cho phep enroll
 	readListEnrolled(time, stu, sem);
-	semester* check = sy->sem; 
-	while (check->mark != sem) {
-		check = check->next; 
-	}
-	if (!checkEnrollTime(check)) {
-		cout << "Out of time for registration" << endl;
-		return;
-	}
+	//semester* check = sy->sem; 
 	if (stu->countEnroll >= 5) {
 		cout << "You cannot enroll over 5 course in this semester.";
 		cout << "\nPress any key to continue....";
@@ -405,7 +423,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	while (tmpc) {
 		++i;
 		cout << "******COURSE NUMBER: " << i << " *******" << endl;
-		cout << ".ID Course: " << tmpc->ID_course << '\t' << "Course Name: " << tmpc->course_name << endl;
+		cout << "ID Course: " << tmpc->ID_course << '\t' << "Course Name: " << tmpc->course_name << endl;
 		cout << "Lecturer: " << tmpc->teacher_name << endl;
 		cout << "Session 1: " << tmpc->ses1.date << '\t' << tmpc->ses1.time << endl;
 		cout << "Session 2: " << tmpc->ses2.date << '\t' << tmpc->ses2.time << endl;
@@ -423,6 +441,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 			cur = cur->next; ++h;
 		}
 	}
+	readStudentOfCourse(cur);
 	if (alreadyEnrolled(cur->ID_course, stu->list_enrolled)) {
 		cout << "You're already enrolled in this course" << endl;
 		return;
@@ -466,9 +485,25 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 		add->next = stu->list_enrolled;
 		stu->list_enrolled = add;
 	}
+
+	studentScore* ss = cur->list_score;
+	studentScore* snew = new studentScore;
+	snew->id = stu->id;
+	snew->name = stu->prf.lastname + ' ' + stu->prf.firstname;
+	snew->stscore.final = snew->stscore.mid = snew->stscore.total = snew->stscore.other = 0;
+	if (!ss) {
+		ss = snew;
+		cur->list_score = ss;
+		ss->pNext = nullptr;
+	}
+	else {
+		snew->pNext = ss;
+		cur->list_score = snew;
+	}
 	cout << "Enroll succesfull" << endl;
 	++cur->cur_student;
 	save_enrollcourse_stu(time, stu, sem);
+	saveStudentOfCourse(cur);
 	saveListOfCourse(sy, c, time, sem);
 }
 

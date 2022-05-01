@@ -1,3 +1,0 @@
-No, Student ID, First name, Last name, Gender, Date of Birth, Social ID
-1,21125131,Phu,Huynh,Male,01/03/2003,0792030
-1,21125133,jOHNNYTri,Nguyen,Male,01/06/2003,13579

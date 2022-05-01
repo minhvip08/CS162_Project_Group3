@@ -59,46 +59,30 @@ void Delete_student(student*& head)
 {
 	if (!head) return;
 	while (head) {
-		// del enrolledCourse
-		//Delete_enrollCourse(head->list_enrolled);
-		// del final GPA
-		Delete_finalGPA(head->list_gpa);
 		student* tmp = head->pNext;
 		delete head;
 		head = tmp;
 	}
 }
 
-//void Delete_enrollCourse(enrolledCourse*& head)
-//{
-//	if (!head) return;
-//	while (head) {
-//		Delete_stdScore(head->list_score);
-//		enrolledCourse* tmp = head->next;
-//		delete head;
-//		head = tmp;
-//	}
-//}
-
-void Delete_finalGPA(finalGPA*& head)
+void Delete_enrollCourse(enrolledCourse*& head)
 {
 	if (!head) return;
 	while (head) {
-		finalGPA* tmp = head->next;
+		Delete_stdScore(head->list_score);
+		enrolledCourse* tmp = head->next;
 		delete head;
 		head = tmp;
 	}
 }
 
+
 void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem) {
 	
 	readListEnrolled(time, pS, sem); 
 	enrolledCourse* pECCrs = pS->list_enrolled;
-
-	//system("cls");
 	if (pECCrs != nullptr) {
-		cout << "\n Press any key to back.... ";
-		char a = _getch();
+		system("pause");
 		return;
 	}
 
@@ -111,7 +95,7 @@ void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem)
 		cout << i << ".ID Course: " << tmp->id_course << '\t' << "Course name: " << tmp->course_name << endl;
 		tmp = tmp->next;
 	} cout << "0. Exit" << endl;
-	int x; cin >> x;
+	int x; cout << "You choose: ";  cin >> x;
 	while (x > i) {
 		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
 	}
@@ -135,14 +119,17 @@ void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem)
 	cout << "Are you sure you want to delete: \n"; int n;
 	cout << "1. Yes" << '\t' << "2. No" << endl;
 	cin >> n;
+	course* out = new course;
 	if (n == 2) return;
 	else if (n == 1) {
 		enrolledCourse* head = pS->list_enrolled;
-		course* tmp = c;
-		while (tmp->ID_course != cur->id_course) {
-			tmp = tmp->next;
+		course* keep = c;
+		while (keep->ID_course != cur->id_course) {
+			keep = keep->next;
 		}
-		--tmp->cur_student;
+		readStudentOfCourse(keep);
+		out = keep;
+		--keep->cur_student;
 		if (cur == head) {
 			enrolledCourse* after = head->next;
 			head = after;
@@ -159,42 +146,94 @@ void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem)
 		}
 	}
 	--pS->countEnroll;
+	// xoa student trong course
+	studentScore* sts = out->list_score; studentScore* pre = out->list_score, * he = out->list_score;
+	while (sts) {
+		if (sts->id == pS->id) {
+			studentScore* del = sts;
+			if (sts == he) {
+				he = he->pNext;
+				sts = he;
+				pre = he;
+			}
+			else {
+				pre->pNext = sts->pNext;
+				sts = sts->pNext;
+			}
+			delete sts;
+			continue;
+		}
+		pre = sts;
+		sts = sts->pNext;
+	}
+	out->list_score = he;
 	save_enrollcourse_stu(time, pS, sem);
+	saveStudentOfCourse(out);
 	saveListOfCourse(sy, c, time, sem);
 }
 
-void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {
-	if (!c) {
-		cout << "Empty course list" << endl;
+void Delete_course_staff(schoolyear*head) {
+
+	readSchoolyear(head);
+	if (!head) {
+		cout << "You haven't input a schoolyear" << endl;
 		return;
 	}
-	int i = 0; course* tmp = c;
+
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
 	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+	readSemester(check->sem, check->time);
+	if (!check->sem) {
+		cout << "You haven't add a semester for this schoolyear" << endl;
+		return;
+	}
+
+	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
+	cout << "Which semester you want to add course? "; int k; cin >> k;
+	semester* s_check = check->sem;
+	if (k != check->num_sem) {
+		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
+	}
+	readListOfCourse(check->time, s_check->course_list, k);
+	
+
+	cout << "These are all courses in this semester: " << endl;
+	i = 0; course* ctmp = s_check->course_list;
+	while (ctmp) {
 		++i;
-		cout << i << '.' << "Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
-		tmp = tmp->next;
+		cout << i << '.' << "Course ID: " << ctmp->ID_course << '\t' << "Course name: " << ctmp->course_name << endl;
+		ctmp = ctmp->next;
 	}
 	cout << "0. Exit" << endl;
-	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
+	cout << "Please choose the number represented the course (1,2,3, ... ): "; cin >> x;
 	while (x > i) {
 		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
 	}
 	if (x == 0) return;
-	course* cur = c;
+	course* cur = s_check->course_list;
 	if (x > 1) {
 		int h = 1; while (h < x) {
 			cur = cur->next; ++h;
 		}
 	}
+
 	if (cur) {
 		cout << "Course information: " << endl;
 		cout << "ID: " << cur->ID_course << endl;
 		cout << "Name: " << cur->course_name << endl;
 		cout << "Teacher: " << cur->teacher_name << endl;
 		cout << "Credits: " << cur->credits << endl;
-		cout << "Current students: " << cur->next->cur_student << endl;
+		cout << "Current students: " << cur->cur_student << endl;
 	}
-	
+	course* c = s_check->course_list;
 	cout << "Are you sure you want to delete: \n"; int n;
 	cout << "1. Yes" << endl << "2. No" << endl;
 	cin >> n;
@@ -215,9 +254,9 @@ void Delete_course_staff(schoolyear*& sy, course*& c, string time, int sem) {
 		}
 	}
 
-	semester* se = sy->sem;
-	while (se && se->mark != sem) se = se->next;
+	semester* se = check->sem;
+	while (se && se->mark != k) se = se->next;
 	--se->num_course;
 	cout << "Course deleted successfully" << endl;
-	saveListOfCourse(sy, c, sy->time, sem);
+	saveListOfCourse(head, c, check->time, k);
 }
