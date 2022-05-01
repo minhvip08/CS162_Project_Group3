@@ -11,6 +11,7 @@
 using namespace std;
 
 int main() {
-	menu_staff();
+	//menu_staff();
+	Intro();
 	return 0;
 }

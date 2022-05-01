@@ -4,7 +4,7 @@ Calculus 1
 Nguyen Le Hoang Anh
 4
 50
-0
+4
 WED	S3(13:30)
 WED	S4(15:30)
 PHY1
@@ -12,7 +12,7 @@ General Physics 1
 Hanh Thu
 4
 50
-0
+4
 WED	S1(7:30)
 WED	S2(09:30)
 CS161
@@ -20,6 +20,6 @@ Introduction to CS1
 Dinh Ba Tien
 4
 50
-0
+4
 MON	S1(7:30)
 SAT	S3(13:30)

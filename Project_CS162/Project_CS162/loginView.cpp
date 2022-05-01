@@ -270,7 +270,7 @@ void loginView(account* &head, int type)
 	if (checkAccountModel(acc, head, type, false)) {
 		cout << "Login successful!" << endl;
 		system("pause");
-		Menu2(acc,head,type);
+		Menu2(acc,acc,type);
 	}
 	else {
 		cout << "Username or password is incorrect" << endl;

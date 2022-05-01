@@ -128,9 +128,13 @@ void readListEnrolled(string time, student*& s, int semester)
 		getline(fin, cur->id_course, '\n');
 		getline(fin, cur->course_name, '\n');
 		getline(fin, cur->name_teacher, '\n');
-		fin >> cur->credits; fin.get(); 
+		fin >> cur->credits; 
+		fin.ignore(1000,'\n');
 		getline(fin, cur->ses1.date, '\t'); getline(fin, cur->ses1.time, '\n');
 		getline(fin, cur->ses2.date, '\t'); getline(fin, cur->ses2.time, '\n');
+		
+		fin >> cur->ecscore.other; fin >> cur->ecscore.mid; fin >> cur->ecscore.final; fin >> cur->ecscore.total;
+		fin.ignore(100, '\n');
 		if (i == n - 1) {
 			cur->next = nullptr;
 		}

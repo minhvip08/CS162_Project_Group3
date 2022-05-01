@@ -307,7 +307,7 @@ void showStudentsInCourse(schoolyear* head) {
 		++b;
 		cout << b << "\t";
 		cout << pStuCrs->id << "\t";
-		cout << pStuCrs->name << "\t";
+		cout << pStuCrs->name << "\n";
 		pStuCrs = pStuCrs->pNext;
 	}
 }
@@ -355,15 +355,18 @@ void menu_student(account*& head) {
 		case 1: {
 			int sem = currentSemester();
 			enrollCourse(sy, tmp->time, sem, stu);
+			system("pause");
 			break;
 		}
 		case 2: {
 			showListEnrolledCourse(stu);
+			system("pause");
 			break;
 		}
 		case 3: {
 			int sem = currentSemester();
 			Delete_enrolled_course(sy, tmp->time, stu, sem);
+			system("pause");
 			break;
 		}
 		case 4: {
@@ -389,14 +392,17 @@ void menu_student(account*& head) {
 					if (!etmp) cout << "**************************************\n";
 				}
 			}
+			system("pause");
 			break;
 		}
 		case 5:{
 			view_scoreboard_stu(stu);
+			system("pause");
 			break;
 		}
 		case 6: {
 			view_scoreboard_sem(stu);
+			system("pause");
 			break;
 		}
 

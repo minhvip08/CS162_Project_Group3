@@ -112,7 +112,7 @@ void save_enrollcourse_stu(string time, student* s, int semester)
 		return;
 	}
 	string id = s->id; char k = semester + 48;
-	ofstream fout; fout.open(id + '_' + k + "sem.txt");
+	ofstream fout; fout.open(id + '_' + k + "sem.txt", ios::trunc);
 	enrolledCourse* c = s->list_enrolled; int cnt = 0;
 	while (c) {
 		++cnt;
@@ -124,6 +124,7 @@ void save_enrollcourse_stu(string time, student* s, int semester)
 		fout << tmp->id_course << endl;
 		fout << tmp->course_name << endl;
 		fout << tmp->name_teacher << endl;
+		fout << tmp->credits << endl;
 		fout << tmp->ses1.date << '\t' << tmp->ses1.time << endl;
 		fout << tmp->ses2.date << '\t' << tmp->ses2.time << endl;
 		fout << tmp->ecscore.other << endl;

@@ -1,0 +1,31 @@
+3
+PHY3
+General Physics 3
+Nguyen Huu Nha
+4
+WED	S2(09:30)
+FRI	S2(09:30)
+9
+10
+7
+8.5
+MTH261
+Linear Algebra
+Thu Van
+4
+THU	S1(7:30)
+THU	S2(09:30)
+0
+0
+0
+0
+CS163
+Data Structures
+Dinh Ba Tien
+4
+MON	S1(7:30)
+WED	S1(7:30)
+0
+0
+0
+0
