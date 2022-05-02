@@ -1,5 +1,15 @@
 #include "design.h"
-#include <iostream>
+#include"header.h"
+string headline() {
+	string hl;
+	return hl = R"(  
+   ___     _____                       ___           _    __           __  _             ____        __          
+  / _ |   / ___/__  __ ____________   / _ \___ ___ _(_)__/ /________ _/ /_(_)__  ___    / __/_ _____/ /____ __ _ 
+ / __ |  / /__/ _ \/ // / __(_-< -_) / , _/ -_) _ `/ (_-< __/ __/ _ `/ __/ / _ \/ _ \  _\ \/ // (_-< __/ -_)  ' \
+/_/ |_|  \___/\___/\_,_/_/ /___|__/ /_/|_|\__/\_, /_/___|__/_/  \_,_/\__/_/\___/_//_/ /___/\_, /___|__/\__/_/_/_/
+                                             /___/                                        /___/                    
+    )";
+}
 void SetColor(WORD color)
 {
 	HANDLE hConsoleOutput;
@@ -85,4 +95,45 @@ void ShowConsoleCursor(bool showFlag)
 	GetConsoleCursorInfo(out, &cursorInfo);
 	cursorInfo.bVisible = showFlag; // set the cursor visibility
 	SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+void moveChoice(int row, int y, int& opt) {
+	char keyBoard = {};
+	do
+	{
+		keyBoard = _getch();
+		switch (keyBoard)
+		{
+		case KEY_DOWN:
+			if (y + 1 != row + 7)
+			{
+				y++;
+				opt++;
+				gotoxy(7, y + 1);
+			}
+			else
+			{
+				y -= (row - 1);
+				opt = 1;
+				gotoxy(7, y + 1);
+			}
+			break;
+		case KEY_UP:
+			if (y - 1 != 6)
+			{
+				y--;
+				opt--;
+				gotoxy(7, y + 1);
+			}
+			else
+			{
+				y += (row - 1);
+				opt = row;
+				gotoxy(7, y + 1);
+			}
+			break;
+		default:
+			break;
+		}
+	} while (keyBoard != '\r');
 }

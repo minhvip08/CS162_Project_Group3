@@ -1,13 +1,9 @@
 #pragma once
-#include <windows.h>
-#include <conio.h>
-#include <fstream>
-
+#include"header.h"
+string headline();
 //use arrow keys for moving
 const int KEY_UP = 72;
 const int KEY_DOWN = 80;
-const int KEY_LEFT = 75;
-const int KEY_RIGHT = 77;
 
 //Color text (choose from 1 to 16 colors)
 void SetColor(WORD color);
@@ -30,3 +26,5 @@ void setColorBGTextXY(SHORT x, SHORT y, WORD color, WORD background, LPSTR str, 
 
 //true/false to show/hide the cursor
 void ShowConsoleCursor(bool showFlag);
+
+void moveChoice(int row, int y, int& opt);

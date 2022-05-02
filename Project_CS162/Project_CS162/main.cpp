@@ -8,10 +8,7 @@
 #include "OutputConsole.h"
 #include "Scoreboard.h"
 #include "Support.h"
-using namespace std;
-
 int main() {
-	//menu_staff();
 	Intro();
 	return 0;
 }

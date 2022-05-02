@@ -30,16 +30,7 @@ void menuDraw(short opt) {
 	setColorBGTextXY(50, 10, 15, ((opt_ == 3) ? 4 : 0), "  EXIT   ");
 	SetBGColor(16);
 }
-string headline() {
-	string hl;
-	return hl = R"(  
-   ___     _____                       ___           _    __           __  _             ____        __          
-  / _ |   / ___/__  __ ____________   / _ \___ ___ _(_)__/ /________ _/ /_(_)__  ___    / __/_ _____/ /____ __ _ 
- / __ |  / /__/ _ \/ // / __(_-< -_) / , _/ -_) _ `/ (_-< __/ __/ _ `/ __/ / _ \/ _ \  _\ \/ // (_-< __/ -_)  ' \
-/_/ |_|  \___/\___/\_,_/_/ /___|__/ /_/|_|\__/\_, /_/___|__/_/  \_,_/\__/_/\___/_//_/ /___/\_, /___|__/\__/_/_/_/
-                                             /___/                                        /___/                    
-    )";
-}
+
 void loginMenu(account*& head, int type) {
 	int opt = 1;
 	int y = 7;
@@ -270,7 +261,7 @@ void loginView(account* &head, int type)
 	if (checkAccountModel(acc, head, type, false)) {
 		cout << "Login successful!" << endl;
 		system("pause");
-		Menu2(acc,acc,type);
+		Menu2(acc,head,type);
 	}
 	else {
 		cout << "Username or password is incorrect" << endl;
@@ -325,7 +316,7 @@ void viewProfile(account*acc, account*& head)
 		cout << "SocialID: " << cur->prf.social_id << endl;
 		cout << "----------------" << endl;
 		if (cur->type == 0) {
-			cout << "1. Change Profile." << endl;
+			cout << "1. Change Profile" << endl;
 		}
 		cout << "0. Back to menu" << endl;
 		cin >> choose;
@@ -342,7 +333,9 @@ void viewProfile(account*acc, account*& head)
 		viewProfile(acc,cur);
 	}
 	else if (choose==0) {
-		Menu2(cur, head,cur->type);
+		//Menu2(cur, head,cur->type);
+		return;
+
 	}
 }
 void changePassword(account* acc, account*& head)
@@ -383,55 +376,17 @@ void changePassword(account* acc, account*& head)
 	saveAccountFile(fout, head);
 	fout.close();
 }
-void moveChoice(int row, int y, int&opt) {
-	char keyBoard = {};
-	do
-	{
-		keyBoard = _getch();
-		switch (keyBoard)
-		{
-		case KEY_DOWN:
-			if (y + 1 != row+7)
-			{
-				y++;
-				opt++;
-				gotoxy(7, y + 1);
-			}
-			else
-			{
-				y -= (row-1);
-				opt =1;
-				gotoxy(7, y + 1);
-			}
-			break;
-		case KEY_UP:
-			if (y - 1 != 6)
-			{
-				y--;
-				opt--;
-				gotoxy(7, y + 1);
-			}
-			else
-			{
-				y += (row - 1);
-				opt =row;
-				gotoxy(7, y + 1);
-			}
-			break;
-		default:
-			break;
-		}
-	} while (keyBoard != '\r');
-}
+
 void Menu2(account*cur, account*&head, int type) {
 	string art = headline();
 	while (true) {
 		system("cls");
+		SetColor(rand() % 14 + 1);
 		cout << art << endl;
 		int opt = 1;
 		int row = 4;//rows of menu lines
 		int y = 7;
-		ShowConsoleCursor(true);
+		//ShowConsoleCursor(false);
 		SetColor(3);
 		gotoxy(8, y + 1);
 		cout << "View Profile" << endl;
@@ -446,7 +401,7 @@ void Menu2(account*cur, account*&head, int type) {
 		}
 		gotoxy(8, y + 4);
 		cout << "Log Out" << endl;
-		gotoxy(8, y + 1);
+		gotoxy(7, y+ 1);
 		moveChoice(row, y, opt);
 
 		switch (opt) {
