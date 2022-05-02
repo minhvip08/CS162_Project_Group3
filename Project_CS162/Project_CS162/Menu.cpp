@@ -50,7 +50,7 @@ void menu_staff() {
 		}
 	}
 }
-void menu_student(account*& head) {
+void menu_student(account* &head) {
 	schoolyear* sy = nullptr;
 	readSchoolyear(sy); schoolyear* tmp = sy;
 	while (tmp) {
@@ -185,15 +185,15 @@ void manage_Schoolyear() { // ok
 		ShowConsoleCursor(true);
 		SetColor(9);
 		gotoxy(8, y + 1);
-		cout << "Create a new schoolyear" << endl;
+		cout << "1.Create a new schoolyear" << endl;
 		gotoxy(8, y + 2);
-		cout << "Create 1st year class" << endl;
+		cout << "2.Create 1st year class" << endl;
 		gotoxy(8, y + 3);
-		cout << "View classes of a schoolyear" << endl;
+		cout << "3.View classes of a schoolyear" << endl;
 		gotoxy(8, y + 4);
-		cout << "View students in a class" << endl;
+		cout << "4.View students in a class" << endl;
 		gotoxy(8, y + 5);
-		cout << "Go backward" << endl;
+		cout << "0.Go backward" << endl;
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -250,7 +250,7 @@ void manage_semester() { //ok
 		gotoxy(8, y + 4);
 		cout << "4. GPA of class\n";
 		gotoxy(8, y + 5);
-		cout << "Go backward" << endl;
+		cout << "0.Go backward" << endl;
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -312,7 +312,7 @@ void manage_course() {
 		gotoxy(8, y + 7);
 		cout << "7. Update student result\n";
 		gotoxy(8, y + 8);
-		cout << "Go backward\n";
+		cout << "0.Go backward\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 

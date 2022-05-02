@@ -338,7 +338,7 @@ void viewProfile(account*acc, account*& head)
 
 	}
 }
-void changePassword(account* acc, account*& head)
+void changePassword(account* acc, account* &head)
 {
 	system("cls");
 	SetColor(12);
@@ -362,17 +362,20 @@ void changePassword(account* acc, account*& head)
 			cur->password = pwd;
 			break;
 		}
-		cur = cur->pNext;
+		else 
+			cur = cur->pNext;
 	}
 	cout << "Change password successfully!"<<endl;
 	ofstream fout;
-	if (cur->type == 1) {
-		fout.open("Student_acc.txt");
+	if (cur) {
+		if (cur->type == 1) {
+			fout.open("Student_acc.txt");
+		}
+		else {
+			fout.open("Staff_acc.txt");
+		}
 	}
-	else {
-		fout.open("Staff_acc.txt");
-	}
-	
+
 	saveAccountFile(fout, head);
 	fout.close();
 }
@@ -405,20 +408,25 @@ void Menu2(account*cur, account*&head, int type) {
 		moveChoice(row, y, opt);
 
 		switch (opt) {
-		case 1:
+		case 1: {
 			viewProfile(cur, head);
+			system("pause");
 			break;
-		case 2:
+		}
+		case 2: {
 			changePassword(cur, head);
+			system("pause");
 			break;
-		case 3:
+		}
+		case 3: {
 			if (type == 0) {
 				menu_staff();
 			}
 			else if (type == 1) {
-				menu_student(head);
+				menu_student(cur);
 			}
 			break;
+		}
 		case 4:
 			return;
 		}

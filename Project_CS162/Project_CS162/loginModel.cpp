@@ -2,10 +2,7 @@
 #include "Login.h"
 #include "Support.h"
 void loadAccountFile(ifstream& fin, account*& head) {
-	if (!head) {
-		head = new account;
-	}
-	account* cur = head;
+	account* cur = new account; head = cur; 
 	
 	//string a; getline(fin, a, '\n');
 	while (!fin.eof()) {
@@ -46,9 +43,8 @@ void saveAccountFile(ofstream& fout, account* head)
 		fout << head->prf.DOB << ',';
 		fout << head->prf.gender << ',';
 		fout << head->prf.social_id;
-		fout << endl;
 		head = head->pNext;
-		//if (head) fout << endl; 
+		if (head) fout << endl; 
 	}
 }
 
