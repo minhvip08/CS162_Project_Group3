@@ -409,11 +409,14 @@ void update1InforCourse(course* &pCourse, int opt) {
 
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	// kiem tra ngay thang cho phep enroll
-	schoolyear* scy = sy; 
+	schoolyear* scy = nullptr;
+	readSchoolyear(scy);
 	while (scy) {
 		if (scy->time == time) break;
-		scy = scy->next_schyear; 
+		else
+			scy = scy->next_schyear; 
 	}
+	readSemester(scy->sem, scy->time);
 	semester* s = scy->sem; 
 	while (s) {
 		if (s->mark == sem) break;

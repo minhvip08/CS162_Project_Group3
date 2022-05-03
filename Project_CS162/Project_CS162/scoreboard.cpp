@@ -144,6 +144,7 @@ void view_scoreboard_sem(student* stu)
 		gpa += conditionGPA(ec->ecscore.total) * ec->credits;
 		cred += ec->credits;
 		ec = ec->next;
+		cout << "******************************************************************************"<<endl;
 	}
 	float end = gpa / cred;
 	cout << "\t* Total GPA in semester " << k << ": " << end << endl;

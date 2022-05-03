@@ -136,7 +136,7 @@ void Intro() {
 	for (int i = 0; i < art.length(); i++) {
 		cout << art[i];
 		if (art[i] != ' ') {
-			chrono::microseconds wait(1);
+			chrono::microseconds wait(10);
 			this_thread::sleep_for(wait);
 		}
 	}

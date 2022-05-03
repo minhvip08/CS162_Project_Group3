@@ -104,7 +104,7 @@ void menu_student(account* &head) {
 		gotoxy(8, y + 5);
 		cout << "5. View his/her scoreboard in current semester" << endl;
 		gotoxy(8, y + 6);
-		cout << "6. View his/her scoreboard in every semester" << endl;
+		cout << "6. View his/her scoreboard in every semesters" << endl;
 		gotoxy(8, y + 7);
 		cout << "0. Exit\n";
 		gotoxy(7, y + 1);
@@ -313,9 +313,9 @@ void manage_course() {
 		gotoxy(8, y + 5);
 		cout << "5. Import scoreboard of a course\n";
 		gotoxy(8, y + 6);
-		cout << "6. View scoreboard of a course in current semester\n";
+		cout << "6. View scoreboard of courses in current semester\n";
 		gotoxy(8, y + 7);
-		cout << "7. View scoreboard of 1 course\n";
+		cout << "7. View scoreboard of courses in every semesters\n";
 		gotoxy(8, y + 8);
 		cout << "8. Update student result\n";
 		gotoxy(8, y + 9);

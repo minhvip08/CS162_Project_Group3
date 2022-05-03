@@ -53,9 +53,10 @@ void show_course(schoolyear* head)
 	}
 	else
 		readListOfCourse(check->time, s_tmp->course_list, x);
-	cout << "list: \n";
+	cout << "LIST OF COURSES: \n";
 	course* c = s_tmp->course_list;
 	while (c) {
+		cout << "***********************************************"<<endl;
 		cout << "Course ID: " << c->ID_course << endl;
 		cout << "Course name: " << c->course_name << endl;
 		cout << "Teacher name: " << c->teacher_name << endl;
