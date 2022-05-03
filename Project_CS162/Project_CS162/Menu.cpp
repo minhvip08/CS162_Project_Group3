@@ -19,13 +19,13 @@ void menu_staff() {
 		ShowConsoleCursor(true);
 		SetColor(14);
 		gotoxy(8, y + 1);
-		cout << "1.Schoolyear management\n";
+		cout << "1. Schoolyear management\n";
 		gotoxy(8, y + 2);
-		cout << "2.Semester management\n";
+		cout << "2. Semester management\n";
 		gotoxy(8, y + 3);
-		cout << "3.Course management\n";
+		cout << "3. Course management\n";
 		gotoxy(8, y + 4);
-		cout << "0.Exit\n";
+		cout << "0. Exit\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -94,19 +94,19 @@ void menu_student(account* &head) {
 		ShowConsoleCursor(true);
 		SetColor(10);
 		gotoxy(8, y + 1);
-		cout << "1.Enroll a course" << endl;
+		cout << "1. Enroll a course" << endl;
 		gotoxy(8, y + 2);
-		cout << "2.View a list of enrolled course" << endl;
+		cout << "2. View a list of enrolled course" << endl;
 		gotoxy(8, y + 3);
-		cout << "3.Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
+		cout << "3. Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
 		gotoxy(8, y + 4);
-		cout << "4.View a list of his/her courses in this semester" << endl;
+		cout << "4. View a list of his/her courses in this semester" << endl;
 		gotoxy(8, y + 5);
-		cout << "5.View his/her scoreboard in current semester" << endl;
+		cout << "5. View his/her scoreboard in current semester" << endl;
 		gotoxy(8, y + 6);
-		cout << "6.View his/her scoreboard in every semester" << endl;
+		cout << "6. View his/her scoreboard in every semester" << endl;
 		gotoxy(8, y + 7);
-		cout << "0.Exit\n";
+		cout << "0. Exit\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -188,15 +188,15 @@ void manage_Schoolyear() { // ok
 		ShowConsoleCursor(true);
 		SetColor(9);
 		gotoxy(8, y + 1);
-		cout << "1.Create a new schoolyear" << endl;
+		cout << "1. Create a new schoolyear" << endl;
 		gotoxy(8, y + 2);
-		cout << "2.Create 1st year class" << endl;
+		cout << "2. Create 1st year class" << endl;
 		gotoxy(8, y + 3);
-		cout << "3.View classes of a schoolyear" << endl;
+		cout << "3. View classes of a schoolyear" << endl;
 		gotoxy(8, y + 4);
-		cout << "4.View students in a class" << endl;
+		cout << "4. View students in a class" << endl;
 		gotoxy(8, y + 5);
-		cout << "0.Go backward" << endl;
+		cout << "0. Go backward" << endl;
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -226,6 +226,7 @@ void manage_Schoolyear() { // ok
 			break;
 		}
 		case 5: {
+			cout << endl;
 			return;
 		}
 		}
@@ -283,6 +284,7 @@ void manage_semester() { //ok
 			break;
 		}
 		case 5: {
+			cout << endl;
 			return;
 		}
 		}
@@ -371,6 +373,7 @@ void manage_course() {
 			break;
 		}
 		case 9: {
+			cout << endl;
 			return; 
 		}
 		}
