@@ -10,6 +10,10 @@ void create_schoolyear(schoolyear* &head)
 	schoolyear* cur = new schoolyear; cin.get();
 	string tmp; 
 	cout << "Input time (ex 2021-2022): "; getline(cin, tmp, '\n');
+	while (!checkValidSchoolyear(tmp)) {
+		cout << "The schoolyear time is not appropriate. Please input again: "; 
+		cin >> tmp;
+	}
 	bool flag = checkExistSchoolyear(head, tmp);
 	while (!flag) {
 		cout << "The schoolyear is already valid, please input another schoolyear time" << endl;
@@ -405,6 +409,21 @@ void update1InforCourse(course* &pCourse, int opt) {
 
 void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	// kiem tra ngay thang cho phep enroll
+	schoolyear* scy = sy; 
+	while (scy) {
+		if (scy->time == time) break;
+		scy = scy->next_schyear; 
+	}
+	semester* s = scy->sem; 
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next; 
+	}
+	if (!checkEnrollTime(s)) {
+		cout << "Out of registration time.\n";
+		return;
+	}
+
 	readListEnrolled(time, stu, sem);
 	//semester* check = sy->sem; 
 	if (stu->countEnroll >= 5) {

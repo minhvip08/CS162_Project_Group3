@@ -123,6 +123,7 @@ void loginMenu(account*& head, int type) {
 	}
 }
 void Intro() {
+	SetConsoleTitleA("COURSE REGISTRATION SYSTEM - GROUP 3 - CS162");
 	account* head = NULL;
 	srand((unsigned int)time(NULL));
 	int opt = 1;

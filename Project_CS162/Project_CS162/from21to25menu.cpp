@@ -6,7 +6,7 @@
 #include "Scoreboard.h"
 #include "Deallocate_graphic.h"
 #include "Login.h"
-void exportstulist_menu(schoolyear* scy) // chay lai
+void exportstulist_menu(schoolyear* scy)
 {
 	readSchoolyear(scy);
 	while (scy) {

@@ -90,17 +90,18 @@ void showCurrentSchoolyear(schoolyear* head)
 		tmp = tmp->next_schyear;
 	}
 }
-bool checkValidSchoolyear(schoolyear* sy)
+bool checkValidSchoolyear(string time)
 {
-	string check = sy->time; 
+	string check = time; 
 	int cnt1 = 0, cnt2 = 0; 
 	for (int i = 0; i < 4; i++) {
 		cnt1 *= 10; cnt1 += (int)check[i]; 
 	} 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 5; i < 9; i++) {
 		cnt2 *= 10; cnt2 += (int)check[i];
 	}
-	if (cnt2 - cnt1 == 1) return true; 
+	if (cnt2 - cnt1 == 1) return true;
+	else return false;
 }
 
 bool checkAvailClass(string s, string year)
@@ -120,24 +121,6 @@ bool checkConflictSession(session ses1, session ses2)
 {
 	if (ses1.date == ses2.date && ses1.time == ses2.time) return true;
 	else return false;
-}
-void changeacctostu(account* acc, schoolyear* scy, student*& stu)
-{
-	Class* c = scy->list_class;
-	while (c)
-	{
-		student* cur = c->student_list;
-		while (cur)
-		{
-			if (acc->username == cur->id)
-			{
-				stu = cur;
-				return;
-			}
-			cur = cur->pNext;
-		}
-		c = c->nextClass;
-	}
 }
 
 bool alreadyEnrolled(string id, enrolledCourse* c)
