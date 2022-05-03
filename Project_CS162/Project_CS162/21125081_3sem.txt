@@ -15,17 +15,17 @@ Thu Van
 4
 THU	S1(7:30)
 THU	S2(09:30)
-0
-0
-0
-0
+9
+8
+7
+7.9
 CS163
 Data Structures
 Dinh Ba Tien
 4
 MON	S1(7:30)
 WED	S1(7:30)
-0
-0
-0
-0
+9
+7
+8
+8
