@@ -216,7 +216,7 @@ void print(course* c)
 	cout << "No\t\tID\t\tFull Name\t\tOther\t\tMid\t\tFinal\t\t\Total\n";
 	studentScore* sco = c->list_score;
 	while (sco) {
-		cout << sco->no << "\t\t" << sco->id << "\t\t" << sco->name << "\t\t" << sco->stscore.other << "\t\t" << sco->stscore.mid << "\t\t" << sco->stscore.final << "\t\t" << sco->stscore.total << endl;
+		cout << sco->no << "\t\t" << sco->id << "\t" <<sco->name<< ((sco->name.length() < 16) ? '\t' : ' ') << "\t" << sco->stscore.other << "\t\t" << sco->stscore.mid << "\t\t" << sco->stscore.final << "\t\t" << sco->stscore.total << endl;
 		sco = sco->pNext;
 	}
 }

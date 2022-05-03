@@ -43,43 +43,49 @@ void gpaOfClass(schoolyear* head)
 	}
 	Class* read = new Class;
 	readStudent1Class(ctmp->class_name, ctmp);
-	student* stu = ctmp->student_list;
-	int sem = currentSemester();
-	int z = 0;
-	while (stu) {
-		++z;
-		cout << "***********STUDENT NUMBER: " << z << "**********\n";
-		cout << "\t* Name: " << stu->prf.lastname + ' ' + stu->prf.firstname << endl;
-		cout << "\t* Course enrolled: \n"; int b = 1;
-		readListEnrolled(check->time, stu, sem);
-		enrolledCourse* ec = stu->list_enrolled;
-		float gpa = 0; float cred = 0;
-		while (ec) {
-			cout << "\t\t* Course number: " << b << endl;
-			cout << "\t\t* Course name: " << ec->course_name << endl;
-			cout << "\t\t* Course ID: " << ec->id_course << endl;
-			cout << "\t\t\tOther\tMid\tFinal\tTotal:\n";
-			cout << "\t\t\t" << ec->ecscore.other << '\t' << ec->ecscore.mid << '\t' << ec->ecscore.final << '\t' << ec->ecscore.total << endl;
-			gpa += conditionGPA(ec->ecscore.total) * ec->credits;
-			cred += ec->credits;
-			++b;
-			ec = ec->next;
-		}
-		float end = gpa / cred;
-		cout << "\t* Total GPA in semester " << sem << ": " << end << endl;
-		float gpaf = 0; float credf = 0;
-		for (int i = 1; i <= 3; i++) {
-			readListEnrolled(check->time, stu, i);
-			enrolledCourse* ecf = stu->list_enrolled;
-			while (ecf) {
-				gpaf += conditionGPA(ecf->ecscore.total) * ecf->credits;
-				credf += ecf->credits;
-				ecf = ecf->next;
+	if (!read) {
+		cout << "Please choose another class to view";
+		return;
+	}
+	else {
+		student* stu = ctmp->student_list;
+		int sem = currentSemester();
+		int z = 0;
+		while (stu) {
+			++z;
+			cout << "***********STUDENT NUMBER: " << z << "**********\n";
+			cout << "\t* Name: " << stu->prf.lastname + ' ' + stu->prf.firstname << endl;
+			cout << "\t* Course enrolled: \n"; int b = 1;
+			readListEnrolled(check->time, stu, sem);
+			enrolledCourse* ec = stu->list_enrolled;
+			float gpa = 0; float cred = 0;
+			while (ec) {
+				cout << "\t\t* Course number: " << b << endl;
+				cout << "\t\t* Course name: " << ec->course_name << endl;
+				cout << "\t\t* Course ID: " << ec->id_course << endl;
+				cout << "\t\t\tOther\tMid\tFinal\tTotal:\n";
+				cout << "\t\t\t" << ec->ecscore.other << '\t' << ec->ecscore.mid << '\t' << ec->ecscore.final << '\t' << ec->ecscore.total << endl;
+				gpa += conditionGPA(ec->ecscore.total) * ec->credits;
+				cred += ec->credits;
+				++b;
+				ec = ec->next;
 			}
+			float end = gpa / cred;
+			cout << "\t* Total GPA in semester " << sem << ": " << end << endl;
+			float gpaf = 0; float credf = 0;
+			for (int i = 1; i <= 3; i++) {
+				readListEnrolled(check->time, stu, i);
+				enrolledCourse* ecf = stu->list_enrolled;
+				while (ecf) {
+					gpaf += conditionGPA(ecf->ecscore.total) * ecf->credits;
+					credf += ecf->credits;
+					ecf = ecf->next;
+				}
+			}
+			float endf = gpaf / credf;
+			cout << "\t* Total GPA of schoolyear: " << endf << endl;
+			stu = stu->pNext;
 		}
-		float endf = gpaf / credf;
-		cout << "\t* Total GPA of schoolyear: " << endf << endl;
-		stu = stu->pNext;
 	}
 }
 

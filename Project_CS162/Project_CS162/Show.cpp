@@ -36,7 +36,7 @@ void show_course(schoolyear* head)
 		}
 	}
 	if (check->num_sem == 0) {
-		cout << "There is no semester added in this schoolyear\n";  system("pause");
+		cout << "There is no semester added in this schoolyear\n";
 		return;
 	}
 	else
@@ -48,7 +48,7 @@ void show_course(schoolyear* head)
 		int h = x; while (h < check->num_sem) { s_tmp = s_tmp->next; ++h; }
 	}
 	if (s_tmp->num_course == 0) {
-		cout << "There is no course added in this semester\n"; system("pause");
+		cout << "There is no course added in this semester\n";
 		return;
 	}
 	else
@@ -159,7 +159,6 @@ void showListEnrolledCourse(student* pS) {
 		cout << "  * Session 2: " << cur->ses2.date << '\t' << cur->ses2.time << endl;
 		cur = cur->next;
 	}
-	system("pause");
 }
 
 void showStudentsInClass(schoolyear* head) {
@@ -193,15 +192,21 @@ void showStudentsInClass(schoolyear* head) {
 	}
 	Class* read = new Class;
 	readStudent1Class(ctmp->class_name, read);
-	student* pStudentHead = read->student_list; int b = 1;
+	if (!read) {
+		cout << "Please choose another class to view"<<endl;
+		return;
+	}
+	else {
+		student* pStudentHead = read->student_list; int b = 1;
 
-	cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\t\tSocial ID\n";
-	while (pStudentHead) {
-		cout << b << '\t';
-		string fullname = pStudentHead->prf.lastname + ' ' + pStudentHead->prf.firstname;
-		cout << pStudentHead->id << '\t' << fullname << '\t' << ((fullname.length() < 16) ? '\t' : ' ') << '\t' << pStudentHead->prf.DOB << "\t\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
-		++b;
-		pStudentHead = pStudentHead->pNext;
+		cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\t\tSocial ID\n";
+		while (pStudentHead) {
+			cout << b << '\t';
+			string fullname = pStudentHead->prf.lastname + ' ' + pStudentHead->prf.firstname;
+			cout << pStudentHead->id << '\t' << fullname << '\t' << ((fullname.length() < 16) ? '\t' : ' ') << '\t' << pStudentHead->prf.DOB << "\t\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
+			++b;
+			pStudentHead = pStudentHead->pNext;
+		}
 	}
 }
 
@@ -223,7 +228,7 @@ void showStudentsInCourse(schoolyear* head) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
 	}
 	if (check->num_sem == 0) {
-		cout << "You haven't add a semester for this schoolyear" << endl; system("pause");
+		cout << "You haven't add a semester for this schoolyear" << endl;
 		return;
 	}
 	else
@@ -236,7 +241,7 @@ void showStudentsInCourse(schoolyear* head) {
 		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
 	}
 	if (s_check->num_course == 0) {
-		cout << "There is no course added in this semester\n"; system("pause");
+		cout << "There is no course added in this semester\n";
 		return;
 	}
 	else
@@ -264,11 +269,10 @@ void showStudentsInCourse(schoolyear* head) {
 	studentScore* pStuCrs = cur->list_score;
 	if (!pStuCrs) {
 		cout << "No student enrolled in this course\n";
-		system("pause");
 		return;
 	}
 	else
-		cout << "No\tID\tName\n";
+		cout << "No\tID\t\tName\n";
 	int b = 0;
 	while (pStuCrs != nullptr) {
 		++b;

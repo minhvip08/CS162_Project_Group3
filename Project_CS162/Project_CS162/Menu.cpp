@@ -86,7 +86,7 @@ void menu_student(account* &head) {
 	string art = headline();
 	while (true) {
 		system("cls");
-		SetColor(rand() % 14 );
+		SetColor(rand() % 14 +1);
 		cout << art << endl;
 		int opt = 1;
 		int row = 7;//rows of menu lines
@@ -298,7 +298,7 @@ void manage_course() {
 		SetColor(rand() % 14 + 1);
 		cout << art << endl;
 		int opt = 1;
-		int row = 8;//rows of menu lines
+		int row = 9;//rows of menu lines
 		int y = 7;
 		ShowConsoleCursor(true);
 		SetColor(6);
