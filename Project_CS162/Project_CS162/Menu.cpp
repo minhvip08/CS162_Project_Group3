@@ -32,16 +32,19 @@ void menu_staff() {
 		case 1: {
 			system("cls");
 			manage_Schoolyear();
+			system("pause");
 			break;
 		}
 		case 2: {
 			system("cls");
 			manage_semester();
+			system("pause");
 			break;
 		}
 		case 3: {
 			system("cls");
 			manage_course();
+			system("pause");
 			break;
 		}
 		case 4: {
@@ -133,8 +136,7 @@ void menu_student(account* &head) {
 			readListEnrolled(tmp->time, stu, sem);
 			enrolledCourse* etmp = stu->list_enrolled;
 			if (etmp == nullptr) {
-				cout << "Press any key to back....\n";
-				char a = _getch();
+				system("pause");
 			}
 			else {
 				int i = 0;
@@ -150,8 +152,8 @@ void menu_student(account* &head) {
 					etmp = etmp->next;
 					if (!etmp) cout << "**************************************\n";
 				}
+				system("pause");
 			}
-			system("pause");
 			break;
 		}
 		case 5: {
@@ -194,7 +196,7 @@ void manage_Schoolyear() { // ok
 		cout << "4.View students in a class" << endl;
 		gotoxy(8, y + 5);
 		cout << "0.Go backward" << endl;
-		gotoxy(7, y + 1);
+		gotoxy(8, y + 1);
 		moveChoice(row, y, opt);
 
 		switch (opt) {
@@ -320,36 +322,43 @@ void manage_course() {
 		case 1: {
 			system("cls");
 			uppdateCourseInfor(sy);
+			system("pause");
 			break;
 		}
 		case 2: {
 			system("cls");
 			Delete_course_staff(sy);
+			system("pause");
 			break;
 		}
 		case 3: {
 			system("cls");
 			showStudentsInCourse(sy);
+			system("pause");
 			break;
 		}
 		case 4: {
 			system("cls");
 			exportstulist_menu(sy);
+			system("pause");
 			break;
 		}
 		case 5: {
 			system("cls");
 			importscoreboard_menu(sy);
+			system("pause");
 			break;
 		}
 		case 6: {
 			system("cls");
 			viewscoboardofc_menu(sy);
+			system("pause");
 			break;
 		}
 		case 7: {
 			system("cls");
 			updatestures_menu(sy);
+			system("pause");
 			break;
 		}
 		case 8: {
