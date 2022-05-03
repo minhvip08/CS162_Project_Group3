@@ -24,7 +24,7 @@ void gpaOfClass(schoolyear* head)
 		cout << i << ". " << tmp->time << '\t'; ++i;
 		tmp = tmp->next_schyear;
 	} cout << endl;
-	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	cout << "Which schoolyear you want to view semester? "; int x; cin >> x;
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
@@ -154,4 +154,49 @@ void view_scoreboard_sem(student* stu)
 	}
 	float endf = gpaf / credf;
 	cout << "\t* Total GPA of schoolyear: " << endf << endl;
+}
+
+void Scoreboard_staff(schoolyear* head)
+{
+	readSchoolyear(head);
+	if (!head) {
+		cout << "You haven't input a schoolyear" << endl;
+		return;
+	}
+
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	while (tmp) {
+		cout << i << ". " << tmp->time << '\t'; ++i;
+		tmp = tmp->next_schyear;
+	} cout << endl;
+	cout << "Which schoolyear you want to view information? "; int x; cin >> x;
+	while (x > i) {
+		cout << "You input wrong number. PLease input again: "; cin >> x;
+	}
+	schoolyear* check = head;
+	if (x > 1) {
+		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
+	}
+	readSemester(check->sem, check->time);
+	if (!check->sem) {
+		cout << "You haven't add a semester for this schoolyear" << endl;
+		return;
+	}
+
+	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
+	cout << "Which semester you want to view course? "; int k; cin >> k;
+	while (k > check->num_sem) {
+		cout << "Invalid number, please input again: "; cin >> k;
+	}
+	semester* s_check = check->sem;
+	if (k != check->num_sem) {
+		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
+	}
+	readListOfCourse(check->time, s_check->course_list, s_check->mark);
+	course* c = s_check->course_list;
+	while (c) {
+		importscoreboardcourse(c);
+		print(c);
+		c = c->next;
+	}
 }

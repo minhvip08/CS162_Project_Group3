@@ -311,10 +311,12 @@ void manage_course() {
 		gotoxy(8, y + 5);
 		cout << "5. Import scoreboard of a course\n";
 		gotoxy(8, y + 6);
-		cout << "6. View scoreboard of a course\n";
+		cout << "6. View scoreboard of a course in current semester\n";
 		gotoxy(8, y + 7);
-		cout << "7. Update student result\n";
+		cout << "7. View scoreboard of 1 course\n";
 		gotoxy(8, y + 8);
+		cout << "8. Update student result\n";
+		gotoxy(8, y + 9);
 		cout << "0.Go backward\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
@@ -358,12 +360,18 @@ void manage_course() {
 		}
 		case 7: {
 			system("cls");
+			Scoreboard_staff(sy);
+			system("pause");
+			return;
+		}
+		case 8: {
+			system("cls");
 			updatestures_menu(sy);
 			system("pause");
 			break;
 		}
-		case 8: {
-			return;
+		case 9: {
+			return; 
 		}
 		}
 	}

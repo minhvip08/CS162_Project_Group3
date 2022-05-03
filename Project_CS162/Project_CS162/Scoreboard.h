@@ -10,3 +10,4 @@ void print(course* c);
 int conditionGPA(float m);
 void gpaOfClass(schoolyear* head);
 void view_scoreboard_sem(student* stu);
+void Scoreboard_staff(schoolyear* head);

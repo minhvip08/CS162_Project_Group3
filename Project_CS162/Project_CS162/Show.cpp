@@ -23,7 +23,7 @@ void show_course(schoolyear* head)
 		tmp = tmp->next_schyear;
 	} cout << endl;
 
-	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	cout << "Which schoolyear you want to view semester? "; int x; cin >> x;
 	while (x > i) {
 		cout << "You input a wrong number. PLease input again: "; cin >> x;
 	}
@@ -43,7 +43,7 @@ void show_course(schoolyear* head)
 		readSemester(check->sem, check->time);
 	semester* s_tmp = check->sem;
 	cout << "There are currently " << check->num_sem << " semesters in this schoolyear" << endl;
-	cout << "Which semester you want to update its courses' information: "; cin >> x;
+	cout << "Which semester you want to view it's information: "; cin >> x;
 	if (x != check->num_sem) {
 		int h = x; while (h < check->num_sem) { s_tmp = s_tmp->next; ++h; }
 	}
@@ -217,7 +217,7 @@ void showStudentsInCourse(schoolyear* head) {
 		cout << i << ". " << tmp->time << '\t'; ++i;
 		tmp = tmp->next_schyear;
 	} cout << endl;
-	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	cout << "Which schoolyear you want to view semester? "; int x; cin >> x;
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
@@ -230,7 +230,7 @@ void showStudentsInCourse(schoolyear* head) {
 		readSemester(check->sem, check->time);
 
 	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
-	cout << "Which semester you want to add course? "; int k; cin >> k;
+	cout << "Which semester you want to view course? "; int k; cin >> k;
 	semester* s_check = check->sem;
 	if (k != check->num_sem) {
 		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
