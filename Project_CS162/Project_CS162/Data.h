@@ -12,6 +12,5 @@ void readSemester(semester*& s, string time);
 void readListEnrolled(string time, student*& s, int semester);
 void readStudentOfCourse(course*& c);
 void saveStudentOfCourse(course* c);
-void readStudent1Class(string name, Class*& cl);
 // csv file
 void collectOneClassAccount(int& n,string class_name, account*& head); 

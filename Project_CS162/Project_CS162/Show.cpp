@@ -195,11 +195,11 @@ void showStudentsInClass(schoolyear* head) {
 	readStudent1Class(ctmp->class_name, read);
 	student* pStudentHead = read->student_list; int b = 1;
 
-	cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\tSocial ID\n";
+	cout << "No\tID\t\tName\t\t\t\tBirthday\tGender\t\tSocial ID\n";
 	while (pStudentHead) {
 		cout << b << '\t';
 		string fullname = pStudentHead->prf.lastname + ' ' + pStudentHead->prf.firstname;
-		cout << pStudentHead->id << '\t' << fullname << '\t' << ((fullname.length() < 16) ? '\t' : ' ') << '\t' << pStudentHead->prf.DOB << "\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
+		cout << pStudentHead->id << '\t' << fullname << '\t' << ((fullname.length() < 16) ? '\t' : ' ') << '\t' << pStudentHead->prf.DOB << "\t\t" << pStudentHead->prf.gender << "\t" << pStudentHead->prf.social_id << "\n";
 		++b;
 		pStudentHead = pStudentHead->pNext;
 	}

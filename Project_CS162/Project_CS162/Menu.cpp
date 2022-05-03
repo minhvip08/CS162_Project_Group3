@@ -6,6 +6,7 @@
 #include "OutputConsole.h"
 #include "Scoreboard.h"
 #include "design.h"
+#include "Login.h"
 void menu_staff() {
 	string art = headline();
 	while (true) {
@@ -18,13 +19,13 @@ void menu_staff() {
 		ShowConsoleCursor(true);
 		SetColor(14);
 		gotoxy(8, y + 1);
-		cout << "Schoolyear management\n";
+		cout << "1.Schoolyear management\n";
 		gotoxy(8, y + 2);
-		cout << "Semester management\n";
+		cout << "2.Semester management\n";
 		gotoxy(8, y + 3);
-		cout << "Course management\n";
+		cout << "3.Course management\n";
 		gotoxy(8, y + 4);
-		cout << "Exit\n";
+		cout << "0.Exit\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -85,7 +86,7 @@ void menu_student(account* &head) {
 	string art = headline();
 	while (true) {
 		system("cls");
-		SetColor(rand() % 14 + 1);
+		SetColor(rand() % 14 );
 		cout << art << endl;
 		int opt = 1;
 		int row = 7;//rows of menu lines
@@ -93,19 +94,19 @@ void menu_student(account* &head) {
 		ShowConsoleCursor(true);
 		SetColor(10);
 		gotoxy(8, y + 1);
-		cout << "Enroll a course" << endl;
+		cout << "1.Enroll a course" << endl;
 		gotoxy(8, y + 2);
-		cout << "View a list of enrolled course" << endl;
+		cout << "2.View a list of enrolled course" << endl;
 		gotoxy(8, y + 3);
-		cout << "Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
+		cout << "3.Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
 		gotoxy(8, y + 4);
-		cout << "View a list of his/her courses in this semester" << endl;
+		cout << "4.View a list of his/her courses in this semester" << endl;
 		gotoxy(8, y + 5);
-		cout << "View his/her scoreboard in current semester" << endl;
+		cout << "5.View his/her scoreboard in current semester" << endl;
 		gotoxy(8, y + 6);
-		cout << "View his/her scoreboard in every semester" << endl;
+		cout << "6.View his/her scoreboard in every semester" << endl;
 		gotoxy(8, y + 7);
-		cout << "Exit\n";
+		cout << "0.Exit\n";
 		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
@@ -196,7 +197,7 @@ void manage_Schoolyear() { // ok
 		cout << "4.View students in a class" << endl;
 		gotoxy(8, y + 5);
 		cout << "0.Go backward" << endl;
-		gotoxy(8, y + 1);
+		gotoxy(7, y + 1);
 		moveChoice(row, y, opt);
 
 		switch (opt) {

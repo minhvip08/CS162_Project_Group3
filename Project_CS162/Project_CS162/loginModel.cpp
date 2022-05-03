@@ -34,7 +34,7 @@ void saveAccountFile(ofstream& fout, account* head)
 		return;
 	}
 	while (head != NULL) {
-		//fout << endl; 
+		fout << endl;
 		fout << head->type << ',';
 		fout << head->username << ',';
 		fout << head->password << ',';
@@ -44,7 +44,7 @@ void saveAccountFile(ofstream& fout, account* head)
 		fout << head->prf.gender << ',';
 		fout << head->prf.social_id;
 		head = head->pNext;
-		if (head) fout << endl; 
+		//if (head) fout << endl; 
 	}
 }
 
@@ -79,6 +79,7 @@ void collectOneClassAccount(int& n, string class_name,account*&head) {
 		return;
 	}
 	else {
+		string a1; getline(fin, a1, '\n');
 		while (!fin.eof()) {
 			++i;
 			cur_acc->type = 1;
@@ -110,7 +111,7 @@ void collectOneClassAccount(int& n, string class_name,account*&head) {
 	saveAccountFile(fout, head);
 	ofstream fout1;
 	fout1.open(class_name + ".txt");
-	saveStudent1Class(fout1, class_name, keep);
+	saveStudent1Class(fout1, class_name, head);
 	fout.close();
 }
 void saveStudent1Class(ofstream& fout, string name, account* head)

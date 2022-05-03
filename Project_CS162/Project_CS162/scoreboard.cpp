@@ -2,6 +2,7 @@
 #include "Scoreboard.h"
 #include "Data.h"
 #include "Support.h"
+#include"Login.h"
 int conditionGPA(float m)
 {
 	if (m >= 8.5 && m <= 10) return 4;
