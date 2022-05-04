@@ -179,7 +179,7 @@ void exportstulist_menu(schoolyear* scy)
 		s = s->next;
 	}
 	readListOfCourse(scy->time, s->course_list, sem);
-	cout << "List of course:" << endl;
+	cout << "List of courses:" << endl;
 	int i = 0;
 	course* tmp = s->course_list;
 	while (tmp) {
@@ -201,7 +201,7 @@ void exportstulist_menu(schoolyear* scy)
 	ofstream fout;
 	readStudentOfCourse(cur);
 	if (!cur->list_score) {
-		cout << "List of student in this course is empty" << endl;
+		cout << "List of students in this course is empty" << endl;
 		return;
 	}
 	studentScore* stu = cur->list_score;

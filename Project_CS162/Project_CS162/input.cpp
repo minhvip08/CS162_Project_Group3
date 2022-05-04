@@ -438,7 +438,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	course* c = new course; 
 	readListOfCourse(time, c, sem); 
 	if (!c) {
-		cout << "List of course in this semester is empty" << endl;
+		cout << "List of courses in this semester is empty" << endl;
 		return;
 	}
 	course* tmpc = c; int i = 0;
@@ -465,7 +465,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	}
 	readStudentOfCourse(cur);
 	if (alreadyEnrolled(cur->ID_course, stu->list_enrolled)) {
-		cout << "You're already enrolled in this course" << endl;
+		cout << "You've already enrolled in this course" << endl;
 		return;
 	}
 	else if (cur->cur_student == cur->max_student) {

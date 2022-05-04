@@ -113,7 +113,7 @@ void readSemester(semester*& s, string time)
 
 void readListEnrolled(string time, student*& s, int semester)
 {
-	char k = semester + 48; string id = s->id; 
+	char k = semester + findYear(s->id) + 48; string id = s->id;
 	ifstream fin; fin.open(id + '_' + k + "sem.txt");
 	if (isEmpty(fin)) {
 		cout << "You haven't enrolled in any course" << endl;

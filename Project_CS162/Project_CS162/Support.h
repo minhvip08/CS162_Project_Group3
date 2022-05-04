@@ -11,7 +11,6 @@ void showCurrentSchoolyear(schoolyear* head);
 bool checkValidSchoolyear(string time);
 bool checkAvailClass(string s, string year);
 bool checkConflictSession(session ses1, session ses2);
-void changeacctostu(account* acc, schoolyear* scy, student*& stu);
 bool alreadyEnrolled(string id, enrolledCourse* c);
 int currentSemester();
 bool checkEnrollTime(semester* s);

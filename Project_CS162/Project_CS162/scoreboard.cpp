@@ -45,7 +45,7 @@ void gpaOfClass(schoolyear* head)
 	Class* read = new Class;
 	readStudent1Class(ctmp->class_name, ctmp);
 	if (!read) {
-		cout << "Please choose another class to view";
+		cout << "Please choose another class to view"<<endl;
 		return;
 	}
 	else {
