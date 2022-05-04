@@ -1,14 +1,4 @@
-3
-PHY3
-General Physics 3
-Nguyen Huu Nha
-4
-WED	S2(09:30)
-FRI	S2(09:30)
-0
-0
-0
-0
+2
 MTH261
 Linear Algebra
 Thu Van

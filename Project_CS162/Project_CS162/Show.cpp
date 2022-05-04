@@ -54,23 +54,25 @@ void show_course(schoolyear* head)
 	else
 		readListOfCourse(check->time, s_tmp->course_list, x);
 	cout << "LIST OF COURSES: \n";
-	course* c = s_tmp->course_list;
+	course* c = s_tmp->course_list; int e = 0; 
 	while (c) {
-		cout << "***********************************************"<<endl;
-		cout << "Course ID: " << c->ID_course << endl;
-		cout << "Course name: " << c->course_name << endl;
-		cout << "Teacher name: " << c->teacher_name << endl;
-		cout << "Number of credits: " << c->credits << endl;
-		cout << "Current student(s): " << c->cur_student << endl;
-		cout << "Session 1: " << endl; show_session(c->ses1);
-		cout << "Session 2: " << endl; show_session(c->ses2);
+		++e; 
+		cout << "********** COURSE NUMBER: " << e << " **********" << endl;
+		cout << "\t* Course ID: " << c->ID_course << endl;
+		cout << "\t* Course name: " << c->course_name << endl;
+		cout << "\t* Teacher name: " << c->teacher_name << endl;
+		cout << "\t* Number of credits: " << c->credits << endl;
+		cout << "\t* Current student(s): " << c->cur_student << endl;
+		cout << "\t* Session 1: \n\t\t"; show_session(c->ses1);
+		cout << "\t* Session 2: \n\t\t"; show_session(c->ses2);
 		c = c->next;
+		if(!c) cout << "********************************************\n";
 	}
 }
 
 void show_session(session s) 
 {
-	cout << "Day: " << s.date << endl;
+	cout << "Day: " << s.date << '\t';
 	cout << "Time: " << s.time << endl;
 }
 

@@ -1,6 +1,7 @@
 #include "header.h"
 #include "Deallocate_graphic.h"
 #include "Data.h"
+#include "Support.h"
 void Delete_schoolyear(schoolyear*& head)
 {
 	if (!head) return; 
@@ -78,10 +79,25 @@ void Delete_enrollCourse(enrolledCourse*& head)
 
 
 void Delete_enrolled_course(schoolyear* &sy, string time, student*& pS, int sem) {
-	
+	schoolyear* scy = nullptr; 
+	readSchoolyear(scy); 
+	while (scy) {
+		if (scy->time == time) break;
+		else scy = scy->next_schyear; 
+	}
+	readSemester(scy->sem, time); 
+	semester* ss = scy->sem; 
+	while (ss) {
+		if (ss->mark == sem) break;
+		else ss = ss->next; 
+	}
+	if (!checkEnrollTime(ss)) {
+		cout << "Out of registration time\n";
+		return; 
+	}
 	readListEnrolled(time, pS, sem); 
 	enrolledCourse* pECCrs = pS->list_enrolled;
-	if (pECCrs != nullptr) {
+	if (pECCrs == nullptr) {
 		system("pause");
 		return;
 	}

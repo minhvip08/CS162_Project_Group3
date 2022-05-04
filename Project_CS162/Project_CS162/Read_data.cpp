@@ -206,3 +206,108 @@ void readListOfStu(student*& stu, string class_name)
 	}
 	fin.close();
 }
+
+void importscoreboard_menu(schoolyear* scy)
+{
+	readSchoolyear(scy);
+	while (scy) {
+		if (checkCurrentSchoolyear(scy)) break;
+		scy = scy->next_schyear;
+	}
+	if (!scy) return;
+	readSemester(scy->sem, scy->time);
+	int sem = currentSemester();
+	semester* s = scy->sem;
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next;
+	}
+	cout << "List of course:" << endl; readListOfCourse(scy->time, s->course_list, sem);
+	int i = 0;
+	course* tmp = s->course_list;
+	while (tmp) {
+		++i;
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+
+	ifstream fin; fin.open(cur->ID_course + ".csv");
+	if (isEmpty(fin)) {
+		return;
+	}
+	studentScore* stu = new studentScore; cur->list_score = stu;
+	string a; getline(fin, a, '\n');
+
+	while (!fin.eof()) {
+		fin >> stu->no;
+		string s; getline(fin, s, ',');
+		getline(fin, stu->id, ',');
+		getline(fin, stu->name, ',');
+
+		fin >> stu->stscore.other;
+		string d; getline(fin, d, ',');
+		fin >> stu->stscore.mid;
+
+		string c; getline(fin, c, ',');
+		fin >> stu->stscore.final;
+		getline(fin, d, ',');
+		fin >> stu->stscore.total;
+		fin.ignore();
+		//string e; getline(fin, e, '\n');
+		if (fin.eof()) {
+			stu->pNext = nullptr;
+			break;
+		}
+		else {
+			stu->pNext = new studentScore;
+			stu = stu->pNext;
+		}
+	}
+	cout << "Import successfully" << endl;
+}
+
+void importscoreboardcourse(course*& c)
+{
+	ifstream fin; fin.open(c->ID_course + ".csv");
+	if (isEmpty(fin)) {
+		return;
+	}
+	studentScore* stu = new studentScore; c->list_score = stu;
+	string a; getline(fin, a, '\n');
+
+	while (!fin.eof()) {
+		fin >> stu->no;
+		string s; getline(fin, s, ',');
+		getline(fin, stu->id, ',');
+
+		getline(fin, stu->name, ',');
+		fin >> stu->stscore.other;
+		string d; getline(fin, d, ',');
+		fin >> stu->stscore.mid;
+		string f; getline(fin, f, ',');
+		fin >> stu->stscore.final;
+		getline(fin, d, ',');
+		fin >> stu->stscore.total;
+		fin.ignore();
+		//string e; getline(fin, e, '\n');
+		if (fin.eof()) {
+			stu->pNext = nullptr;
+			break;
+		}
+		else {
+			stu->pNext = new studentScore;
+			stu = stu->pNext;
+		}
+	}
+}

@@ -2,8 +2,8 @@
 #include "Support.h"
 #include "Login.h"
 #include "Menu.h"
-#include "design.h"
-#include"Data.h"
+#include "Design.h"
+#include "Data.h"
 void loginDraw(short opt, int type) {
 	short opt_ = opt;
 	SetColor(4);

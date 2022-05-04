@@ -1,5 +1,5 @@
-#include "design.h"
-#include"header.h"
+#include "Design.h"
+#include "header.h"
 string headline() {
 	string hl;
 	return hl = R"(  

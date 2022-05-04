@@ -162,3 +162,82 @@ void saveStudentOfCourse(course* c)
 	}
 	fout.close();
 }
+
+void exportstulist_menu(schoolyear* scy)
+{
+	readSchoolyear(scy);
+	while (scy) {
+		if (checkCurrentSchoolyear(scy)) break;
+		scy = scy->next_schyear;
+	}
+	if (!scy) return;
+	readSemester(scy->sem, scy->time);
+	int sem = currentSemester();
+	semester* s = scy->sem;
+	while (s) {
+		if (s->mark == sem) break;
+		s = s->next;
+	}
+	readListOfCourse(scy->time, s->course_list, sem);
+	cout << "List of course:" << endl;
+	int i = 0;
+	course* tmp = s->course_list;
+	while (tmp) {
+		++i;
+		cout << i << ". Course ID: " << tmp->ID_course << '\t' << "Course name: " << tmp->course_name << endl;
+		tmp = tmp->next;
+	}	cout << "0. Exit" << endl;
+	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
+	while (x > i) {
+		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+	}
+	if (x == 0) return;
+	course* cur = s->course_list;
+	if (x > 1) {
+		int h = 1; while (h < x) {
+			cur = cur->next; ++h;
+		}
+	}
+	ofstream fout;
+	readStudentOfCourse(cur);
+	if (!cur->list_score) {
+		cout << "List of student in this course is empty" << endl;
+		return;
+	}
+	studentScore* stu = cur->list_score;
+	fout.open(cur->ID_course + ".csv");
+	fout << "No,ID,Fullname,Other,Mid,Final,Total\n";
+	int j = 0;
+	while (stu) {
+		++j; stu->no = j;
+		fout << stu->no << ',';
+		fout << stu->id << ',';
+		fout << stu->name << ',';
+		fout << stu->stscore.other << ',';
+		fout << stu->stscore.mid << ',';
+		fout << stu->stscore.final << ',';
+		fout << stu->stscore.total;
+		stu = stu->pNext;
+		if (stu) fout << '\n';
+	}
+	fout.close();
+	cout << "Export successfully" << endl;
+}
+
+void saveScoreboardCSV(course* c) {
+	studentScore* stu = c->list_score;
+	ofstream fout; fout.open(c->ID_course + ".csv");
+	fout << "No,ID,Name,Other,Mid,Final,Total\n";
+	while (stu) {
+		fout << stu->no << ',';
+		fout << stu->id << ',';
+		fout << stu->name << ',';
+		fout << stu->stscore.other << ',';
+		fout << stu->stscore.mid << ',';
+		fout << stu->stscore.final << ',';
+		fout << stu->stscore.total;
+		stu = stu->pNext;
+		if (stu) fout << '\n';
+	}
+	fout.close();
+}

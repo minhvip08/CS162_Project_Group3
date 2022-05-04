@@ -5,7 +5,7 @@
 #include "Input.h"
 #include "OutputConsole.h"
 #include "Scoreboard.h"
-#include "design.h"
+#include "Design.h"
 #include "Login.h"
 void menu_staff() {
 	string art = headline();
