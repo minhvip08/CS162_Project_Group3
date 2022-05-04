@@ -12,6 +12,8 @@ Source code is written by 4 members in a team:
  <img width="727" alt="image" src="https://user-images.githubusercontent.com/23515034/166115995-1c2c01b4-aa74-4107-8f03-dfad816eafaa.png">
  
 _We encourage everyone using Windows 7, 8, 10, 11 to run the project to not encounter any erros when set-up_
+<img width="672" alt="image" src="https://user-images.githubusercontent.com/23515034/166660680-52673fd5-77d1-4f77-b651-940b76a06ea4.png">
+
 
 ## Function:
 In the project, we write 26 sub-functions about Create, View, Export TXT Files and Delete. 
