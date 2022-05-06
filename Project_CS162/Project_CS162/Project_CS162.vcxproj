@@ -115,7 +115,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,13 +139,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\ACourseRegistrationSystem_P\main\loginModel.cpp" />
+    <ClCompile Include="Deallocate_deleting.cpp" />
+    <ClCompile Include="design.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="loginModel.cpp" />
     <ClCompile Include="loginView.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Read_data.cpp" />
+    <ClCompile Include="Save_data.cpp" />
+    <ClCompile Include="scoreboard.cpp" />
+    <ClCompile Include="Show.cpp" />
+    <ClCompile Include="Support.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Data.h" />
+    <ClInclude Include="Deallocate_graphic.h" />
+    <ClInclude Include="design.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Login.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="OutputConsole.h" />
+    <ClInclude Include="Scoreboard.h" />
+    <ClInclude Include="Support.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

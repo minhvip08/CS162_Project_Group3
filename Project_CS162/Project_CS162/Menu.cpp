@@ -98,7 +98,7 @@ void menu_student(account* &head) {
 		gotoxy(8, y + 2);
 		cout << "2. View a list of enrolled course" << endl;
 		gotoxy(8, y + 3);
-		cout << "3. Remove enrolled course" << endl; // ktra ngay thang cho phep enroll
+		cout << "3. Remove enrolled course" << endl;
 		gotoxy(8, y + 4);
 		cout << "4. View a list of his/her courses in this semester" << endl;
 		gotoxy(8, y + 5);
@@ -252,7 +252,7 @@ void manage_semester() { //ok
 		gotoxy(8, y + 3);
 		cout << "3. View list of course\n";
 		gotoxy(8, y + 4);
-		cout << "4. GPA of class\n";
+		cout << "4. GPA of class in this semester\n";
 		gotoxy(8, y + 5);
 		cout << "0.Go backward" << endl;
 		gotoxy(7, y + 1);

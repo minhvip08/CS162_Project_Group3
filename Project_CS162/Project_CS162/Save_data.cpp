@@ -189,7 +189,7 @@ void exportstulist_menu(schoolyear* scy)
 	}	cout << "0. Exit" << endl;
 	cout << "Please choose the number represented the course(1, 2, 3, ...) : "; int x; cin >> x;
 	while (x > i) {
-		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+		cout << "You input the wrong number. Please input again: "; cin >> x;
 	}
 	if (x == 0) return;
 	course* cur = s->course_list;

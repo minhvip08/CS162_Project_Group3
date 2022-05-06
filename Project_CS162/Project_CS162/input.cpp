@@ -44,13 +44,17 @@ void create_semester(schoolyear* &head)
 		return;
 	}
 
-	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 0;
 	while (tmp) {
-		cout << i << ". " << tmp->time << '\t'; ++i;
+		++i;
+		cout << i << ". " << tmp->time << '\t'; 
 		tmp = tmp->next_schyear;
 	} cout << endl;
 
 	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	while (x > i) {
+		cout << "You input wrong number. Please input again: "; cin >> x; 
+	}
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1;
@@ -109,12 +113,16 @@ void create_course(schoolyear* &head) // OK
 		return;
 	}
 
-	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 0;
 	while (tmp) {
-		cout << i << ". " << tmp->time << '\t'; ++i;
+		++i;
+		cout << i << ". " << tmp->time << '\t'; 
 		tmp = tmp->next_schyear;
 	} cout << endl;
 	cout << "Which schoolyear you want to add semester? "; int x; cin >> x;
+	while (x > i) {
+		cout << "You input the wrong number. PLease input again: "; cin >> x; 
+	}
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
@@ -127,6 +135,9 @@ void create_course(schoolyear* &head) // OK
 
 	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
 	cout << "Which semester you want to add course? "; int k; cin >> k;
+	while (k > check->num_sem) {
+		cout << "You input the wrong number. PLease input again: "; cin >> k; 
+	}
 	semester* s_check = check->sem;
 	if (k != check->num_sem) {
 		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
@@ -199,12 +210,16 @@ void create_class(schoolyear* &head) //OK
 		return;
 	}
 
-	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 0;
 	while (tmp) {
-		cout << i << ". " << tmp->time << '\t'; ++i;
+		++i;
+		cout << i << ". " << tmp->time << '\t';
 		tmp = tmp->next_schyear;
 	} cout << endl;
 	cout << "Which schoolyear you want to add class? "; int x; cin >> x;
+	while (x > i) {
+		cout << "You input the wrong number. PLease input again: "; cin >> x; 
+	}
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
@@ -272,12 +287,16 @@ void uppdateCourseInfor(schoolyear*& head) {
 		return;
 	}
 
-	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 1;
+	schoolyear* tmp = head; cout << "List of schoolyear: " << endl; int i = 0;
 	while (tmp) {
-		cout << i << ". " << tmp->time << '\t'; ++i;
+		++i; 
+		cout << i << ". " << tmp->time << '\t'; 
 		tmp = tmp->next_schyear;
 	} cout << endl;
 	cout << "Which schoolyear you want to view semester? "; int x; cin >> x;
+	while (x > i) {
+		cout << "You input the wrong number. PLease input again: "; cin >> x; 
+	}
 	schoolyear* check = head;
 	if (x > 1) {
 		int j = 1; while (j < x) { check = check->next_schyear; ++j; }
@@ -290,6 +309,9 @@ void uppdateCourseInfor(schoolyear*& head) {
 
 	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
 	cout << "Which semester you want to view course? "; int k; cin >> k;
+	while (k > check->num_sem) {
+		cout << "You input the wrong number. PLease input again: "; cin >> k; 
+	}
 	semester* s_check = check->sem;
 	if (k != check->num_sem) {
 		int h = k; while (h < check->num_sem) { s_check = s_check->next; ++h; }
@@ -297,7 +319,7 @@ void uppdateCourseInfor(schoolyear*& head) {
 	readListOfCourse(check->time, s_check->course_list, k);
 
 	//system("cls");
-	cout << "These are all courses in this semester, please enter one ID Course!" << endl;
+	cout << "These are all courses in this semester:" << endl;
 	i = 0; course* ctmp = s_check->course_list;
 	while (ctmp) {
 		++i;
@@ -307,7 +329,7 @@ void uppdateCourseInfor(schoolyear*& head) {
 	cout << "0. Exit" << endl;
 	cout << "Please choose the number represented the course (1,2,3, ... ): "; cin >> x;
 	while (x > i) {
-		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+		cout << "You input the wrong number. PLease input again: "; cin >> x;
 	}
 	if (x == 0) return;
 	course* cur = s_check->course_list;
@@ -399,9 +421,8 @@ void update1InforCourse(course* &pCourse, int opt) {
 		break;
 	}
 	default: {
-		cout << endl << "You enter wrong number, please enter again!";
-		cout << "\nPress any key to continue....";
-		char a = _getch();
+		cout << endl << "You enter wrong number!!!\n";
+		system("pause"); 
 		return;
 	}
 	}
@@ -454,7 +475,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	} cout << "0. Exit" << endl;
 	cout << "Please choose the number represented the course (1,2,3, ... ): "; int x; cin >> x;
 	while (x > i) {
-		cout << "Invalid number!!" << endl << "Please input again: "; cin >> x;
+		cout << "You input the wrong number. PLease input again: "; cin >> x;
 	}
 	if (x == 0) return;
 	course* cur = c;
@@ -470,7 +491,7 @@ void enrollCourse(schoolyear*& sy, string time, int sem, student*& stu) {
 	}
 	else if (cur->cur_student == cur->max_student) {
 		cout << "The course is full of slots" << endl << "You can't enroll in this course" << endl;
-		cout << "\nPress any key to continue....";
+		cout << "Press any key to continue....";
 		char a = _getch();
 		return;
 	}

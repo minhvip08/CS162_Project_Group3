@@ -1,1 +1,11 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(390,5): error MSB8020: The build tools for v143 (Platform Toolset = 'v143') cannot be found. To build using the v143 build tools, please install v143 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  loginModel.cpp
+  scoreboard.cpp
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(77,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(89,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(154,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(167,37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(264,10): warning C4129: 'T': unrecognized character escape sequence
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(351,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(414,12): warning C4129: 'T': unrecognized character escape sequence
+  Generating Code...
+  Project_CS162.vcxproj -> D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\x64\Debug\Project_CS162.exe
