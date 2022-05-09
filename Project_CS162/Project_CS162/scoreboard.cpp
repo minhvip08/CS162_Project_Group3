@@ -128,7 +128,7 @@ void view_scoreboard_sem(student* stu)
 	}
 
 	cout << "There are currently " << check->num_sem << " semesters in this schoolyear." << endl;
-	cout << "Which semester you want to add course? "; int k; cin >> k;
+	cout << "Which semester you want to view course? "; int k; cin >> k;
 	while (k > check->num_sem) {
 		cout << "You input the wrong number. Please input again: "; cin >> k;
 	}

@@ -1,5 +1,4 @@
-﻿  loginModel.cpp
-  scoreboard.cpp
+﻿  scoreboard.cpp
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(77,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(89,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(154,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
@@ -7,5 +6,4 @@ D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(264,10): warning C4129: 'T': unrecognized character escape sequence
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(351,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\Project_CS162\scoreboard.cpp(414,12): warning C4129: 'T': unrecognized character escape sequence
-  Generating Code...
   Project_CS162.vcxproj -> D:\HCMUS\1styear\2ndterm\CS162\CS162_Project_Group3\Project_CS162\x64\Debug\Project_CS162.exe

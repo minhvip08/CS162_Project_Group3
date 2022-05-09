@@ -112,7 +112,7 @@ void save_enrollcourse_stu(string time, student* s, int semester)
 		cout << "Can't save" << endl;
 		return;
 	}
-	string id = s->id; char k = semester + findYear(s->id) + 48;
+	string id = s->id; char k = semester + 3*findYear(s->id) + 48;
 	ofstream fout; fout.open(id + '_' + k + "sem.txt", ios::trunc);
 	enrolledCourse* c = s->list_enrolled; int cnt = 0;
 	while (c) {

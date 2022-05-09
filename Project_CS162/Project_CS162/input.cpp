@@ -255,13 +255,13 @@ void createCourseEnrolledTime(semester*& s)
 	bool flag = false;
 	while (!flag) {
 		cout << "Create a course registration time! " << endl;
-		cout << "Please enter the start of the semester"; input_date(s->start_regist);
+		cout << "Please enter the start of the semester\n"; input_date(s->start_regist);
 		flag = checkSem(s->start_regist, s->mark);
 		if (!flag) {
 			cout << "Start month does not match with semester registration time!" << endl;
 		}
 		else {
-			cout << "Please enter the end of the semester"; input_date(s->end_regist);
+			cout << "Please enter the end of the semester\n"; input_date(s->end_regist);
 			flag = checkSem(s->end_regist, s->mark);
 			if (!flag) {
 				cout << "End month does not match with smester registration time!" << endl;
